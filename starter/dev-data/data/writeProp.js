@@ -1,0 +1,148 @@
+const fs = require('fs');
+
+const obj = [
+  {
+    _id: '5c8a1d5b0190b214360dc057',
+    name: 'Jonas Schmedtmann',
+    email: 'admin@natours.io',
+    role: 'admin',
+    active: true,
+    photo: 'user-1.jpg',
+    password: '$2a$12$Q0grHjH9PXc6SxivC8m12.2mZJ9BbKcgFpwSG4Y1ZEII8HJVzWeyS',
+  },
+  {
+    _id: '5c8a1dfa2f8fb814b56fa181',
+    name: 'Lourdes Browning',
+    email: 'loulou@example.com',
+    role: 'user',
+    active: true,
+    photo: 'user-2.jpg',
+    password: '$2a$12$hP1h2pnNp7wgyZNRwPsOTeZuNzWBv7vHmsR3DT/OaPSUBQT.y0S..',
+  },
+  {
+    _id: '5c8a1e1a2f8fb814b56fa182',
+    name: 'Sophie Louise Hart',
+    email: 'sophie@example.com',
+    role: 'user',
+    active: true,
+    photo: 'user-3.jpg',
+    password: '$2a$12$9nFqToiTmjgfFVJiQvjmreLt4k8X4gGYCETGapSZOb2hHa55t0dDq',
+  },
+  {
+    _id: '5c8a1ec62f8fb814b56fa183',
+    name: 'Ayla Cornell',
+    email: 'ayls@example.com',
+    role: 'user',
+    active: true,
+    photo: 'user-4.jpg',
+    password: '$2a$12$tm33.M/4pfEbZF64WbFuHuVFv85v4qEhi.ik8njbud7yaoqCZpjiy',
+  },
+  {
+    _id: '5c8a1f292f8fb814b56fa184',
+    name: 'Leo Gillespie',
+    email: 'leo@example.com',
+    role: 'guide',
+    active: true,
+    photo: 'user-5.jpg',
+    password: '$2a$12$OOPr90tBEBF1Iho3ox0Jde0O/WXUR0VLA5xdh6tWcu7qb.qOCvSg2',
+  },
+  {
+    _id: '5c8a1f4e2f8fb814b56fa185',
+    name: 'Jennifer Hardy',
+    email: 'jennifer@example.com',
+    role: 'guide',
+    active: true,
+    photo: 'user-6.jpg',
+    password: '$2a$12$XCXvvlhRBJ8CydKH09v1v.jpg0hB9gVVfMVEoz4MsxqL9zb5PrF42',
+  },
+  {
+    _id: '5c8a201e2f8fb814b56fa186',
+    name: 'Kate Morrison',
+    email: 'kate@example.com',
+    role: 'guide',
+    active: true,
+    photo: 'user-7.jpg',
+    password: '$2a$12$II1F3aBSFDF3Xz7iB4rk/.a2dogwkClMN5gGCWrRlILrG1xtJG7q6',
+  },
+  {
+    _id: '5c8a20d32f8fb814b56fa187',
+    name: 'Eliana Stout',
+    email: 'eliana@example.com',
+    role: 'user',
+    active: true,
+    photo: 'user-8.jpg',
+    password: '$2a$12$Jb/ILhdDV.ZpnPMu19xfe.NRh5ntE2LzNMNcsty05QWwRbmFFVMKO',
+  },
+  {
+    _id: '5c8a211f2f8fb814b56fa188',
+    name: 'Cristian Vega',
+    email: 'chris@example.com',
+    role: 'user',
+    active: true,
+    photo: 'user-9.jpg',
+    password: '$2a$12$r7/jtdWtzNfrfC7zw3uS.eDJ3Bs.8qrO31ZdbMljL.lUY0TAsaAL6',
+  },
+  {
+    _id: '5c8a21d02f8fb814b56fa189',
+    name: 'Steve T. Scaife',
+    email: 'steve@example.com',
+    role: 'lead-guide',
+    active: true,
+    photo: 'user-10.jpg',
+    password: '$2a$12$q7v9dm.S4DvqhAeBc4KwduedEDEkDe2GGFGzteW6xnHt120oRpkqm',
+  },
+  {
+    _id: '5c8a21f22f8fb814b56fa18a',
+    name: 'Aarav Lynn',
+    email: 'aarav@example.com',
+    role: 'lead-guide',
+    active: true,
+    photo: 'user-11.jpg',
+    password: '$2a$12$lKWhzujFvQwG4m/X3mnTneOB3ib9IYETsOqQ8aN5QEWDjX6X2wJJm',
+  },
+  {
+    _id: '5c8a22c62f8fb814b56fa18b',
+    name: 'Miyah Myles',
+    email: 'miyah@example.com',
+    role: 'lead-guide',
+    active: true,
+    photo: 'user-12.jpg',
+    password: '$2a$12$.XIvvmznHQSa9UOI639yhe4vzHKCYO1vpTUZc4d45oiT4GOZQe1kS',
+  },
+  {
+    _id: '5c8a23412f8fb814b56fa18c',
+    name: 'Ben Hadley',
+    email: 'ben@example.com',
+    role: 'guide',
+    active: true,
+    photo: 'user-13.jpg',
+    password: '$2a$12$D3fyuS9ETdBBw5lOwceTMuZcDTyVq28ieeGUAanIuLMcSDz6bpfIe',
+  },
+  {
+    _id: '5c8a23c82f8fb814b56fa18d',
+    name: 'Laura Wilson',
+    email: 'laura@example.com',
+    role: 'user',
+    active: true,
+    photo: 'user-14.jpg',
+    password: '$2a$12$VPYaAAOsI44uhq11WbZ5R.cHT4.fGdlI9gKJd95jmYw3.sAsmbvBq',
+  },
+  {
+    _id: '5c8a23de2f8fb814b56fa18e',
+    name: 'Max Smith',
+    email: 'max@example.com',
+    role: 'user',
+    active: true,
+    photo: 'user-15.jpg',
+    password: '$2a$12$l5qamwqcqC2NlgN6o5A5..9Fxzr6X.bjx/8j3a9jYUHWGOL99oXlm',
+  },
+];
+
+obj.forEach((el) => {
+  el.username = el.name
+    .split(' ')
+    .map((item) => item.toLowerCase())
+    .join('_');
+});
+
+fs.writeFileSync(`${__dirname}/writingProp.js`, JSON.stringify(obj, null, 2));

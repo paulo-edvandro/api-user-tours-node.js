@@ -1,0 +1,26 @@
+# Arquivos e pastas ignorados pelo Git
+
+# Dependências
+node_modules/
+
+# Ambiente
+.env
+config.env
+
+# Logs
+*.log
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Outros arquivos temporários
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build
+/dist
+
+# VSCode
+.vscode/
