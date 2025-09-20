@@ -25,6 +25,17 @@ O projeto foi desenvolvido como parte de um curso online na **Udemy**. **O front
 
 ---
 
+### Como Testar a API (via Postman)
+
+A API está hospedada publicamente. Você pode testar todos os endpoints usando o [Postman](https://www.postman.com/downloads/).
+
+**URL Base:** `https://api-user-tours-node-js.onrender.com/api/v1`
+
+1. **Crie um Usuário:** Faça uma requisição `POST` para `URL BASE/users/signup` com os dados do novo usuário.
+2. **Faça Login:** Com o usuário criado, faça uma requisição `POST` para `URL BASE/users/login` para receber um token de autenticação.
+3. **Acesse as Rotas Protegidas:** Use o token de autenticação para acessar as rotas protegidas, como `GET URL BASE/tours`.
+
+---
 ### Tecnologias Utilizadas
 
 * **Back-end:**
@@ -32,11 +43,6 @@ O projeto foi desenvolvido como parte de um curso online na **Udemy**. **O front
     * **Express.js**
     * **MongoDB** (via Mongoose)
     * **JavaScript**
+    * **Outras Ferramentas:** Render (para hospedagem), Postman
 
 ---
-
-### Como Rodar o Projeto
-
-1.  Clone este repositório: `git clone [cole o link do seu repositório aqui]`
-2.  Instale as dependências: `npm install`
-3.  Inicie o servidor: `npm start`
