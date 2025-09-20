@@ -4,7 +4,7 @@
   "description": "Construindo uma API em Node, aprendendo express na versão 4, node e banco de dados",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "start:prod": "cross-env NODE_ENV=production nodemon server.js",
     "debug": "ndb nodemon server.js"
   },
