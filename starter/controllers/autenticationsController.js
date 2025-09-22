@@ -5,7 +5,7 @@ const catchAsync = require('../utils/catchAsync');
 const { promisify } = require('util');
 const { verify } = require('crypto');
 const sendEmail = require('../utils/email');
-
+const crypto = require('crypto');
 function jwtSign(id) {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES,
@@ -134,14 +134,35 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     .json({ status: 'sucess', message: 'Token enviado para o email!' });
 });
 
-// exports.resetPassword = catchAsync(async (req, res, next) => {
-//   const { token } = req.params;
-//   const user = await User.findOne({ passwordResetToken: token });
-// });
+exports.resetPassword = catchAsync(async (req, res, next) => {
+  //poderiamos refatorar e deixar isso em uma função, mas por enquanto, vamos deixar assim mesmo
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+  //A unica maneira de sabermos quem é o user aqui é através do token cru que enviamos na Url dele para identificar
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() },
+  });
 
-//
-//
-//
-//
-//
-//
+  if (!user) {
+    return next(new AppError(400, 'Token inválido ou expirado!'));
+  }
+  if (Date.now() > user.passwordResetExpires) {
+    return next(
+      new AppError(
+        400,
+        'O token expirou! Por favor, peça a solicitação de redefinição de senha novamente!',
+      ),
+    );
+  }
+
+  user.password = req.body.newPassword;
+  user.passwordConfirm = req.body.newPasswordConfirm;
+  user.passwordResetToken = undefined;
+  user.passwordResetExpires = undefined;
+  await user.save();
+  const token = jwtSign(user._id);
+  res.status(200).json({ status: 'sucess', token });
+});
