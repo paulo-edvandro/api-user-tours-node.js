@@ -4,6 +4,10 @@ Este é um projeto de back-end para um site completo de turismo, com diferentes 
 
 O projeto foi desenvolvido como parte de um curso online na **Udemy**. **O front-end em HTML, CSS e JavaScript foi fornecido como material didático do curso**, e meu trabalho se concentrou exclusivamente no desenvolvimento da API e do back-end.
 
+## Preview
+
+<img width="1363" height="722" alt="Captura de tela 2025-09-20 014816" src="https://github.com/user-attachments/assets/7ed7386d-e77c-480a-bb1a-5cd3f12c7c7e" />
+
 ---
 
 ### Status do Projeto
