@@ -11,9 +11,14 @@ function jwtSign(id) {
     expiresIn: process.env.JWT_EXPIRES,
   });
 }
+
+function createAndSendToken(user, res, statusCode, message = undefined) {
+  const token = jwtSign(user._id);
+  res.status(statusCode).json({ status: 'sucess', message, token });
+}
 // const UserFeatures = require('../utils/usersFeatures');
 exports.signup = catchAsync(async (req, res, next) => {
-  const newUser = await User.create({
+  const user = await User.create({
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
@@ -21,11 +26,9 @@ exports.signup = catchAsync(async (req, res, next) => {
     role: req.body.role,
   });
 
-  newUser.password = undefined;
+  user.password = undefined;
 
-  const token = jwtSign(newUser._id);
-
-  res.status(201).json({ status: 'sucess', token, user: newUser });
+  createAndSendToken(user, res, 201);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -40,9 +43,7 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError(401, 'Email ou senha estão incorretos!'));
   }
 
-  const token = jwtSign(user._id);
-
-  res.status(200).json({ status: 'sucess', token });
+  createAndSendToken(user, res, 200);
 });
 
 exports.protectionToken = catchAsync(async (req, res, next) => {
@@ -163,6 +164,35 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   user.passwordResetToken = undefined;
   user.passwordResetExpires = undefined;
   await user.save();
-  const token = jwtSign(user._id);
-  res.status(200).json({ status: 'sucess', token });
+  createAndSendToken(user, res, 200);
+});
+
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  const user = await User.findOne({ _id: req.user._id }).select('+password');
+
+  //OUTRO JEITO DE FAZER SERIA:
+  // 1 PEGA O ID DO USUÁRIO POR MEIO DO SEU TOKEN
+  // const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+  // 2 BUSCA O USUÁRIO DE ACORDO COM ESSE ID
+  // const user = User.findOne({ _id: decoded.id }).select('+password');
+  // 3 PORÉM , JÁ FIZEMOS ISSO NO PROTECTION TOKEN GERANDO O REQ.USER , ENTÃO NÃO PRECISA FAZER DE NOVO;
+  // OBS: PODERIA FAZER TUDO USANDO O REQ.USER E NÃO FAZER BUSCA NENHUMA DE USUÁRIO NO FINDONE;
+  // PORÉM PARA FAZER ISSO EU TERIA QUE FAZER .select('+password'); NO REQ.USER DO PROTECTIONTOKEN DEIXANDO A SENHA NO OBJETO, ISSO EM SI NÃO TEM PROBLEMA NENHUM,
+  // PORÉM EU NÃO ME LEMBRO SE EM ALGUMA ROTA EU ENVIEI REQ.USER PARA O USUÁRIO COMO RESPOSTA, SE TIVER FEITO ISSO IRIA VAZAR SENHA;
+  // MAS NÃO TENHO TEMPO DE PROCURAR SÓ POR ISSO, ENTÃO FAZEMOS ASSIM MESMO E TAMBÉM IRÁ FUNCIONAR SEM PROBLEMAS NENHUM;
+  // Só Nunca faça res.json({ user }) com esse user que tem password selecionado.
+
+  if (!(await user.checkPassword(req.body.currentPassword, user.password))) {
+    return next(new AppError(400, 'Senha incorreta, tente novamente!'));
+  }
+
+  user.password = req.body.newPassword;
+  user.passwordConfirm = req.body.newPasswordConfirm;
+  await user.save();
+
+  console.log({
+  passwordChangedAt: user.passwordChangedAt,
+  agora: Date.now(),
+});
+  createAndSendToken(user, res, 200);
 });

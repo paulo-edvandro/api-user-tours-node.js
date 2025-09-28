@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'O usuário deve ter uma senha!'],
+    required: [true, 'O usuário deve ter uma senha'],
     minlength: [7, 'A senha deve ter pelo menos 7 caracteres'],
     validate: {
       validator: (val) =>
@@ -62,7 +62,7 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: [true, 'O usuário deve ter um email!'],
+    required: [true, 'O usuário deve ter um email'],
     unique: true,
     lowercase: true,
     validate: [validator.isEmail, 'Por favor, insira um e-mail válido!'],
@@ -96,14 +96,22 @@ const userSchema = new mongoose.Schema({
   //   experiencia
 });
 
+//PARA MUDANÇAS DE SENHA EM GERAL: APLICA O  HASH E DEFINE O PASSWORDCONFIRM COMO UNDEFINED PARA IR AO BD
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
 
   this.password = await bcrypt.hash(this.password, 13);
 
-  this.passwordChangedAt = Date.now() - 1000;
-
   this.passwordConfirm = undefined;
+  next();
+});
+
+
+//ETAPA ACIONADA PARA REDEFINIÇÕES DE SENHA: DEFINE O PASSWORDCHANGEDAT NO BD
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now() - 1000;
   next();
 });
 
@@ -114,18 +122,23 @@ userSchema.pre('save', async function (next) {
 //   next();
 // });
 
-userSchema.methods.checkPassword = async function (password, userPassword) {
-  return await bcrypt.compare(password, userPassword);
+userSchema.methods.checkPassword = async function (password, passwordHash) {
+  return await bcrypt.compare(password, passwordHash);
 };
+
+//VERIFICA SE O PASSWORDCHANGEDAT EXISTE E SE EXISTE VERIFICA SE ELE É MAIOR QUE A EMISSÃO DO TOKEN, SE FOR AI DÁ ERRO
 userSchema.methods.checkPasswordChanged = function (jwtEmit) {
   if (!this.passwordChangedAt) return false;
   const changedTimestamp = parseInt(
     this.passwordChangedAt.getTime() / 1000,
     10,
   );
+    console.log({ changedTimestamp, jwtEmit });
+
   return changedTimestamp > jwtEmit;
 };
 
+//DEFINE A PROPRIEDADE DO SCHEMA RESETTOKEN E RESETEXPIRES COM O VALOR TEMPORARIO DO TOKEN CRIPTOGRAFADO E DO SEU TEMPO DE EXPIRAÇÃO PARA REDEFINIÇÃO DE SENHA. RETORNA O TOKEN NORMAL SEM O HASH PARA VERIFICAÇÃO NO EMAIL DO USER;
 userSchema.methods.createPasswordResetToken = function () {
   const tokenReset = crypto.randomBytes(32).toString('hex');
 

@@ -41,7 +41,7 @@ const handlerValidationErrors = (error) => {
     .map((key) => error.errors[key].message)
     .join('. ');
 
-  const message = `Data inválida! Os seguintes campos precisam de alteração: ${msgsErrorsValidators}`;
+  const message = `Data inválida: ${msgsErrorsValidators}`;
 
   return new AppError(400, message);
 };
