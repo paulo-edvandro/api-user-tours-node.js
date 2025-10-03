@@ -148,12 +148,12 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   });
 
   if (!user) {
-    return next(new AppError(400, 'Token inválido ou expirado!'));
+    return next(new AppError(401, 'Token inválido ou expirado!'));
   }
   if (Date.now() > user.passwordResetExpires) {
     return next(
       new AppError(
-        400,
+        401,
         'O token expirou! Por favor, peça a solicitação de redefinição de senha novamente!',
       ),
     );
@@ -183,7 +183,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   // Só Nunca faça res.json({ user }) com esse user que tem password selecionado.
 
   if (!(await user.checkPassword(req.body.currentPassword, user.password))) {
-    return next(new AppError(400, 'Senha incorreta, tente novamente!'));
+    return next(new AppError(401, 'Senha incorreta, tente novamente!'));
   }
 
   user.password = req.body.newPassword;
@@ -191,8 +191,8 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   console.log({
-  passwordChangedAt: user.passwordChangedAt,
-  agora: Date.now(),
-});
+    passwordChangedAt: user.passwordChangedAt,
+    agora: Date.now(),
+  });
   createAndSendToken(user, res, 200);
 });

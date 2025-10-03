@@ -18,6 +18,7 @@ const handlerJwtExpired = (err) => {
   return new AppError(401, message);
 };
 
+
 const handlerCastErrors = (error) => {
   const message = `O valor ${error.value} está incorreto para o campo ${error.path}`;
 

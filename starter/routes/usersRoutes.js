@@ -17,6 +17,10 @@ router
     autenticationsController.protectionToken,
     autenticationsController.updatePassword,
   );
+
+router
+  .route('/updateme')
+  .patch(autenticationsController.protectionToken, usersController.updateMe);
 router.route('/').get(usersController.getAllUsers);
 // .post(usersController.addNewUser);
 
