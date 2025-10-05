@@ -84,10 +84,10 @@ const userSchema = new mongoose.Schema({
     default: 'user',
     enum: ['user', 'guide', 'lead-guide', 'admin'],
   },
-  active: Boolean,
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
+  active: { type: Boolean, default: true, select: false },
 
   //   bank,
   //   age,
@@ -106,7 +106,6 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-
 //ETAPA ACIONADA PARA REDEFINIÇÕES DE SENHA: DEFINE O PASSWORDCHANGEDAT NO BD
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password') || this.isNew) return next();
@@ -122,6 +121,11 @@ userSchema.pre('save', async function (next) {
 //   next();
 // });
 
+userSchema.pre(/^find/, function (next) {
+  this.find({ active: { $ne: false } });
+  next();
+});
+
 userSchema.methods.checkPassword = async function (password, passwordHash) {
   return await bcrypt.compare(password, passwordHash);
 };
@@ -133,7 +137,7 @@ userSchema.methods.checkPasswordChanged = function (jwtEmit) {
     this.passwordChangedAt.getTime() / 1000,
     10,
   );
-    console.log({ changedTimestamp, jwtEmit });
+  console.log({ changedTimestamp, jwtEmit });
 
   return changedTimestamp > jwtEmit;
 };

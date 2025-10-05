@@ -21,8 +21,11 @@ router
 router
   .route('/updateme')
   .patch(autenticationsController.protectionToken, usersController.updateMe);
-router.route('/').get(usersController.getAllUsers);
+router
+  .route('/deleteme')
+  .delete(autenticationsController.protectionToken, usersController.deleteMe);
 // .post(usersController.addNewUser);
+router.route('/').get(usersController.getAllUsers);
 
 router
   .route('/:id')
