@@ -12,7 +12,13 @@ function jwtSign(id) {
   });
 }
 
-function createAndSendToken(user, res, statusCode, message = undefined) {
+function createAndSendToken(
+  user,
+  res,
+  statusCode,
+  sendUser = false,
+  message = undefined,
+) {
   const token = jwtSign(user._id);
 
   const cookieOptions = {
@@ -28,7 +34,11 @@ function createAndSendToken(user, res, statusCode, message = undefined) {
 
   user.password = undefined;
   res.cookie('jwt', token, cookieOptions);
-  res.status(statusCode).json({ status: 'sucess', message });
+  const resBody = { status: 'sucess', message };
+  if (sendUser) {
+    resBody.data = user;
+  }
+  res.status(statusCode).json(resBody);
 }
 // const UserFeatures = require('../utils/usersFeatures');
 exports.signup = catchAsync(async (req, res, next) => {
@@ -42,7 +52,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   user.password = undefined;
 
-  createAndSendToken(user, res, 201);
+  createAndSendToken(user, res, 201, user);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
