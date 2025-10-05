@@ -52,7 +52,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   user.password = undefined;
 
-  createAndSendToken(user, res, 201, user);
+  createAndSendToken(user, res, 201, true);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
