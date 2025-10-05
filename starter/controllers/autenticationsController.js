@@ -14,7 +14,21 @@ function jwtSign(id) {
 
 function createAndSendToken(user, res, statusCode, message = undefined) {
   const token = jwtSign(user._id);
-  res.status(statusCode).json({ status: 'sucess', message, token });
+
+  const cookieOptions = {
+    expires: new Date(
+      Date.now() + process.env.JWT_EXPIRES_COOKIE * 24 * 60 * 60 * 1000,
+    ),
+    // secure: true,
+    httpOnly: true,
+    sameSite: 'Lax',
+  };
+
+  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+
+  user.password = undefined;
+  res.cookie('jwt', token, cookieOptions);
+  res.status(statusCode).json({ status: 'sucess', message });
 }
 // const UserFeatures = require('../utils/usersFeatures');
 exports.signup = catchAsync(async (req, res, next) => {

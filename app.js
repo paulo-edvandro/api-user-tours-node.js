@@ -1,4 +1,5 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 
 const app = express();
@@ -7,6 +8,10 @@ const AppError = require("./starter/utils/appError");
 const toursRouter = require("./starter/routes/toursRoutes");
 const usersRouter = require("./starter/routes/usersRoutes");
 const globalErrorHandler = require("./starter/controllers/globalErrorController");
+app.use(cookieParser());
+console.log("COOKIE-PARSER FOI EXECUTADO!"); 
+
+
 app.use((req, res, next) => {
   console.log(`Requisição recebida: ${req.method} ${req.originalUrl}`);
   next(); // Não se esqueça do next() para passar a requisição para o próximo middleware/rota
