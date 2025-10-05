@@ -30,7 +30,6 @@ router.route('/').get(usersController.getAllUsers);
 router
   .route('/:id')
   .get(usersController.getUser)
-  .patch(usersController.updateUser)
-  .delete(usersController.deleteUser);
+  .patch(usersController.updateUser);
 
 module.exports = router;

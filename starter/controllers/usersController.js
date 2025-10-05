@@ -55,13 +55,6 @@ exports.updateUser = catchAsync(async (req, res, next) => {
   }
   res.status(200).json({ status: 'sucess', data: user });
 });
-exports.deleteUser = catchAsync(async (req, res, next) => {
-  const user = await User.findByIdAndDelete(req.params.id);
-  if (!user) {
-    return next(new AppError(404, 'id de usuário inválido'));
-  }
-  res.status(204).json({ status: 'sucess', data: null });
-});
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
@@ -82,7 +75,23 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   res.status(200).json({ status: 'sucess', data: { user: updateUser } });
 });
 
+// exports.deleteMe = catchAsync(async (req, res, next) => {
+//   await User.findByIdAndUpdate(req.user._id, { active: false });
+//   res.status(204).json({ status: 'sucess', data: null });
+// });
+
 exports.deleteMe = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user._id).select('+password');
+
+  if (!(await user.checkPassword(req.body.password, user.password))) {
+    return next(new AppError(401, 'A senha está incorreta'));
+  }
+
+  if (req.body.password !== req.body.passwordConfirm) {
+    return next(new AppError(400, 'As senhas não estão iguais'));
+  }
+
   await User.findByIdAndUpdate(req.user._id, { active: false });
+
   res.status(204).json({ status: 'sucess', data: null });
 });
