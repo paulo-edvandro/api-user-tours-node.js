@@ -5,11 +5,12 @@ const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const app = express();
 const AppError = require("./starter/utils/appError");
-
 const toursRouter = require("./starter/routes/toursRoutes");
 const usersRouter = require("./starter/routes/usersRoutes");
 const globalErrorHandler = require("./starter/controllers/globalErrorController");
-
+const mongoSanitize = require("express-mongo-sanitize");
+const xss = require("xss-clean");
+const hpp = require("hpp");
 //segurança de http headers
 app.use(helmet());
 app.use(cookieParser());
@@ -32,6 +33,25 @@ if (process.env.NODE_ENV === "development") {
 //só  usar o morgan se for nesse modo de desenvolvimento
 
 app.use(express.json({ limit: "10kb" }));
+
+//higieização mais BÁSICA de dados contra ataques comuns: No sql injection/ cross-site xss (que usam injeção de código via inputs: primeiro caso é código mongo, segundo é scripts html/js)
+//OBS: depois no final do curso faremos uma proteção mais avançada no código
+app.use(mongoSanitize());
+app.use(xss());
+app.use(
+  hpp({
+    whitelist: [
+      "duration",
+      "ratingsAverage",
+      "ratingsQuantity",
+      "startDates",
+      "duration",
+      "maxGroupSize",
+      "difficulty",
+      "price",
+    ],
+  })
+);
 
 app.use("/api/v1/tours", toursRouter);
 ///POR AGORA NÃO VAMOS IMPLEMENTAR POIS É MUITO PARECIDO COM A DINÂMICA DO TOUR E TBM PQ NÃO COMEÇAMOS A UTILIZAR INFORMAÇÕES REAIS COM BANCO DE DADOS
