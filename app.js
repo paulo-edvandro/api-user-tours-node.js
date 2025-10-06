@@ -2,13 +2,16 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
-
+const helmet = require("helmet");
 const app = express();
 const AppError = require("./starter/utils/appError");
 
 const toursRouter = require("./starter/routes/toursRoutes");
 const usersRouter = require("./starter/routes/usersRoutes");
 const globalErrorHandler = require("./starter/controllers/globalErrorController");
+
+//segurança de http headers
+app.use(helmet());
 app.use(cookieParser());
 
 const limiter = rateLimit({
@@ -28,7 +31,7 @@ if (process.env.NODE_ENV === "development") {
 }
 //só  usar o morgan se for nesse modo de desenvolvimento
 
-app.use(express.json());
+app.use(express.json({ limit: "10kb" }));
 
 app.use("/api/v1/tours", toursRouter);
 ///POR AGORA NÃO VAMOS IMPLEMENTAR POIS É MUITO PARECIDO COM A DINÂMICA DO TOUR E TBM PQ NÃO COMEÇAMOS A UTILIZAR INFORMAÇÕES REAIS COM BANCO DE DADOS
