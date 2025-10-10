@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const usersController = require('../controllers/usersController');
-const autenticationsController = require('../controllers/autenticationsController');
+const authenticationController = require('../controllers/authenticationController');
 const rateLimit = require('express-rate-limit');
 
 const router = express.Router();
@@ -15,25 +15,25 @@ const loginLimiter = rateLimit({
   }),
 });
 
-router.route('/signup').post(autenticationsController.signup);
-router.route('/login').post(loginLimiter, autenticationsController.login);
-router.route('/forgotpassword').post(autenticationsController.forgotPassword);
+router.route('/signup').post(authenticationController.signup);
+router.route('/login').post(loginLimiter, authenticationController.login);
+router.route('/forgotpassword').post(authenticationController.forgotPassword);
 router
   .route('/resetpassword/:token')
-  .patch(autenticationsController.resetPassword);
+  .patch(authenticationController.resetPassword);
 router
   .route('/updatepassword')
   .patch(
-    autenticationsController.protectionToken,
-    autenticationsController.updatePassword,
+    authenticationController.protectionToken,
+    authenticationController.updatePassword,
   );
 
 router
   .route('/updateme')
-  .patch(autenticationsController.protectionToken, usersController.updateMe);
+  .patch(authenticationController.protectionToken, usersController.updateMe);
 router
   .route('/deleteme')
-  .delete(autenticationsController.protectionToken, usersController.deleteMe);
+  .delete(authenticationController.protectionToken, usersController.deleteMe);
 // .post(usersController.addNewUser);
 router.route('/').get(usersController.getAllUsers);
 

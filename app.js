@@ -58,7 +58,7 @@ app.use("/api/v1/tours", toursRouter);
 ///POR AGORA NÃO VAMOS IMPLEMENTAR POIS É MUITO PARECIDO COM A DINÂMICA DO TOUR E TBM PQ NÃO COMEÇAMOS A UTILIZAR INFORMAÇÕES REAIS COM BANCO DE DADOS
 app.use("/api/v1/users", usersRouter);
 ////////////////////////////////////////////////
-// app.use("/api/v1/reviews", reviewsRouter);
+app.use("/api/v1/reviews", reviewsRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(404, `Não achamos ${req.originalUrl}`));
