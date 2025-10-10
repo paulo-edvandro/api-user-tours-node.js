@@ -33,11 +33,14 @@ exports.aliasTopTours = (req, res, next) => {
 //SERVE PARA EXIBIR TODOS OS TOURS DE UMA DETERMINADA ROTA, NÃO IMPORTA QUAL SEJA;
 exports.getAllTours = catchAsync(async (req, res, next) => {
   const queryFeatures = await new TourFeatures(req.query, Tour)
+    //FILTRA A REQ.QUERY PARA COLOCAR NO FIND
     .deleteControlFields()
     .convertOperators()
     .buildMongoQuery()
+    //APLICA NO FIND OS MÉTODOS .SORT/.FILTER JÁ COM OS CAMPOS FORMATADOS PARA O PADRÃO MONGOOSE
     .sortDocuments()
     .filterFields()
+    //APLICA TAMBÉM JUNTO O MÉTODO DE PAGINAÇÃO + VERIFICAÇÃO DE ERRO SE A PAGINA ESCOLHIDA EXISTE
     .applyPagination()
     .checkPageExists();
 
@@ -66,7 +69,11 @@ exports.updateTour = catchAsync(async (req, res, next) => {
   const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
+  }).setOptions({
+    skipPopulate: true,
   });
+
+  //set options define opções de criação de variaveis para manipulação de resultados em middlewares pre save/pre query...
 
   if (!tour) {
     return next(new AppError(404, 'Nenhum tour com esse Id'));
@@ -81,7 +88,9 @@ exports.updateTour = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findByIdAndDelete(req.params.id);
+  const tour = await Tour.findByIdAndDelete(req.params.id).setOptions({
+    skipPopulate: true,
+  });
 
   if (!tour) {
     return next(new AppError(404, 'Nenhum tour com esse Id'));

@@ -7,6 +7,7 @@ const app = express();
 const AppError = require("./starter/utils/appError");
 const toursRouter = require("./starter/routes/toursRoutes");
 const usersRouter = require("./starter/routes/usersRoutes");
+const reviewsRouter = require("./starter/routes/reviewsRoutes");
 const globalErrorHandler = require("./starter/controllers/globalErrorController");
 const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
@@ -57,6 +58,8 @@ app.use("/api/v1/tours", toursRouter);
 ///POR AGORA NÃO VAMOS IMPLEMENTAR POIS É MUITO PARECIDO COM A DINÂMICA DO TOUR E TBM PQ NÃO COMEÇAMOS A UTILIZAR INFORMAÇÕES REAIS COM BANCO DE DADOS
 app.use("/api/v1/users", usersRouter);
 ////////////////////////////////////////////////
+// app.use("/api/v1/reviews", reviewsRouter);
+
 app.all("*", (req, res, next) => {
   next(new AppError(404, `Não achamos ${req.originalUrl}`));
 });
