@@ -2,14 +2,15 @@ const express = require('express');
 const reviewsController = require('../controllers/reviewsController');
 const authenticationController = require('../controllers/authenticationController');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
-router.route('/').get(reviewsController.getAllReviews);
 router
-  .route('/addreview/:tourId')
+  .route('/')
   .post(
     authenticationController.protectionToken,
     authenticationController.restrictTo('user'),
     reviewsController.addNewReview,
-  );
+  )
+  .get(reviewsController.getAllReviews);
+
 module.exports = router;

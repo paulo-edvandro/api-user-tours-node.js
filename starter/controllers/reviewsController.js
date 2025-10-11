@@ -5,6 +5,10 @@ const AppError = require('../utils/appError');
 const ReviewsFeatures = require('../utils/ReviewsFeatures');
 
 exports.getAllReviews = catchAsync(async (req, res, next) => {
+  if (req.params.tourId) {
+    req.query.tour = req.params.tourId;
+  }
+
   const queryFeatures = await new ReviewsFeatures(req.query, Review)
     .convertOperators()
     .buildMongoQuery()
@@ -30,10 +34,4 @@ exports.addNewReview = catchAsync(async (req, res, next) => {
   res.status(201).json({ status: 'success', data: reviews });
 });
 
-// exports.getReview = catchAsync((req,res,next)=>{
 
-// const review = findById(req.params.id);
-
-// res.status(200).json({status:"success", data: review  })
-
-// })
