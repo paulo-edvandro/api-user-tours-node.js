@@ -1,5 +1,4 @@
 const express = require('express');
-const fs = require('fs');
 const usersController = require('../controllers/usersController');
 const authenticationController = require('../controllers/authenticationController');
 const rateLimit = require('express-rate-limit');
@@ -21,49 +20,25 @@ router.route('/forgotpassword').post(authenticationController.forgotPassword);
 router
   .route('/resetpassword/:token')
   .patch(authenticationController.resetPassword);
-router
-  .route('/updatepassword')
-  .patch(
-    authenticationController.protectionToken,
-    authenticationController.updatePassword,
-  );
 
-router
-  .route('/updateme')
-  .patch(authenticationController.protectionToken, usersController.updateMe);
+//aplica em todo o resto o protectionToken , funciona, pois router.use() é, na verdade, um middlewware
+router.use(authenticationController.protectionToken);
 
-router
-  .route('/updateuser/:id')
-  .patch(
-    authenticationController.protectionToken,
-    authenticationController.restrictTo('admin'),
-    usersController.updateUser,
-  );
+router.route('/updatepassword').patch(authenticationController.updatePassword);
 
-router
-  .route('/deleteuser/:id')
-  .delete(
-    authenticationController.protectionToken,
-    authenticationController.restrictTo('admin'),
-    usersController.deleteUser,
-  );
+router.route('/updateme').patch(usersController.updateMe);
+router.route('/deleteme').delete(usersController.deleteMe);
+router.route('/me').get(usersController.getMe, usersController.getUser);
 
-router
-  .route('/deleteme')
-  .delete(authenticationController.protectionToken, usersController.deleteMe);
-// .post(usersController.addNewUser);
-router
-  .route('/')
-  .get(usersController.getAllUsers)
-  .get(
-    authenticationController.protectionToken,
-    usersController.getMe,
-    usersController.getUser,
-  );
+//usando de novo router.use para aplicar aos demais a restrição de admin
+router.use(authenticationController.restrictTo('admin'));
+
+router.route('/').get(usersController.getAllUsers);
 
 router
   .route('/:id')
   .get(usersController.getUser)
-  .patch(usersController.updateUser);
+  .patch(usersController.updateUser)
+  .delete(usersController.deleteUser);
 
 module.exports = router;

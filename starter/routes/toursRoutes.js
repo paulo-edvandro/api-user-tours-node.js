@@ -3,11 +3,10 @@ const express = require('express');
 const toursController = require('../controllers/toursController');
 const reviewsController = require('../controllers/reviewsController');
 const authenticationController = require('../controllers/authenticationController');
-const reviewsRouter = require("./reviewsRoutes")
+const reviewsRouter = require('./reviewsRoutes');
 const router = express.Router();
 
 router.use('/:tourId/reviews', reviewsRouter);
-
 
 router
   .route('/top-5-cheap')
@@ -15,17 +14,31 @@ router
 
 router.route('/stats').get(toursController.getToursStats);
 
-router.route('/mes-mais-tours/:year').get(toursController.getMonthlyPlan);
+router
+  .route('/mes-mais-tours/:year')
+  .get(
+    authenticationController.protectionToken,
+    authenticationController.restrictTo('admin', 'lead-guide'),
+    toursController.getMonthlyPlan,
+  );
 
 router
   .route('/')
-  .get(authenticationController.protectionToken, toursController.getAllTours)
-  .post(toursController.addNewTour);
+  .get(toursController.getAllTours)
+  .post(
+    authenticationController.protectionToken,
+    authenticationController.restrictTo('admin', 'lead-guide'),
+    toursController.addNewTour,
+  );
 
 router
   .route('/:id')
   .get(toursController.getTour)
-  .patch(toursController.updateTour)
+  .patch(
+    authenticationController.protectionToken,
+    authenticationController.restrictTo('admin', 'lead-guide'),
+    toursController.updateTour,
+  )
   .delete(
     authenticationController.protectionToken,
     authenticationController.restrictTo('admin', 'lead-guide'),
