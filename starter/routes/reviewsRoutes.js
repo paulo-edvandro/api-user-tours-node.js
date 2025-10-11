@@ -11,6 +11,13 @@ router
     authenticationController.restrictTo('user'),
     reviewsController.addNewReview,
   )
-  .get(reviewsController.getAllReviews);
+  .get(reviewsController.setTourQuery, reviewsController.getAllReviews);
+
+router
+  .route('/:id')
+  .delete(reviewsController.deleteReview)
+  .patch(reviewsController.updateReview);
+
+router.route('/getreview').get(reviewsController.getReview);
 
 module.exports = router;

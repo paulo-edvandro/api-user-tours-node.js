@@ -5,6 +5,7 @@ const { error } = require('console');
 const TourFeatures = require('../utils/toursFeatures');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const handlerFactory = require('./handlerFactory');
 
 // const { buscarTourPorId } = require('../helpers-function/helpers');
 
@@ -31,76 +32,15 @@ exports.aliasTopTours = (req, res, next) => {
 };
 
 //SERVE PARA EXIBIR TODOS OS TOURS DE UMA DETERMINADA ROTA, NÃO IMPORTA QUAL SEJA;
-exports.getAllTours = catchAsync(async (req, res, next) => {
-  const queryFeatures = await new TourFeatures(req.query, Tour)
-    //FILTRA A REQ.QUERY PARA COLOCAR NO FIND
-    .deleteControlFields()
-    .convertOperators()
-    .buildMongoQuery()
-    //APLICA NO FIND OS MÉTODOS .SORT/.FILTER JÁ COM OS CAMPOS FORMATADOS PARA O PADRÃO MONGOOSE
-    .sortDocuments()
-    .filterFields()
-    //APLICA TAMBÉM JUNTO O MÉTODO DE PAGINAÇÃO + VERIFICAÇÃO DE ERRO SE A PAGINA ESCOLHIDA EXISTE
-    .applyPagination()
-    .checkPageExists();
+exports.getAllTours = handlerFactory.getAll(Tour, TourFeatures);
 
-  const tours = await queryFeatures.mongoQuery;
+exports.getTour = handlerFactory.getOne(Tour, { path: 'reviews' });
 
-  res
-    .status(200)
-    .json({ status: 'sucess', results: tours.length, data: { tours } });
-});
+exports.addNewTour = handlerFactory.createOne(Tour);
 
-exports.getTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id).populate('reviews');
-  if (!tour) {
-    return next(new AppError(404, 'Nenhum tour com esse Id'));
-  }
-  res.status(200).json({ status: 'sucess', data: { tour } }); // Exemplo de retorno temporário
-});
+exports.updateTour = handlerFactory.updateOne(Tour);
 
-exports.addNewTour = catchAsync(async (req, res, next) => {
-  const newTour = await Tour.create(req.body);
-
-  res.status(201).json({ status: 'success', data: { tour: newTour } }); // Exemplo de retorno temporário
-});
-
-exports.updateTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  }).setOptions({
-    skipPopulate: true,
-  });
-
-  //set options define opções de criação de variaveis para manipulação de resultados em middlewares pre save/pre query...
-
-  if (!tour) {
-    return next(new AppError(404, 'Nenhum tour com esse Id'));
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      tour,
-    },
-  });
-});
-
-exports.deleteTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findByIdAndDelete(req.params.id).setOptions({
-    skipPopulate: true,
-  });
-
-  if (!tour) {
-    return next(new AppError(404, 'Nenhum tour com esse Id'));
-  }
-
-  res.status(204).json({
-    status: 'success',
-    data: null,
-  });
-});
+exports.deleteTour = handlerFactory.deleteOne(Tour);
 
 exports.getToursStats = catchAsync(async (req, res, next) => {
   const stats = await Tour.aggregate([

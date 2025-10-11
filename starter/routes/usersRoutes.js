@@ -31,11 +31,35 @@ router
 router
   .route('/updateme')
   .patch(authenticationController.protectionToken, usersController.updateMe);
+
+router
+  .route('/updateuser/:id')
+  .patch(
+    authenticationController.protectionToken,
+    authenticationController.restrictTo('admin'),
+    usersController.updateUser,
+  );
+
+router
+  .route('/deleteuser/:id')
+  .delete(
+    authenticationController.protectionToken,
+    authenticationController.restrictTo('admin'),
+    usersController.deleteUser,
+  );
+
 router
   .route('/deleteme')
   .delete(authenticationController.protectionToken, usersController.deleteMe);
 // .post(usersController.addNewUser);
-router.route('/').get(usersController.getAllUsers);
+router
+  .route('/')
+  .get(usersController.getAllUsers)
+  .get(
+    authenticationController.protectionToken,
+    usersController.getMe,
+    usersController.getUser,
+  );
 
 router
   .route('/:id')

@@ -4,6 +4,7 @@ const User = require('../model/usersModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const UserFeatures = require('../utils/usersFeatures');
+const handlerFactory = require('./handlerFactory');
 
 const filterObj = (req, ...allowedFields) => {
   const object = {};
@@ -17,44 +18,13 @@ const filterObj = (req, ...allowedFields) => {
   return object;
 };
 
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const queryFeatures = await new UserFeatures(req.body, User)
-    .deleteControlFields()
-    .convertOperators()
-    .buildMongoQuery()
-    .sortDocuments()
-    .filterFields()
-    .applyPagination()
-    .checkPageExists();
+exports.getAllUsers = handlerFactory.getAll(User, UserFeatures);
 
-  const users = await queryFeatures.mongoQuery;
-
-  res.status(200).json({ status: 'sucess', data: users });
-});
-exports.getUser = catchAsync(async (req, res, next) => {
-  const user = await User.findById(req.params.id);
-
-  if (!user) {
-    return next(new AppError(404, 'id de usuário inválido'));
-  }
-
-  res.status(200).json({ status: 'sucess', data: user });
-});
-// exports.addNewUser = catchAsync(async (req, res, next) => {
-//   const newUser = await User.create(req.body);
-
-//   res.status(201).json({ status: 'sucess', data: newUser });
-// });
-exports.updateUser = catchAsync(async (req, res, next) => {
-  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
-  if (!user) {
-    return next(new AppError(404, 'id de usuário inválido'));
-  }
-  res.status(200).json({ status: 'sucess', data: user });
-});
+exports.getMe = (req, res, next) => {
+  req.params.id = req.user._id;
+  next();
+};
+exports.getUser = handlerFactory.getOne(User, false);
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
@@ -75,10 +45,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   res.status(200).json({ status: 'sucess', data: { user: updateUser } });
 });
 
-// exports.deleteMe = catchAsync(async (req, res, next) => {
-//   await User.findByIdAndUpdate(req.user._id, { active: false });
-//   res.status(204).json({ status: 'sucess', data: null });
-// });
+exports.updateUser = handlerFactory.updateOne(User);
 
 exports.deleteMe = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user._id).select('+password');
@@ -95,3 +62,5 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
 
   res.status(204).json({ status: 'sucess', data: null });
 });
+
+exports.deleteUser = handlerFactory.deleteOne(User);
