@@ -4,10 +4,11 @@ const authenticationController = require('../controllers/authenticationControlle
 
 const router = express.Router({ mergeParams: true });
 router.use(authenticationController.protectionToken);
+//depois tirar admin desse aqui primeiro
 router
   .route('/')
   .post(
-    authenticationController.restrictTo('user'),
+    authenticationController.restrictTo('user', 'admin'),
     reviewsController.addNewReview,
   )
   .get(reviewsController.setTourQuery, reviewsController.getAllReviews);

@@ -5,6 +5,7 @@ require('dotenv').config({ path: './config.env' });
 const mongoose = require('mongoose');
 const Tour = require('../../model/toursModel');
 const User = require('../../model/usersModel');
+const Review = require('../../model/reviewsModel');
 
 const DB = process.env.DATABASE.replace(
   '<db_password>',
@@ -65,5 +66,5 @@ function escolherColecao(Model, fileName) {
 }
 
 //CHAMAMOS A FUNÇÃO:
-escolherColecao(Tour, 'tours.json');
+escolherColecao(Review, 'tours.json');
 // node starter/dev-data/data/EnviarRemoverDataParaDb.js --

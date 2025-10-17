@@ -62,7 +62,7 @@ exports.getAll = (Model, Feature) =>
       .applyPagination()
       .checkPageExists();
 
-    const doc = await queryFeatures.mongoQuery.explain();
+    const doc = await queryFeatures.mongoQuery;
 
     res
       .status(200)
