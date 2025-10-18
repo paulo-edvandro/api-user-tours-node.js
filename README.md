@@ -31,13 +31,14 @@ O projeto foi desenvolvido como parte de um curso online na **Udemy**. **O front
 
 ### Como Testar a API (via Postman)
 
-A API está hospedada publicamente. Você pode testar todos os endpoints usando o [Postman](https://www.postman.com/downloads/).
+A API está hospedada publicamente. Você pode explorar todos os endpoints e payloads de exemplo na documentação oficial do Postman. [👉 Documentação Completa da API no Postman](https://api-user-tours-node-js.onrender.com/api/v1).
 
 **URL Base:** `https://api-user-tours-node-js.onrender.com/api/v1`
 
 1. **Crie um Usuário:** Faça uma requisição `POST` para `URL BASE/users/signup` com os dados do novo usuário.
 2. **Faça Login:** Com o usuário criado, faça uma requisição `POST` para `URL BASE/users/login` para receber um token de autenticação.
 3. **Acesse as Rotas Protegidas:** Use o token de autenticação para acessar as rotas protegidas, como `GET URL BASE/tours`.
+4. **Experimente com admin e user para diferentes funcionalidades:** restrictTo para diferentes usuários
 
 ---
 ### Tecnologias Utilizadas
