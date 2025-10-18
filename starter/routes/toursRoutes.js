@@ -10,9 +10,12 @@ router.use('/:tourId/reviews', reviewsRouter);
 
 router
   .route('/tours-within/:distance/center/:latlong/unit/:unit')
-  .get(toursController.getToursDistance);
+  .get(toursController.getToursWithin);
 //poderia ser /tours-distance?distance=233$center=40,45$unit=km ;
 //Mas padrão hoje é utilizar opções
+router
+  .route('/distances/:latlong/unit/:unit')
+  .get(toursController.getToursDistances);
 router
   .route('/top-5-cheap')
   .get(toursController.aliasTopTours, toursController.getAllTours);

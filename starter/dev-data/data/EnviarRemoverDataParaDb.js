@@ -66,5 +66,5 @@ function escolherColecao(Model, fileName) {
 }
 
 //CHAMAMOS A FUNÇÃO:
-escolherColecao(User, 'users-simple.json');
+escolherColecao(Tour, 'tours.json');
 // node starter/dev-data/data/EnviarRemoverDataParaDb.js --
