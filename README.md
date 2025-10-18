@@ -34,6 +34,7 @@ O projeto foi desenvolvido como parte de um curso online na **Udemy**. **O front
 A API está hospedada publicamente. Você pode explorar todos os endpoints e payloads de exemplo na documentação oficial do Postman. [👉 Documentação Completa da API no Postman](https://documenter.getpostman.com/view/46078241/2sB3QQJTaT).
 
 **URL Base:** `https://api-user-tours-node-js.onrender.com/api/v1`
+
 ---
 ### Tecnologias Utilizadas
 
