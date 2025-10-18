@@ -120,8 +120,34 @@ exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getToursDistance = catchAsync(async (req, res, next) => {
+  const { distance, latlong, unit } = req.params;
+
+  const [lat, long] = latlong.split(',');
+
+  if (!lat || !long) {
+    next(
+      new AppError(
+        400,
+        'Por favor, envie latitude e longitude no formato lat,lng',
+      ),
+    );
+  }
+
+  //opções disponiveis : 'mi' ou 'km'
+  const radius = unit === 'mi' ? distance / 3963.2 : distance / 6378.1;
+
+  const tours = await Tour.find({
+    startLocation: { $geoWithin: { $centerSphere: [[long, lat], radius] } },
+  });
+
+  res
+    .status(200)
+    .json({ status: 'sucess', results: tours.length, data: { data: tours } });
+});
+
 // module.exports = {
-//   getAllTours,
+//   getAllTours,data
 //   getTour,
 //   addNewTour,
 //   updateTour,

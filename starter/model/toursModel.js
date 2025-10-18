@@ -121,6 +121,7 @@ tourSchema.index({ price: 1, ratingsAverage: -1 });
 tourSchema.index({ ratingsAverage: -1, ratingsQuantity: 1, createdAt: -1 }); //nossos Sorts padrão
 //ou só tourSchema.index({ ratingsAverage: -1, ratingsQuantity: 1, createdAt: -1}); carregando em 50% a pesquisa ratingsAverage + price, mas n é uma boa ideia:preço é mto pesquisado , tem que haver 100% eficiencia
 tourSchema.index({ slug: 1 });
+tourSchema.index({ startLocations: '2dsphere' });
 
 tourSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
