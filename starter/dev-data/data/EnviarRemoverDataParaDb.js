@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const Tour = require('../../model/toursModel');
 const User = require('../../model/usersModel');
 const Review = require('../../model/reviewsModel');
+const UsersFeatures = require('../../utils/usersFeatures');
 
 const DB = process.env.DATABASE.replace(
   '<db_password>',
@@ -66,5 +67,5 @@ function escolherColecao(Model, fileName) {
 }
 
 //CHAMAMOS A FUNÇÃO:
-escolherColecao(Tour, 'tours.json');
+escolherColecao(User, 'users-simple.json');
 // node starter/dev-data/data/EnviarRemoverDataParaDb.js --

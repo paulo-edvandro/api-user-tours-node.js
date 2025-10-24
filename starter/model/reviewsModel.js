@@ -63,7 +63,9 @@ reviewSchema.pre(/^findOneAnd/, async function (next) {
 });
 
 reviewSchema.post(/^findOneAnd/, async function () {
-  await this.review.constructor.calcAverageRatingTour(this.review.tour);
+  if (this.review) {
+    await this.review.constructor.calcAverageRatingTour(this.review.tour);
+  }
 });
 
 reviewSchema.pre(/^find/, function (next) {

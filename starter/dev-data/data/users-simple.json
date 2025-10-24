@@ -2,12 +2,12 @@
   {
     "_id": "5c8a1d5b0190b214360dc057",
     "name": "Jonas Schmedtmann",
-    "email": "admin@natours.io",
+    "email": "test1@gmail.com",
     "role": "admin",
     "active": true,
     "photo": "user-1.jpg",
     "password": "$2a$12$Q0grHjH9PXc6SxivC8m12.2mZJ9BbKcgFpwSG4Y1ZEII8HJVzWeyS",
-    "username": "jonas_schmedtmann"
+    "username": "jonas_schmedtmanndd"
   },
   {
     "_id": "5c8a1dfa2f8fb814b56fa181",

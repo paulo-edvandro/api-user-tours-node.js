@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const app = express();
+const path = require("path");
 const AppError = require("./starter/utils/appError");
 const toursRouter = require("./starter/routes/toursRoutes");
 const usersRouter = require("./starter/routes/usersRoutes");
@@ -12,6 +13,10 @@ const globalErrorHandler = require("./starter/controllers/globalErrorController"
 const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
+
+app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "/starter/views"));
+app.use(express.static(path.join(__dirname, "/starter/public")));
 //segurança de http headers
 app.use(helmet());
 app.use(cookieParser());
@@ -53,7 +58,9 @@ app.use(
     ],
   })
 );
-
+app.get("/", (req, res) => {
+  res.status(200).render("base");
+});
 app.use("/api/v1/tours", toursRouter);
 ///POR AGORA NÃO VAMOS IMPLEMENTAR POIS É MUITO PARECIDO COM A DINÂMICA DO TOUR E TBM PQ NÃO COMEÇAMOS A UTILIZAR INFORMAÇÕES REAIS COM BANCO DE DADOS
 app.use("/api/v1/users", usersRouter);
