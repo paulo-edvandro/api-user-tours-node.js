@@ -8,6 +8,7 @@ const path = require("path");
 const AppError = require("./starter/utils/appError");
 const toursRouter = require("./starter/routes/toursRoutes");
 const usersRouter = require("./starter/routes/usersRoutes");
+const viewsRouter = require("./starter/routes/viewsRoutes");
 const reviewsRouter = require("./starter/routes/reviewsRoutes");
 const globalErrorHandler = require("./starter/controllers/globalErrorController");
 const mongoSanitize = require("express-mongo-sanitize");
@@ -16,9 +17,23 @@ const hpp = require("hpp");
 
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "/starter/views"));
-app.use(express.static(path.join(__dirname, "/starter/public")));
+app.use(express.static(path.join(__dirname, "starter", "public")));
 //segurança de http headers
-app.use(helmet());
+// Configuração do Helmet com CSP personalizado
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        fontSrc: ["'self'", "https://fonts.gstatic.com"],
+        imgSrc: ["'self'", "data:", "https://*.basemaps.cartocdn.com"],
+        connectSrc: ["'self'", "https://*.basemaps.cartocdn.com"],
+      },
+    },
+  })
+);
 app.use(cookieParser());
 
 const limiter = rateLimit({
@@ -58,9 +73,7 @@ app.use(
     ],
   })
 );
-app.get("/", (req, res) => {
-  res.status(200).render("base");
-});
+app.use("/", viewsRouter);
 app.use("/api/v1/tours", toursRouter);
 ///POR AGORA NÃO VAMOS IMPLEMENTAR POIS É MUITO PARECIDO COM A DINÂMICA DO TOUR E TBM PQ NÃO COMEÇAMOS A UTILIZAR INFORMAÇÕES REAIS COM BANCO DE DADOS
 app.use("/api/v1/users", usersRouter);
