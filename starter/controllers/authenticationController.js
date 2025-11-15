@@ -74,6 +74,26 @@ exports.login = catchAsync(async (req, res, next) => {
   createAndSendToken(user, res, 200);
 });
 
+exports.logout = (req,res) => {
+ console.log('⚡ Logout iniciado'); // ✅ log do início da função
+
+  console.log('Cookies antes:', req.cookies); // veja se o cookie jwt está chegando
+
+res.cookie('jwt', 'loggeout' , {
+
+expires: new Date(Date.now() + 10  * 1000),
+httpOnly: true,
+sameSite: 'Lax',
+secure: false,
+})
+
+  console.log('Cookie definido para expirar'); // confirme que chegou aqui
+
+
+res.status(200).json({status: "success"})
+
+
+}
 exports.protectionToken = catchAsync(async (req, res, next) => {
   let token;
   if (
@@ -119,7 +139,7 @@ exports.protectionToken = catchAsync(async (req, res, next) => {
 });
 
 //Para páginas renderizadas, ou seja, deve ter um tratamento diferente;
-exports.isLoginIn = catchAsync(async (req, res, next) => {
+exports.isLoginIn = async (req, res, next) => {
   if (!req.cookies.jwt) return next();
 
   try {
@@ -140,7 +160,7 @@ exports.isLoginIn = catchAsync(async (req, res, next) => {
     res.clearCookie('jwt');
     return next();
   }
-});
+};
 
 exports.restrictTo =
   (...roles) =>
