@@ -28,13 +28,16 @@ function createAndSendToken(
     // secure: true,
     httpOnly: true,
     sameSite: 'Lax',
+    secure: false,
+    //ativar secure em https
   };
 
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
   user.password = undefined;
+  console.log('🍪 Criando cookie JWT para o usuário');
   res.cookie('jwt', token, cookieOptions);
-  const resBody = { status: 'sucess', message };
+  const resBody = { status: 'success', message };
   if (sendUser) {
     resBody.data = user;
   }
@@ -66,6 +69,7 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!user || !(await user.checkPassword(password, user.password))) {
     return next(new AppError(401, 'Email ou senha estão incorretos!'));
   }
+  console.log('✅ Entrou na função login, usuário autenticado com sucesso');
 
   createAndSendToken(user, res, 200);
 });
@@ -77,6 +81,8 @@ exports.protectionToken = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
 
   if (!token) {
@@ -91,8 +97,6 @@ exports.protectionToken = catchAsync(async (req, res, next) => {
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   //agora podemos usar de boa o decoded e todo o codigo relacionado a ele fora, sem ser dentro do callback, com o modelo baseado em promise armazenado em variavel
-  console.log(decoded);
-
   const user = await User.findOne({ _id: decoded.id });
 
   if (!user) {
@@ -113,6 +117,31 @@ exports.protectionToken = catchAsync(async (req, res, next) => {
   req.user = user;
   next();
 });
+
+//Para páginas renderizadas, ou seja, deve ter um tratamento diferente;
+exports.isLoginIn = catchAsync(async (req, res, next) => {
+  if (!req.cookies.jwt) return next();
+
+  try {
+    const decoded = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRET,
+    );
+
+    const user = await User.findById(decoded.id);
+    if (!user) return next();
+
+    if (user.checkPasswordChanged(decoded.iat)) return next();
+
+    res.locals.user = user;
+    return next();
+  } catch (err) {
+    // se token expirou ou inválido, NÃO lança erro
+    res.clearCookie('jwt');
+    return next();
+  }
+});
+
 exports.restrictTo =
   (...roles) =>
   (req, res, next) => {

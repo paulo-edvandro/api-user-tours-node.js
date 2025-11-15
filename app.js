@@ -14,6 +14,7 @@ const globalErrorHandler = require("./starter/controllers/globalErrorController"
 const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
+const cors = require("cors");
 
 //adicionando comentarios aquii
 
@@ -24,38 +25,30 @@ app.use(express.static(path.join(__dirname, "starter", "public")));
 // Configuração do Helmet com CSP personalizado
 app.use(
   helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-        fontSrc: ["'self'", "https://fonts.gstatic.com"],
-        imgSrc: ["'self'", "data:", "https://*.basemaps.cartocdn.com"],
-        connectSrc: ["'self'", "https://*.basemaps.cartocdn.com"],
-      },
-    },
+    contentSecurityPolicy: false, // 🔓 desativa CSP por completo
   })
 );
+
 app.use(cookieParser());
+app.use(express.json({ limit: "10kb" }));
 
 const limiter = rateLimit({
   max: 1000,
   windowMs: 60 * 60 * 1000,
   message: "Muitas requisições. Tente novamente em 1 hora!",
 });
-
 app.use("/api", limiter);
-app.use((req, res, next) => {
-  console.log(`Requisição recebida: ${req.method} ${req.originalUrl}`);
-  next(); // Não se esqueça do next() para passar a requisição para o próximo middleware/rota
-});
-// Middleware
+
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 //só  usar o morgan se for nesse modo de desenvolvimento
 
-app.use(express.json({ limit: "10kb" }));
+app.use((req, res, next) => {
+  res.set("Cache-Control", "no-store");
+  next();
+});
+// Middleware
 
 //higieização mais BÁSICA de dados contra ataques comuns: No sql injection/ cross-site xss (que usam injeção de código via inputs: primeiro caso é código mongo, segundo é scripts html/js)
 //OBS: depois no final do curso faremos uma proteção mais avançada no código
@@ -73,6 +66,18 @@ app.use(
       "difficulty",
       "price",
     ],
+  })
+);
+
+app.use((req, res, next) => {
+  console.log(`Requisição recebida: ${req.method} ${req.originalUrl}`);
+  console.log(req.cookies);
+  next(); // Não se esqueça do next() para passar a requisição para o próximo middleware/rota
+});
+app.use(
+  cors({
+    origin: "http://127.0.0.1:8000", // ou o domínio do seu front se for diferente
+    credentials: true, // 🔥 permite o envio de cookies entre client/server
   })
 );
 app.use("/", viewsRouter);
