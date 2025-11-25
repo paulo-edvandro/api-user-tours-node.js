@@ -18,7 +18,6 @@ const handlerJwtExpired = (err) => {
   return new AppError(401, message);
 };
 
-
 const handlerCastErrors = (error) => {
   const message = `O valor ${error.value} está incorreto para o campo ${error.path}`;
 
@@ -47,29 +46,46 @@ const handlerValidationErrors = (error) => {
   return new AppError(400, message);
 };
 
-const sendErrorDev = (err, res, req, next) => {
-  res.status(err.statusCode).json({
-    status: err.status,
-    message: err.message,
-    err: err,
-    stack: err.stack,
+const sendErrorDev = (err, req, res) => {
+  // API
+  if (req.originalUrl.startsWith('/api')) {
+    return res.status(err.statusCode).json({
+      status: err.status,
+      message: err.message,
+      err,
+      stack: err.stack,
+    });
+  }
+
+  // WEBSITE
+  return res.status(err.statusCode).render('error', {
+    title: 'Algo deu errado!',
+    msg: err.message,
   });
 };
 
-const sendErrorProd = (err, res, req, next) => {
-  if (err.isOperational) {
-    res.status(err.statusCode).json({
-      status: err.status,
-      message: err.message,
-    });
-  } else {
+const sendErrorProd = (err, req, res) => {
+  // API
+  if (req.originalUrl.startsWith('/api')) {
+    if (err.isOperational) {
+      return res.status(err.statusCode).json({
+        status: err.status,
+        message: err.message,
+      });
+    }
     console.error('BUG NO CODIGO!!!', err);
 
-    res.status(500).json({
-      status: 500,
-      message: 'algo deu errado',
+    return res.status(500).json({
+      status: 'error',
+      message: 'Algo deu muito errado!',
     });
   }
+
+  // WEBSITE
+  return res.status(err.statusCode).render('error', {
+    title: 'Algo deu errado!',
+    msg: 'Por favor tente novamente mais tarde',
+  });
 };
 
 module.exports = (err, req, res, next) => {
@@ -78,7 +94,7 @@ module.exports = (err, req, res, next) => {
   err.status = err.status || 'error';
 
   if (process.env.NODE_ENV === 'development') {
-    sendErrorDev(err, res);
+    sendErrorDev(err, req, res);
   }
 
   if (process.env.NODE_ENV === 'production') {
@@ -94,11 +110,12 @@ module.exports = (err, req, res, next) => {
     const handlers = errorHandlers[err.name] || errorHandlers[err.code];
 
     let error = { ...err };
+    error.message = err.message;
 
     if (handlers) {
       error = handlers(error);
-      return sendErrorProd(error, res);
+      return sendErrorProd(error, req, res);
     }
-    return sendErrorProd(err, res);
+    return sendErrorProd(err, req, res);
   }
 };

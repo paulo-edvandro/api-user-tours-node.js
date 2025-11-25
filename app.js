@@ -31,6 +31,7 @@ app.use(
 
 app.use(cookieParser());
 app.use(express.json({ limit: "10kb" }));
+app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 
 const limiter = rateLimit({
   max: 1000,
@@ -86,7 +87,6 @@ app.use("/api/v1/tours", toursRouter);
 app.use("/api/v1/users", usersRouter);
 ////////////////////////////////////////////////
 app.use("/api/v1/reviews", reviewsRouter);
-
 app.all("*", (req, res, next) => {
   next(new AppError(404, `Não achamos ${req.originalUrl}`));
 });

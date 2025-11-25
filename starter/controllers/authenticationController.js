@@ -59,12 +59,21 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 
 exports.login = catchAsync(async (req, res, next) => {
+  console.log(
+    '🔎 login request body:',
+    req.method,
+    req.originalUrl,
+    req.headers['content-type'],
+  );
+
+  console.log("LOGIN-EU TO SENDO CHAMADO AQUI RAPAZ");
+  console.log('🔎 req.body:', req.body);
   const { email, password } = req.body;
   if (!email || !password) {
     return next(new AppError(400, 'email ou senha devem ser preenchidos'));
   }
 
-  const user = await User.findOne({ email }).select('password');
+  const user = await User.findOne({ email }).select('+password');
 
   if (!user || !(await user.checkPassword(password, user.password))) {
     return next(new AppError(401, 'Email ou senha estão incorretos!'));
@@ -74,26 +83,22 @@ exports.login = catchAsync(async (req, res, next) => {
   createAndSendToken(user, res, 200);
 });
 
-exports.logout = (req,res) => {
- console.log('⚡ Logout iniciado'); // ✅ log do início da função
+exports.logout = (req, res) => {
+  console.log('⚡ Logout iniciado'); // ✅ log do início da função
 
   console.log('Cookies antes:', req.cookies); // veja se o cookie jwt está chegando
 
-res.cookie('jwt', 'loggeout' , {
-
-expires: new Date(Date.now() + 10  * 1000),
-httpOnly: true,
-sameSite: 'Lax',
-secure: false,
-})
+  res.cookie('jwt', 'loggeout', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+    sameSite: 'Lax',
+    secure: false,
+  });
 
   console.log('Cookie definido para expirar'); // confirme que chegou aqui
 
-
-res.status(200).json({status: "success"})
-
-
-}
+  res.status(200).json({ status: 'success' });
+};
 exports.protectionToken = catchAsync(async (req, res, next) => {
   let token;
   if (
@@ -135,6 +140,8 @@ exports.protectionToken = catchAsync(async (req, res, next) => {
   }
 
   req.user = user;
+  res.locals.user = user;
+
   next();
 });
 
@@ -232,8 +239,8 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     );
   }
 
-  user.password = req.body.newPassword;
-  user.passwordConfirm = req.body.newPasswordConfirm;
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
   user.passwordResetToken = undefined;
   user.passwordResetExpires = undefined;
   await user.save();
@@ -242,6 +249,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ _id: req.user._id }).select('+password');
+
 
   //OUTRO JEITO DE FAZER SERIA:
   // 1 PEGA O ID DO USUÁRIO POR MEIO DO SEU TOKEN
@@ -255,12 +263,12 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   // MAS NÃO TENHO TEMPO DE PROCURAR SÓ POR ISSO, ENTÃO FAZEMOS ASSIM MESMO E TAMBÉM IRÁ FUNCIONAR SEM PROBLEMAS NENHUM;
   // Só Nunca faça res.json({ user }) com esse user que tem password selecionado.
 
-  if (!(await user.checkPassword(req.body.currentPassword, user.password))) {
+  if (!(await user.checkPassword(req.body.passwordCurrent, user.password))) {
     return next(new AppError(401, 'Senha incorreta, tente novamente!'));
   }
 
-  user.password = req.body.newPassword;
-  user.passwordConfirm = req.body.newPasswordConfirm;
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
   await user.save();
 
   console.log({

@@ -12,9 +12,7 @@ export const login = async (email, password) => {
     if (res.data.status === 'success') {
       // location.assign('/');
       showAlert('success', 'Logado com sucesso!');
-      window.setTimeout(() => {
-        location.assign('/');
-      }, 500);
+      location.assign('/');
     }
   } catch (err) {
     showAlert('error', err.response?.data?.message || err.message);
@@ -23,17 +21,20 @@ export const login = async (email, password) => {
 
 export const logout = async () => {
   try {
-        console.log('🌀 Logout chamado'); // log de chamada
+    console.log('🌀 Logout chamado'); // log de chamada
 
     const res = await axios({
       method: 'GET',
-      url: 'http://127.0.0.1:8000/api/v1/users/logout'
+      url: 'http://127.0.0.1:8000/api/v1/users/logout',
     });
     console.log('Resposta do logout:', res.data); // veja o que chega
 
-    if ((res.data.status === 'success')) location.reload(true);
+    if (res.data.status === 'success') {
+      // location.reload(true);
+      location.assign('/');
+    }
   } catch (err) {
-        console.error('Erro no logout:', err.response || err); // log completo
+    console.error('Erro no logout:', err.response || err); // log completo
 
     showAlert('error', 'Error logging out! Try again.');
   }

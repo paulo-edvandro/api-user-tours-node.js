@@ -9,8 +9,26 @@ const authenticationController = require('../controllers/authenticationControlle
 // });
 router.get('/login', viewsController.getLogin);
 
-router.use(authenticationController.isLoginIn);
+router.get(
+  '/',
+  authenticationController.isLoginIn,
+  viewsController.getOverview,
+);
+router.get(
+  '/tour/:slug',
+  authenticationController.isLoginIn,
+  viewsController.getTour,
+);
 
-router.get('/', viewsController.getOverview);
-router.get('/tour/:slug', viewsController.getTour);
+router.get(
+  '/me',
+  authenticationController.protectionToken,
+  viewsController.getAccount,
+);
+
+router.post(
+  '/submit-user-data',
+  authenticationController.protectionToken,
+  viewsController.updateUserData,
+);
 module.exports = router;
