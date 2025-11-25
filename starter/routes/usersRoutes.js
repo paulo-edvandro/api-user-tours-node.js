@@ -29,7 +29,11 @@ router.route('/updatepassword').patch(authenticationController.updatePassword);
 
 router
   .route('/updateme')
-  .patch(usersController.uploadUserPhoto, usersController.updateMe);
+  .patch(
+    usersController.uploadUserPhoto,
+    usersController.resizeUserPhoto,
+    usersController.updateMe,
+  );
 router.route('/deleteme').delete(usersController.deleteMe);
 router.route('/me').get(usersController.getMe, usersController.getUser);
 
