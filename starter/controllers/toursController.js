@@ -6,6 +6,59 @@ const TourFeatures = require('../utils/toursFeatures');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const handlerFactory = require('./handlerFactory');
+const multer = require('multer');
+const sharp = require('sharp');
+
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new AppError(400, 'Apenas imagens são permitidas para upload'), false);
+  }
+};
+
+const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
+
+exports.uploadTourImages = upload.fields([
+  { name: 'imageCover', maxCount: 1 },
+  { name: 'images', maxCount: 3 },
+]);
+
+exports.resizeTourImages = async (req, res, next) => {
+  //bem importante e evita que os horarios saiam diferentes no imageCover e images
+  const timestamp = Date.now();
+
+  if (req.files.imageCover) {
+    req.body.imageCover = `tour-${req.params.id}-${timestamp}-cover.jpeg`;
+
+    await sharp(req.files.imageCover[0].buffer)
+      .resize(2000, 1333)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toFile(`starter/public/img/tours/${req.body.imageCover}`);
+  }
+
+  if (req.files.images) {
+    req.body.images = await Promise.all(
+      req.files.images.map(async (file, i) => {
+        const filename = `tour-${req.params.id}-${timestamp}-${i + 1}.jpeg`;
+
+        await sharp(file.buffer)
+          .resize(2000, 1333)
+          .toFormat('jpeg')
+          .jpeg({ quality: 90 })
+          .toFile(`starter/public/img/tours/${filename}`);
+
+        return filename;
+      }),
+    );
+
+  }
+
+  next();
+};
 
 // const { buscarTourPorId } = require('../helpers-function/helpers');
 

@@ -32,14 +32,15 @@ if (logOutBtn) logOutBtn.addEventListener('click', logout);
 if (userDataForm) {
   userDataForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    document.querySelector('.btn-salvar-updateme').textContent = 'Carregando...';
+    document.querySelector('.btn-salvar-updateme').textContent =
+      'Carregando...';
 
-    const email = document.getElementById('email').value;
-    const name = document.getElementById('name').value;
-    const username = document.getElementById('username').value;
-    await updateSettings({ name, email, username }, 'data');
+    const form = new FormData();
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    form.append('photo', document.getElementById('photo').files[0]);
+    await updateSettings(form, 'data');
     document.querySelector('.btn-salvar-updateme').textContent = 'Pronto!';
-
   });
 }
 
