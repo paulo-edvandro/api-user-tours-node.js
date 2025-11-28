@@ -8,20 +8,9 @@ const AppError = require('../utils/appError');
 const handlerFactory = require('./handlerFactory');
 const multer = require('multer');
 const sharp = require('sharp');
+const multerUtil = require('../utils/multer');
 
-const multerStorage = multer.memoryStorage();
-
-const multerFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('image')) {
-    cb(null, true);
-  } else {
-    cb(new AppError(400, 'Apenas imagens são permitidas para upload'), false);
-  }
-};
-
-const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
-
-exports.uploadTourImages = upload.fields([
+exports.uploadTourImages = multerUtil.upload.fields([
   { name: 'imageCover', maxCount: 1 },
   { name: 'images', maxCount: 3 },
 ]);

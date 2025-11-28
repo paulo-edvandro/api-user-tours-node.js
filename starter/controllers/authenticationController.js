@@ -4,14 +4,23 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const { promisify } = require('util');
 const { verify } = require('crypto');
-const sendEmail = require('../utils/email');
+const Email = require('../utils/email');
 const crypto = require('crypto');
+
+const url = (req, caminho, flag, token) => {
+  const host = '127.0.0.1:8000'; // TEMPORARIO SÓ PARA TESTES, NÃO RECOMENDADO, DEPOIS USAR req.get('host')
+
+  if (flag !== true) {
+    return `${req.protocol}://${host}/${caminho}`;
+  }
+
+  return `${req.protocol}://${host}/${caminho}/${token}`;
+};
 function jwtSign(id) {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES,
   });
 }
-
 function createAndSendToken(
   user,
   res,
@@ -47,11 +56,14 @@ function createAndSendToken(
 exports.signup = catchAsync(async (req, res, next) => {
   const user = await User.create({
     username: req.body.username,
+    photo: req.body.photo,
+    name: req.body.name,
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     role: req.body.role,
   });
+  await new Email(user, url(req, 'me')).sendWelcome();
 
   user.password = undefined;
 
@@ -66,7 +78,7 @@ exports.login = catchAsync(async (req, res, next) => {
     req.headers['content-type'],
   );
 
-  console.log("LOGIN-EU TO SENDO CHAMADO AQUI RAPAZ");
+  console.log('LOGIN-EU TO SENDO CHAMADO AQUI RAPAZ');
   console.log('🔎 req.body:', req.body);
   const { email, password } = req.body;
   if (!email || !password) {
@@ -191,17 +203,15 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   const resetToken = user.createPasswordResetToken();
 
   await user.save({ validateBeforeSave: false });
-  const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetpassword/${resetToken}`;
-
-  const message = `Esqueceu sua senha? clique nesse link e atualize sua senha: ${resetURL}.\nSe você não esqueceu sua senha, por favor, ignore este email!`;
 
   try {
-    await sendEmail({
-      email: user.email,
-      message: message,
-      subject: 'Token de recuperação de senha (válido por 10 minutos)',
-    });
+    await new Email(
+      user,
+      url(req, '/api/v1/users/resetpassword/', true, resetToken),
+    ).sendPasswordReset();
   } catch (err) {
+    // Log do erro real para diagnóstico
+    console.error('Erro ao enviar email no forgotPassword:', err);
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
     await user.save({ validateBeforeSave: false });
@@ -249,7 +259,6 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ _id: req.user._id }).select('+password');
-
 
   //OUTRO JEITO DE FAZER SERIA:
   // 1 PEGA O ID DO USUÁRIO POR MEIO DO SEU TOKEN

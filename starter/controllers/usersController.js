@@ -7,30 +7,9 @@ const UserFeatures = require('../utils/usersFeatures');
 const handlerFactory = require('./handlerFactory');
 const multer = require('multer');
 const sharp = require('sharp');
-// const multerStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, 'starter/public/img/users');
-//   },
-//   filename: (req, file, cb) => {
-//     const ext = file.mimetype.split('/')[1];
-//     cb(null, `user-${req.user._id}-${Date.now()}.${ext}`);
-//   },
-// });
+const multerUtil = require('../utils/multer');
 
-//irá armazenar no req.file.buffer para podermos usar para mexer na imagem e depois enviar para algum canto
-const multerStorage = multer.memoryStorage();
-
-const multerFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('image')) {
-    cb(null, true);
-  } else {
-    cb(new AppError(400, 'Apenas imagens são permitidas para upload'), false);
-  }
-};
-
-const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
-
-exports.uploadUserPhoto = upload.single('photo');
+exports.uploadUserPhoto = multerUtil.upload.single('photo');
 exports.resizeUserPhoto = async (req, res, next) => {
   if (req.file) {
     req.file.filename = `user-${req.user._id}-${Date.now()}.jpeg`;
@@ -64,9 +43,7 @@ exports.getMe = (req, res, next) => {
 exports.getUser = handlerFactory.getOne(User, false);
 
 exports.updateMe = catchAsync(async (req, res, next) => {
-  console.log('🔎 updateMe called:', req.method, req.originalUrl);
-  console.log('🔎 updateMe body:', req.body);
-  console.log('UPATEME AQUI');
+  
   if (req.body.password || req.body.passwordConfirm) {
     return next(
       new AppError(

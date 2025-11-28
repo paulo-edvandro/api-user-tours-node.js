@@ -3,6 +3,7 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const User = require('../model/usersModel');
 
+
 exports.getOverview = catchAsync(async (req, res, next) => {
   const tours = await Tour.find();
 
