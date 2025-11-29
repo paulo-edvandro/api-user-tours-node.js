@@ -4,7 +4,8 @@ include _reviewCard
 block append head
     link(rel='stylesheet' href='/css/leaflet.css')
     script(src='/js/leaflet.js')
-
+    script(src="https://js.stripe.com/v3/")
+    
 mixin overviewBox(label, text, icon)
     .overview-box__detail
         svg.overview-box__icon

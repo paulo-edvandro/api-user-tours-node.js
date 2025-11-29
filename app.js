@@ -9,6 +9,7 @@ const AppError = require("./starter/utils/appError");
 const toursRouter = require("./starter/routes/toursRoutes");
 const usersRouter = require("./starter/routes/usersRoutes");
 const viewsRouter = require("./starter/routes/viewsRoutes");
+const bookingRouter = require("./starter/routes/bookingsRoutes");
 const reviewsRouter = require("./starter/routes/reviewsRoutes");
 const globalErrorHandler = require("./starter/controllers/globalErrorController");
 const mongoSanitize = require("express-mongo-sanitize");
@@ -81,6 +82,8 @@ app.use(
     credentials: true, // 🔥 permite o envio de cookies entre client/server
   })
 );
+
+app.use("/api/v1/bookings", bookingRouter);
 app.use("/", viewsRouter);
 app.use("/api/v1/tours", toursRouter);
 ///POR AGORA NÃO VAMOS IMPLEMENTAR POIS É MUITO PARECIDO COM A DINÂMICA DO TOUR E TBM PQ NÃO COMEÇAMOS A UTILIZAR INFORMAÇÕES REAIS COM BANCO DE DADOS
