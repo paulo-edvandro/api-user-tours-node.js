@@ -88,12 +88,6 @@ const userSchema = new mongoose.Schema({
   passwordResetToken: String,
   passwordResetExpires: Date,
   active: { type: Boolean, default: true, select: false },
-
-  //   bank,
-  //   age,
-  //   description,
-  //   formação,
-  //   experiencia
 });
 
 //PARA MUDANÇAS DE SENHA EM GERAL: APLICA O  HASH E DEFINE O PASSWORDCONFIRM COMO UNDEFINED PARA IR AO BD

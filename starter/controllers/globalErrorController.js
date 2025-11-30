@@ -77,7 +77,7 @@ const sendErrorProd = (err, req, res) => {
 
     return res.status(500).json({
       status: 'error',
-      message: 'Algo deu muito errado!',
+      message: 'Algo deu errado!',
     });
   }
 
@@ -94,7 +94,7 @@ module.exports = (err, req, res, next) => {
   err.status = err.status || 'error';
 
   if (process.env.NODE_ENV === 'development') {
-    sendErrorDev(err, req, res);
+    return sendErrorDev(err, req, res);
   }
 
   if (process.env.NODE_ENV === 'production') {
@@ -111,11 +111,13 @@ module.exports = (err, req, res, next) => {
 
     let error = { ...err };
     error.message = err.message;
+    error.stack = err.stack;
 
     if (handlers) {
-      error = handlers(error);
-      return sendErrorProd(error, req, res);
+      const transformedError = handlers(error);
+      transformedError.stack = err.stack;
+      return sendErrorProd(transformedError, req, res);
     }
-    return sendErrorProd(err, req, res);
+    return sendErrorProd(error, req, res);
   }
 };

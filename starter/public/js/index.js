@@ -1,5 +1,6 @@
 import '@babel/polyfill';
 import { login, logout } from './login';
+import { signup } from './signup';
 import { displayMap } from './leafletMap';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
@@ -8,6 +9,8 @@ const bookBtn = document.getElementById('book-tour');
 const mapElement = document.getElementById('map');
 const logOutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
+const signupForm = document.querySelector('.form--signup');
+
 if (mapElement) {
   const locations = JSON.parse(mapElement.dataset.locations);
   displayMap(locations);
@@ -69,6 +72,36 @@ if (bookBtn) {
   bookBtn.addEventListener('click', (e) => {
     e.target.textContent = 'Processing';
     const { tourId } = e.target.dataset;
-    bookTour(tourId)
+    bookTour(tourId);
+  });
+}
+
+if (signupForm) {
+  signupForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const username = document.getElementById('signup-username').value;
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+    const passwordConfirm = document.getElementById(
+      'signup-password-confirm',
+    ).value;
+    const name = document.getElementById('signup-name')?.value || '';
+    const role = document.getElementById('signup-role')?.value || undefined;
+
+    const photo = document.getElementById('signup-photo')?.files[0];
+
+    // FormData para suportar imagem
+    const form = new FormData();
+    form.append('username', username);
+    form.append('email', email);
+    form.append('password', password);
+    form.append('passwordConfirm', passwordConfirm);
+
+    if (name) form.append('name', name);
+    if (role) form.append('role', role);
+    if (photo) form.append('photo', photo);
+
+    await signup(form);
   });
 }

@@ -8,6 +8,7 @@ html(lang='en')
             link(rel='stylesheet' href='/css/style.css')
             link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
             link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+
         body 
             //HEADER
             include _header
@@ -18,7 +19,10 @@ html(lang='en')
             include _footer    
 
                 // Carrega o bundle compilado (contém index.js, login, updateSettings, etc.)
+                script(src="https://js.stripe.com/v3/")
+                
+                //sempre vem por ultimo, empacotador:
                 script(src='/js/bundle.js')
-            script(src='/js/bundle.js')
+
 
 

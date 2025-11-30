@@ -11,7 +11,7 @@ class Email {
 
   constructor(user, url) {
     this.userEmail = user.email;
-    this.firstName = user.name.split(' ')[0];
+    this.firstName = (user.name || user.username).split(' ')[0];
     this.url = url;
   }
 

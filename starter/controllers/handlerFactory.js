@@ -48,6 +48,17 @@ exports.createOne = (Model, getData) =>
     res.status(201).json({ status: 'success', data: { tour: newDoc } });
   });
 
+  exports.getAllSimple = (Model) =>
+  catchAsync(async (req, res, next) => {
+    const doc = await Model.find();
+
+    res.status(200).json({
+      status: 'success',
+      results: doc.length,
+      data: { doc }
+    });
+  });
+
 exports.getAll = (Model, Feature) =>
   catchAsync(async (req, res, next) => {
     const queryFeatures = await new Feature(req.query, Model)

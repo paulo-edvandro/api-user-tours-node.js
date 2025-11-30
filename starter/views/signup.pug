@@ -1,0 +1,42 @@
+extends base
+
+block content
+    main.main
+        .signup-form
+            h2.heading-secondary.ma-bt-lg Create your account
+
+            form.form.form--signup(enctype="multipart/form-data")
+                // NAME (opcional)
+                .form__group
+                    label.form__label(for='signup-name') Full Name (optional)
+                    input#signup-name.form__input(type='text',name='name',placeholder='Your name')
+
+                // USERNAME (obrigatório)
+                .form__group
+                    label.form__label(for='signup-username') Username *
+                    input#signup-username.form__input(type='text', required placeholder='yourusername')
+
+                // EMAIL (obrigatório)
+                .form__group
+                    label.form__label(for='signup-email') Email *
+                    input#signup-email.form__input(type='email', required placeholder='you@example.com')
+
+                // PASSWORD (obrigatório)
+                .form__group
+                    label.form__label(for='signup-password') Password *
+                    input#signup-password.form__input(type='password', required minlength='8' placeholder='••••••••')
+
+                // PASSWORD CONFIRM (obrigatório)
+                .form__group
+                    label.form__label(for='signup-password-confirm') Confirm Password *
+                    input#signup-password-confirm.form__input(type='password', required minlength='8' placeholder='••••••••')
+
+
+                // PHOTO (opcional)
+                .form__group
+                    label.form__label(for='signup-photo') Upload a photo (optional)
+                    input#signup-photo.form__input(type='file' name='photo' accept='image/*')
+
+                // SUBMIT BUTTON
+                .form__group
+                    button.btn.btn--green(type='submit') Create account

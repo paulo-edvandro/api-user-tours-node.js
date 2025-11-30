@@ -14,7 +14,13 @@ const loginLimiter = rateLimit({
   }),
 });
 
-router.route('/signup').post(authenticationController.signup);
+router
+  .route('/signup')
+  .post(
+    usersController.uploadUserPhoto,
+    usersController.resizeUserPhotoForSignup,
+    authenticationController.signup,
+  );
 router.route('/login').post(loginLimiter, authenticationController.login);
 router.route('/logout').get(authenticationController.logout);
 router.route('/forgotpassword').post(authenticationController.forgotPassword);

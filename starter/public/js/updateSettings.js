@@ -14,7 +14,7 @@ export const updateSettings = async (data, type) => {
     });
 
     if (res.data.status === 'success') {
-    //   location.assign('/');
+      //   location.assign('/');
       showAlert('success', `${type.toUpperCase()} atualizado com sucesso!`);
     }
   } catch (err) {

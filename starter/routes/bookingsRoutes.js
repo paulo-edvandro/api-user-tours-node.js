@@ -1,14 +1,25 @@
 const express = require('express');
-const bookingController = require('../controllers/bookingsController');
+const bookingsController = require('../controllers/bookingsController');
 const authenticationController = require('../controllers/authenticationController');
 
 const router = express.Router({ mergeParams: true });
 
+router.use(authenticationController.protectionToken);
 router
   .route('/checkout-session/:tourId')
-  .get(
-    authenticationController.protectionToken,
-    bookingController.getCheckoutSession,
-  );
+  .get(bookingsController.getCheckoutSession);
+
+router.use(authenticationController.restrictTo('admin', 'lead-guide'));
+
+router
+  .route('/')
+  .get(bookingsController.getAllBooking)
+  .post(bookingsController.addNewBooking);
+
+router
+  .route('/:id')
+  .get(bookingsController.getBooking)
+  .patch(bookingsController.updateBooking)
+  .delete(bookingsController.deleteBooking);
 
 module.exports = router;

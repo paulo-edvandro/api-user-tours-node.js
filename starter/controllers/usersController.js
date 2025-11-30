@@ -22,6 +22,24 @@ exports.resizeUserPhoto = async (req, res, next) => {
   }
   next();
 };
+
+exports.resizeUserPhotoForSignup = async (req, res, next) => {
+  if (!req.file) return next();
+
+  req.file.filename = `user-${Date.now()}-${Math.round(
+    Math.random() * 1e9
+  )}.jpeg`;
+
+  await sharp(req.file.buffer)
+    .resize(500, 500)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toFile(`starter/public/img/users/${req.file.filename}`);
+
+  req.body.photo = req.file.filename;
+
+  next();
+};
 const filterObj = (req, ...allowedFields) => {
   const object = {};
 
