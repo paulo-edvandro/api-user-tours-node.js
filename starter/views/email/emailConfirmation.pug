@@ -1,0 +1,19 @@
+extends baseEmail
+
+block content
+    p Olá #{firstName},
+    p Obrigado por se registrar! Antes de começar a usar sua conta, precisamos confirmar seu e-mail.
+    p Clique no botão abaixo para ativar sua conta:
+
+    table.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')
+        tbody
+            tr
+                td(align='left')
+                    table(role='presentation', border='0', cellpadding='0', cellspacing='0')
+                        tbody
+                            tr
+                                td
+                                    a(href=`${url}`, target='_blank') Confirmar e-mail
+
+    p Se você não solicitou essa ação, basta ignorar este e-mail.
+    p - Equipe Natours

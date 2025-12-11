@@ -11,7 +11,10 @@ export const signup = async (data) => {
 
     if (res.data.status === 'success') {
       showAlert('success', 'Registrado com sucesso!');
-      location.assign('/');
+
+      window.setTimeout(() => {
+        location.assign(`/check-email?email=${res.data.email}`);
+      }, 800);
     }
   } catch (err) {
     showAlert('error', err.response?.data?.message || err.message);

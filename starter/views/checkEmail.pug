@@ -1,0 +1,15 @@
+extends base
+
+block content
+    main.main
+        .success-container
+            h2.heading-secondary Confirme seu e-mail 📧
+            p.info-message.ma-bt-md
+                | Enviamos um e-mail de confirmação para
+                strong  #{email}
+                | .
+            p.info-message Clique no link enviado para ativar sua conta.
+            
+            p.info-message.mt-lg
+                | Não recebeu o e-mail?
+                a.link.ma-lt-sm(href="/resend-email-confirmation?email=" + email) Clique aqui para reenviar.

@@ -13,3 +13,18 @@ block content
                     input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
                 .form__group
                     button.btn.btn--green Login
+
+                // CORRIGIDO: Link para Forgot Password
+                p.ma-tp-md
+                    | Trouble accessing?
+                    a.link.ma-lt-sm(href="/forgotpassword") Forgot password?
+
+                // NOVO: Link para Signup
+                p.ma-tp-sm
+                    | New here?
+                    a.link.ma-lt-sm(href="/signup") Create account
+
+                // CORRIGIDO: Link para Reenvio de Confirmação (Sincronizado com sua rota)
+                p.ma-tp-sm.info-message.ma-bt-md
+                    | If you signed up but haven't received the confirmation email:
+                    a.link.ma-lt-sm(href="/resend-email-confirmation") Resend Confirmation

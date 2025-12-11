@@ -4,7 +4,7 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const { promisify } = require('util');
 const { verify } = require('crypto');
-const Email = require('../utils/email');
+const Email = require('../utils/Email');
 const crypto = require('crypto');
 
 const url = (req, caminho, flag, token) => {
@@ -27,6 +27,8 @@ function createAndSendToken(
   statusCode,
   sendUser = false,
   message = undefined,
+  redirect,
+  page,
 ) {
   const token = jwtSign(user._id);
 
@@ -37,21 +39,25 @@ function createAndSendToken(
     // secure: true,
     httpOnly: true,
     sameSite: 'Lax',
-    secure: false,
+    secure: process.env.NODE_ENV === 'production',
     //ativar secure em https
   };
 
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
-
   user.password = undefined;
-  console.log('🍪 Criando cookie JWT para o usuário');
   res.cookie('jwt', token, cookieOptions);
   const resBody = { status: 'success', message };
   if (sendUser) {
     resBody.data = user;
   }
+
+  if (redirect) {
+    res.redirect(`${page}`);
+    return;
+  }
+
   res.status(statusCode).json(resBody);
 }
+
 // const UserFeatures = require('../utils/usersFeatures');
 exports.signup = catchAsync(async (req, res, next) => {
   const user = await User.create({
@@ -62,23 +68,58 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
   });
-  await new Email(user, url(req, 'me')).sendWelcome();
 
+  const emailToken = user.createEmailToken();
+
+  await user.save({ validateBeforeSave: false });
+
+  try {
+    await new Email(
+      user,
+      url(req, `api/v1/users/emailConfirmation`, true, emailToken),
+    ).sendEmailConfirmation();
+  } catch (err) {
+    // Log do erro real para diagnóstico
+    console.error('Erro ao enviar email no signup:', err);
+    user.emailToken = undefined;
+    user.emailTokenExpires = undefined;
+    await user.save({ validateBeforeSave: false });
+    return next(
+      new AppError(500, 'Erro ao enviar o email. Tente novamente mais tarde!'),
+    );
+  }
   user.password = undefined;
 
-  createAndSendToken(user, res, 201, true);
+  res
+    .status(200)
+    .json({ status: 'success', message: 'usuário criado', email: user.email });
+});
+
+exports.emailConfirmation = catchAsync(async (req, res, next) => {
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+
+  const user = await User.findOne({
+    emailToken: hashedToken,
+    emailTokenExpires: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return next(new AppError(401, 'Token inválido ou expirado!'));
+  }
+
+  user.emailToken = undefined;
+  user.emailTokenExpires = undefined;
+  user.emailVerified = true;
+  await user.save({ validateBeforeSave: false });
+  await new Email(user, url(req, 'me')).sendWelcome();
+
+  createAndSendToken(user, res, 200, false, false, true, '/');
 });
 
 exports.login = catchAsync(async (req, res, next) => {
-  console.log(
-    '🔎 login request body:',
-    req.method,
-    req.originalUrl,
-    req.headers['content-type'],
-  );
-
-  console.log('LOGIN-EU TO SENDO CHAMADO AQUI RAPAZ');
-  console.log('🔎 req.body:', req.body);
   const { email, password } = req.body;
   if (!email || !password) {
     return next(new AppError(400, 'email ou senha devem ser preenchidos'));
@@ -89,16 +130,15 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!user || !(await user.checkPassword(password, user.password))) {
     return next(new AppError(401, 'Email ou senha estão incorretos!'));
   }
-  console.log('✅ Entrou na função login, usuário autenticado com sucesso');
 
-  createAndSendToken(user, res, 200);
+  if (user.emailVerified === false) {
+    return next(new AppError(401, 'Confirme seu email!'));
+  }
+
+  createAndSendToken(user, res, 200, true, 'Email confirmado com sucesso!');
 });
 
 exports.logout = (req, res) => {
-  console.log('⚡ Logout iniciado'); // ✅ log do início da função
-
-  console.log('Cookies antes:', req.cookies); // veja se o cookie jwt está chegando
-
   res.cookie('jwt', 'loggeout', {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
@@ -206,7 +246,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   try {
     await new Email(
       user,
-      url(req, '/api/v1/users/resetpassword/', true, resetToken),
+      url(req, 'resetpassword', true, resetToken),
     ).sendPasswordReset();
   } catch (err) {
     // Log do erro real para diagnóstico
@@ -221,7 +261,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   res
     .status(200)
-    .json({ status: 'sucess', message: 'Token enviado para o email!' });
+    .json({ status: 'success', message: 'Token enviado para o email!' });
 });
 
 exports.resetPassword = catchAsync(async (req, res, next) => {
@@ -238,14 +278,6 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   if (!user) {
     return next(new AppError(401, 'Token inválido ou expirado!'));
-  }
-  if (Date.now() > user.passwordResetExpires) {
-    return next(
-      new AppError(
-        401,
-        'O token expirou! Por favor, peça a solicitação de redefinição de senha novamente!',
-      ),
-    );
   }
 
   user.password = req.body.password;
@@ -279,9 +311,49 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   user.passwordConfirm = req.body.passwordConfirm;
   await user.save();
 
-  console.log({
-    passwordChangedAt: user.passwordChangedAt,
-    agora: Date.now(),
-  });
   createAndSendToken(user, res, 200);
+});
+
+exports.resendEmailToken = catchAsync(async (req, res, next) => {
+  if (!req.body.email) {
+    return next(new AppError(400, 'Por favor, forneça seu e-mail!'));
+  }
+
+  const user = await User.findOne({ email: req.body.email });
+
+  if (!user) {
+    return next(new AppError(404, 'Não existe usuário com esse e-mail.'));
+  }
+
+  if (user.emailVerified) {
+    return next(
+      new AppError(
+        400,
+        'Este e-mail já está confirmado. Faça login normalmente.',
+      ),
+    );
+  }
+
+  const emailToken = user.createEmailToken();
+
+  await user.save({ validateBeforeSave: false });
+
+  try {
+    await new Email(
+      user,
+      url(req, `api/v1/users/emailConfirmation`, true, emailToken),
+    ).sendEmailConfirmation();
+  } catch (err) {
+    // Log do erro real para diagnóstico
+    console.error('Erro ao enviar email no resend:', err);
+    user.emailToken = undefined;
+    user.emailTokenExpires = undefined;
+    await user.save({ validateBeforeSave: false });
+    return next(
+      new AppError(500, 'Erro ao enviar o email. Tente novamente mais tarde!'),
+    );
+  }
+  res
+    .status(200)
+    .json({ status: 'success', message: 'email de confirmação enviado!' });
 });

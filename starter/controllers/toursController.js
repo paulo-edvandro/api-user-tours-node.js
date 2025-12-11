@@ -43,7 +43,6 @@ exports.resizeTourImages = async (req, res, next) => {
         return filename;
       }),
     );
-
   }
 
   next();
@@ -185,7 +184,7 @@ exports.getToursWithin = catchAsync(async (req, res, next) => {
 
   res
     .status(200)
-    .json({ status: 'sucess', results: tours.length, data: { data: tours } });
+    .json({ status: 'success', results: tours.length, data: { data: tours } });
 });
 
 exports.getToursDistances = catchAsync(async (req, res, next) => {
@@ -201,7 +200,7 @@ exports.getToursDistances = catchAsync(async (req, res, next) => {
       ),
     );
   }
-
+  
   const multiplier = unit === 'km' ? 0.001 : 0.000621371;
 
   const distances = await Tour.aggregate([
@@ -215,7 +214,7 @@ exports.getToursDistances = catchAsync(async (req, res, next) => {
     { $project: { name: 1, distance: 1 } },
   ]);
 
-  res.status(200).json({ status: 'sucess', data: { data: distances } });
+  res.status(200).json({ status: 'success', data: { data: distances } });
 });
 
 // module.exports = {

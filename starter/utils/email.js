@@ -68,7 +68,13 @@ class Email {
   async sendPasswordReset() {
     await this.send(
       'passwordReset',
-      'Sua senha de redefinição (valida por 10 minutos apenas)',
+      'Sua senha de redefinição (válida por 10 minutos apenas)',
+    );
+  }
+  async sendEmailConfirmation() {
+    await this.send(
+      'emailConfirmation',
+      'Confirme aqui o seu email (válido por 10 minutos apenas)',
     );
   }
 }

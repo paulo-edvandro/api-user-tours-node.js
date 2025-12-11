@@ -59,3 +59,37 @@ exports.getMyTours = catchAsync(async (req, res, next) => {
   });
   res.status(200).render('overview', { title: `My tours`, tours });
 });
+
+exports.getResendEmailConfirmation = (req, res) => {
+  res.status(200).render('resendEmail', {
+    title: 'Reenviar confirmação de e-mail',
+    email: req.query.email || '',
+  });
+};
+
+exports.getEmailConfirmedPage = (req, res) => {
+  res.status(200).render('emailConfirmed', {
+    title: 'Reenviar confirmação de e-mail',
+  });
+};
+
+exports.getCheckEmail = (req, res) => {
+  res.status(200).render('checkEmail', {
+    title: 'Confirme seu e-mail',
+    email: req.query.email,
+  });
+};
+
+exports.getForgotPassword = (req, res) => {
+  res.status(200).render('forgotPassword', {
+    title: 'Esqueci a Senha',
+  });
+};
+
+exports.getResetPassword = (req, res) => {
+  const { token } = req.params;
+  res.status(200).render('resetPassword', {
+    title: 'Redefinir Senha',
+    token,
+  });
+};

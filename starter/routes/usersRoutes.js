@@ -21,6 +21,15 @@ router
     usersController.resizeUserPhotoForSignup,
     authenticationController.signup,
   );
+
+router
+  .route('/resend-email-confirmation')
+  .post(authenticationController.resendEmailToken);
+
+router
+  .route('/emailConfirmation/:token')
+  .get(authenticationController.emailConfirmation);
+
 router.route('/login').post(loginLimiter, authenticationController.login);
 router.route('/logout').get(authenticationController.logout);
 router.route('/forgotpassword').post(authenticationController.forgotPassword);

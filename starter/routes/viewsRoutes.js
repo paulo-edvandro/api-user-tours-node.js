@@ -11,6 +11,17 @@ const bookingsController = require('../controllers/bookingsController');
 router.get('/login', viewsController.getLogin);
 
 router.get(
+  '/resend-email-confirmation',
+  viewsController.getResendEmailConfirmation,
+);
+
+router.get('/forgotpassword', viewsController.getForgotPassword);
+
+router.get('/resetpassword/:token', viewsController.getResetPassword);
+
+router.get('/emailConfirmed', viewsController.getEmailConfirmedPage);
+
+router.get(
   '/',
   bookingsController.createBookingCheckout,
   authenticationController.isLoginIn,
@@ -35,6 +46,8 @@ router.get(
 );
 
 router.get('/signup', viewsController.getSignup);
+
+router.get('/check-email', viewsController.getCheckEmail);
 
 router.post(
   '/submit-user-data',

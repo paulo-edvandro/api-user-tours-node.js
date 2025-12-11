@@ -82,7 +82,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     runValidators: true,
   });
 
-  res.status(200).json({ status: 'sucess', data: { user: updateUser } });
+  res.status(200).json({ status: 'success', data: { user: updateUser } });
 });
 
 exports.updateUser = handlerFactory.updateOne(User);
@@ -100,7 +100,7 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
 
   await User.findByIdAndUpdate(req.user._id, { active: false });
 
-  res.status(204).json({ status: 'sucess', data: null });
+  res.status(204).json({ status: 'success', data: null });
 });
 
 exports.deleteUser = handlerFactory.deleteOne(User);

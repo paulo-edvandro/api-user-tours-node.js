@@ -51,7 +51,6 @@ exports.createOne = (Model, getData) =>
   exports.getAllSimple = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.find();
-
     res.status(200).json({
       status: 'success',
       results: doc.length,
@@ -77,7 +76,7 @@ exports.getAll = (Model, Feature) =>
 
     res
       .status(200)
-      .json({ status: 'sucess', results: doc.length, data: { doc } });
+      .json({ status: 'success', results: doc.length, data: { doc } });
   });
 
 exports.getOne = (Model, popOption) =>
@@ -90,5 +89,5 @@ exports.getOne = (Model, popOption) =>
     if (!doc) {
       return next(new AppError(404, 'Nenhum documento com esse Id'));
     }
-    res.status(200).json({ status: 'sucess', data: { doc } }); // Exemplo de retorno temporário
+    res.status(200).json({ status: 'success', data: { doc } }); // Exemplo de retorno temporário
   });

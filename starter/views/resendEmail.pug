@@ -1,0 +1,18 @@
+extends base
+
+block content
+    main.main
+        .form-container
+            h2.heading-secondary Reenviar email de confirmação
+
+            if message
+                p.info-message= message
+            if error
+                p.error-message= error
+
+            form.form.form--resend-email
+                .form__group
+                    label.form__label(for="resend-email") Digite seu email:
+                    input.form__input(type="email" name="email" id="resend-email" placeholder="seu@email.com" required value=email)
+                .form__group.right
+                    button.btn.btn--green.btn--resend-email(type="submit") Enviar novamente

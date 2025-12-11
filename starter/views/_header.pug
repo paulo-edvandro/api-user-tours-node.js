@@ -1,4 +1,4 @@
-header.header
+header.header 
     nav.nav.nav--tours
         a.nav__el(href='/') All tours
     .header__logo
@@ -6,10 +6,16 @@ header.header
     nav.nav.nav--user
 
         if user
+            // Se o email NAO estiver confirmado
+            if !user.emailVerified
+                    a.nav__el.nav__warning(href="/check-email?email=" + user.email) Confirme seu e-mail
+
+
             a.nav__el.nav__el--logout Log out
             a.nav__el(href='/me')
-                img.nav__user-img(src=`/img/users/${user.photo}` alt=`Photo of ${user.username}`)
+                img.nav__user-img(src=`/img/users/${user.photo}`)
                 span= user.username.split(' ')[0]
+
         else
             a.nav__el(href='/login') Login
             a.nav__el.nav__el--cta(href='/signup') Sign Up

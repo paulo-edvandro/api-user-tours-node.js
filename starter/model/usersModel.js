@@ -87,7 +87,11 @@ const userSchema = new mongoose.Schema({
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
-  active: { type: Boolean, default: true, select: false },
+  //email confirmation
+  emailToken: String,
+  emailTokenExpires: Date,
+  emailVerified: { type: Boolean, default: false },
+  active: { type: Boolean, default: true },
 });
 
 //PARA MUDANÇAS DE SENHA EM GERAL: APLICA O  HASH E DEFINE O PASSWORDCONFIRM COMO UNDEFINED PARA IR AO BD
@@ -136,7 +140,24 @@ userSchema.methods.checkPasswordChanged = function (jwtEmit) {
   return changedTimestamp > jwtEmit;
 };
 
-//DEFINE A PROPRIEDADE DO SCHEMA RESETTOKEN E RESETEXPIRES COM O VALOR TEMPORARIO DO TOKEN CRIPTOGRAFADO E DO SEU TEMPO DE EXPIRAÇÃO PARA REDEFINIÇÃO DE SENHA. RETORNA O TOKEN NORMAL SEM O HASH PARA VERIFICAÇÃO NO EMAIL DO USER;
+// TICKT TEMPORARIO PARA MUDANÇA DE SENHA. DEVE SER BEM COMPRIDO PARA EVITAR ATAQUES PRO TENTAVAS DURANTE O TEMPO DE EXPIRAÇÃO DELE;
+// SALVAMOS NO BANCO DE DADOS CRIPTOGRAFADO PARA COMPARAR COM O TOKEN ENVIADO PARA O USUÁRIO E IMPEDIR ATAQUES AO BANCO DE DADOS (O QUE TA NO BC É DIFERENTE--CRIPTOGRAFADO)
+// DEFINE A PROPRIEDADE DO SCHEMA PASSWORDRESETTOKEN E PASSWORDRESETEXPIRES COM O VALOR TEMPORARIO DO TOKEN CRIPTOGRAFADO E DO SEU TEMPO DE EXPIRAÇÃO PARA REDEFINIÇÃO DE SENHA. RETORNA O TOKEN NORMAL SEM O HASH PARA QUE POSSAMOS VERIFICAR COM O ENVIADO NO EMAIL DO USER;
+// AI O USUÁRIO IRÁ CLICAR NO LINK DE EMAIL ENVIADO PARA ELE ESTILO '/api/v1/users/(resetpassword OU EMAILCONFIRMATION...)/TOKEN' E IREMOS VERIFICAR ISSO;
+
+// DEPOIS TESTAMOS NO RESETPASSWORDCONTROLLER:
+// PEGAMOS O TOKEN CRU , CRIPTOGRAFAMOS LÁ E COMPRAMOS COM O QUE TEM NO BANCO DE DADOS QUE TBM ESTÁ CRIPTOGRAFADO;
+
+//  const hashedToken = crypto
+//     .createHash('sha256')
+//     .update(req.params.token)
+//     .digest('hex');
+//   //A unica maneira de sabermos quem é o user aqui é através do token cru que enviamos na Url dele para identificar
+//   const user = await User.findOne({
+//     passwordResetToken: hashedToken,
+//     passwordResetExpires: { $gt: Date.now() },
+//   });
+
 userSchema.methods.createPasswordResetToken = function () {
   const tokenReset = crypto.randomBytes(32).toString('hex');
 
@@ -149,6 +170,20 @@ userSchema.methods.createPasswordResetToken = function () {
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
   //SEMPRE DEVEMOS RETORNAR O TOKEN NÃO CRIPTOGRAFADO, POIS O USUARIO VAI USAR ELE, MAS O HASH VAI FICAR SALVO NO BANCO DE DADOS;
   return tokenReset;
+};
+
+userSchema.methods.createEmailToken = function () {
+  const emailToken = crypto.randomBytes(32).toString('hex');
+
+  this.emailToken = crypto
+    .createHash('sha256')
+    .update(emailToken)
+    .digest('hex');
+
+  //ADICIONA UMA DATA DE EXPIRAÇÃO PARA O TOKEN VÁLIDO A PARTIR DA DATA DE AGORA "DATE.NOW()" + 10 * 60 * 1000  QUE É 10 MINUTOS EM MILISEGUNDOS; OU SEJA DANDO UM PRAZO DE VALIDADE DE 10 MINUTOS DEPOIS  DE CRIADO;
+  this.emailTokenExpires = Date.now() + 10 * 60 * 1000;
+  //SEMPRE DEVEMOS RETORNAR O TOKEN NÃO CRIPTOGRAFADO, POIS O USUARIO VAI USAR ELE, MAS O HASH VAI FICAR SALVO NO BANCO DE DADOS;
+  return emailToken;
 };
 const User = mongoose.model('User', userSchema);
 

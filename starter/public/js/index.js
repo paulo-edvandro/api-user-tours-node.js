@@ -4,12 +4,18 @@ import { signup } from './signup';
 import { displayMap } from './leafletMap';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
+import { resendEmail } from './resendEmail';
+import { forgotPassword } from './forgotPassword';
+import { resetPassword } from './resetPassword';
 
 const bookBtn = document.getElementById('book-tour');
 const mapElement = document.getElementById('map');
 const logOutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const signupForm = document.querySelector('.form--signup');
+const resendEmailForm = document.querySelector('.form--resend-email');
+const forgotPasswordForm = document.querySelector('.form--forgot-password');
+const resetPasswordForm = document.querySelector('.form--reset-password');
 
 if (mapElement) {
   const locations = JSON.parse(mapElement.dataset.locations);
@@ -103,5 +109,52 @@ if (signupForm) {
     if (photo) form.append('photo', photo);
 
     await signup(form);
+  });
+}
+
+if (resendEmailForm) {
+  resendEmailForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById('resend-email').value;
+
+    document.querySelector('.btn--resend-email').textContent = 'Enviando...';
+
+    await resendEmail(email); // função que vamos criar
+
+    document.querySelector('.btn--resend-email').textContent = 'Enviado!';
+  });
+}
+
+if (forgotPasswordForm) {
+  forgotPasswordForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById('email').value;
+
+    document.querySelector('.btn--forgot-password').textContent = 'Enviando...';
+
+    await forgotPassword(email);
+
+    document.querySelector('.btn--forgot-password').textContent =
+      'Enviar link de redefinição';
+  });
+}
+
+if (resetPasswordForm) {
+  resetPasswordForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const token = document.getElementById('token').value;
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('password-confirm').value;
+
+    document.querySelector('.btn--reset-password').textContent =
+      'Redefinindo...';
+
+    await resetPassword(password, passwordConfirm, token);
+
+    document.querySelector('.btn--reset-password').textContent =
+      'Redefinir Senha';
   });
 }
