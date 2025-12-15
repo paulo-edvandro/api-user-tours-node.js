@@ -9,17 +9,16 @@ export const bookTour = async (tourId) => {
   try {
     // 1) NÃO PRECISA ESPECIFICAR METHOD , POIS É GET, APENAS COLOCAMOS A URL. TAMBÉM NÃO TEMOS DADOS ESPECIFICOS AQUI
     const session = await axios(
-      `http://127.0.0.1:8000/api/v1/bookings/checkout-session/${tourId}`,
+      `/api/v1/bookings/checkout-session/${tourId}`,
     );
 
-    console.log(session)
 
     // 2) Create checkout form + chanre credit card
     await stripe.redirectToCheckout({
       sessionId: session.data.session.id,
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     showAlert('error', err);
   }
 };

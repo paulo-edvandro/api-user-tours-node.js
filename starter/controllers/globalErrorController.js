@@ -73,7 +73,7 @@ const sendErrorProd = (err, req, res) => {
         message: err.message,
       });
     }
-    console.error('BUG NO CODIGO!!!', err);
+    console.error('ERROR: ', err);
 
     return res.status(500).json({
       status: 'error',
@@ -89,7 +89,7 @@ const sendErrorProd = (err, req, res) => {
 };
 
 module.exports = (err, req, res, next) => {
-  console.log(Object.keys(err));
+  // console.log(Object.keys(err));
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 

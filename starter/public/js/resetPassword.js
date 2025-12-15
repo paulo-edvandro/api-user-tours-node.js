@@ -26,3 +26,4 @@ export const resetPassword = async (password, passwordConfirm, token) => {
     );
   }
 };
+

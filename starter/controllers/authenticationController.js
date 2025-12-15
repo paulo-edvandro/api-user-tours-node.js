@@ -8,13 +8,12 @@ const Email = require('../utils/Email');
 const crypto = require('crypto');
 
 const url = (req, caminho, flag, token) => {
-  const host = '127.0.0.1:8000'; // TEMPORARIO SÓ PARA TESTES, NÃO RECOMENDADO, DEPOIS USAR req.get('host')
 
   if (flag !== true) {
-    return `${req.protocol}://${host}/${caminho}`;
+    return `${req.protocol}://${req.get('host')}/${caminho}`;
   }
 
-  return `${req.protocol}://${host}/${caminho}/${token}`;
+  return `${req.protocol}://${req.get('host')}/${caminho}/${token}`;
 };
 function jwtSign(id) {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -40,7 +39,6 @@ function createAndSendToken(
     httpOnly: true,
     sameSite: 'Lax',
     secure: process.env.NODE_ENV === 'production',
-    //ativar secure em https
   };
 
   user.password = undefined;
@@ -145,8 +143,6 @@ exports.logout = (req, res) => {
     sameSite: 'Lax',
     secure: false,
   });
-
-  console.log('Cookie definido para expirar'); // confirme que chegou aqui
 
   res.status(200).json({ status: 'success' });
 };

@@ -16,6 +16,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 const cors = require("cors");
+const compression = require("compression");
 
 //adicionando comentarios aquii
 
@@ -46,6 +47,8 @@ if (process.env.NODE_ENV === "development") {
 }
 //só  usar o morgan se for nesse modo de desenvolvimento
 
+app.use(compression());
+
 app.use((req, res, next) => {
   res.set("Cache-Control", "no-store");
   next();
@@ -72,9 +75,10 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  console.log(`Requisição recebida: ${req.method} ${req.originalUrl}`);
-  console.log(req.cookies);
-  next(); // Não se esqueça do next() para passar a requisição para o próximo middleware/rota
+  req.requestTime = new Date().toISOString();
+  // console.log(`Requisição recebida: ${req.method} ${req.originalUrl}`);
+  // console.log(req.cookies);
+  next();
 });
 app.use(
   cors({

@@ -4,7 +4,7 @@ export const login = async (email, password) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: 'http://127.0.0.1:8000/api/v1/users/login',
+      url: '/api/v1/users/login',
       data: { email, password },
       withCredentials: true,
     });
@@ -18,6 +18,7 @@ export const login = async (email, password) => {
       }, 800);
     }
   } catch (err) {
+    console.error('Erro no logout:', err.response || err);
     showAlert('error', err.response?.data?.message || err.message);
   }
 };
@@ -28,7 +29,7 @@ export const logout = async () => {
 
     const res = await axios({
       method: 'GET',
-      url: 'http://127.0.0.1:8000/api/v1/users/logout',
+      url: '/api/v1/users/logout',
     });
     console.log('Resposta do logout:', res.data); // veja o que chega
 
