@@ -133,7 +133,7 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError(401, 'Confirme seu email!'));
   }
 
-  createAndSendToken(user, res, 200, true, 'Email confirmado com sucesso!');
+  createAndSendToken(user, res, 200, true, 'Sucesso! Usuário logado!');
 });
 
 exports.logout = (req, res) => {
