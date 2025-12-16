@@ -6,6 +6,11 @@ const DB = process.env.DATABASE.replace(
   "<db_password>",
   process.env.DATABASE_PASSWORD
 );
+
+console.log('--- DEBUG DA URI ---');
+console.log(`DATABASE_PASSWORD: ${process.env.DATABASE_PASSWORD}`);
+console.log(`URI MONTADA: ${DB}`); // <--- Adicione este log!
+console.log('--------------------');
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
