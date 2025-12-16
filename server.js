@@ -4,13 +4,13 @@ const mongoose = require("mongoose");
 
 const DB = process.env.DATABASE.replace(
   "<db_password>",
-  process.env.DATABASE_PASSWORD
+  encodeURIComponent(process.env.DATABASE_PASSWORD)
 );
 
-console.log('--- DEBUG DA URI ---');
+console.log("--- DEBUG DA URI ---");
 console.log(`DATABASE_PASSWORD: ${process.env.DATABASE_PASSWORD}`);
 console.log(`URI MONTADA: ${DB}`); // <--- Adicione este log!
-console.log('--------------------');
+console.log("--------------------");
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
@@ -24,7 +24,7 @@ mongoose
 
 const app = require("./app");
 
-const port = process.env.PORT
+const port = process.env.PORT;
 
 const server = app.listen(port, () => {
   console.log("app rodando");
