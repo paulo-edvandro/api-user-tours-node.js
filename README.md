@@ -55,6 +55,12 @@ Este é um projeto de back-end robusto para uma plataforma de turismo, focado em
     ```bash
     npm start
     ```
+    
+    ### 💳 Testando Pagamentos (Stripe Sandbox)
+Para testar a funcionalidade de reserva e checkout, a API está em modo de teste. Você pode utilizar o cartão fictício padrão do Stripe:
+* **Número:** `4242 4242 4242 4242`
+* **Validade:** Qualquer data futura (ex: `12/28`)
+* **CVC:** `123`
 
 ## 🚀 Próximos Passos
 
