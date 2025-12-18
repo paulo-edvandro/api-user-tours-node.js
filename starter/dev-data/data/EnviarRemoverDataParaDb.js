@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const Tour = require('../../model/toursModel');
 const User = require('../../model/usersModel');
 const Review = require('../../model/reviewsModel');
-const UsersFeatures = require('../../utils/usersFeatures');
+const UsersFeatures = require('../../utils/UsersFeatures');
 
 const DB = process.env.DATABASE.replace(
   '<db_password>',

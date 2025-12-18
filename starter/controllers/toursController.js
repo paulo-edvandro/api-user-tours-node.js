@@ -1,12 +1,9 @@
-const express = require('express');
-
 const Tour = require('../model/toursModel');
 const { error } = require('console');
-const TourFeatures = require('../utils/toursFeatures');
+const TourFeatures = require('../utils/ToursFeatures');
 const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
+const AppError = require('../utils/AppError');
 const handlerFactory = require('./handlerFactory');
-const multer = require('multer');
 const sharp = require('sharp');
 const multerUtil = require('../utils/multer');
 
@@ -200,7 +197,7 @@ exports.getToursDistances = catchAsync(async (req, res, next) => {
       ),
     );
   }
-  
+
   const multiplier = unit === 'km' ? 0.001 : 0.000621371;
 
   const distances = await Tour.aggregate([

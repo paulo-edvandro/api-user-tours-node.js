@@ -1,6 +1,6 @@
 //TRATAMENTOS DE ERROS DOS QUE VEM PARA CÁ, DOS QUE O MONGGOSE GERA POR SI MESMO E DAS FALHAS DE PROGRAMAÇÃO DENTRO DE MIDDLEWARES
 
-const AppError = require('../utils/appError');
+const AppError = require('../utils/AppError');
 const { formatDistanceToNow } = require('date-fns');
 const { ptBR } = require('date-fns/locale');
 

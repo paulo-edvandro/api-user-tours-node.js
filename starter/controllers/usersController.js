@@ -1,11 +1,10 @@
 // const express = require('express');
 // const mongoose = require('mongoose');
 const User = require('../model/usersModel');
-const AppError = require('../utils/appError');
+const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
-const UserFeatures = require('../utils/usersFeatures');
+const UserFeatures = require('../utils/UsersFeatures');
 const handlerFactory = require('./handlerFactory');
-const multer = require('multer');
 const sharp = require('sharp');
 const multerUtil = require('../utils/multer');
 
@@ -27,7 +26,7 @@ exports.resizeUserPhotoForSignup = async (req, res, next) => {
   if (!req.file) return next();
 
   req.file.filename = `user-${Date.now()}-${Math.round(
-    Math.random() * 1e9
+    Math.random() * 1e9,
   )}.jpeg`;
 
   await sharp(req.file.buffer)
@@ -61,7 +60,6 @@ exports.getMe = (req, res, next) => {
 exports.getUser = handlerFactory.getOne(User, false);
 
 exports.updateMe = catchAsync(async (req, res, next) => {
-  
   if (req.body.password || req.body.passwordConfirm) {
     return next(
       new AppError(

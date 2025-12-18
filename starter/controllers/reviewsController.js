@@ -1,7 +1,4 @@
 const Review = require('../model/reviewsModel');
-const { findOne } = require('../model/usersModel');
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
 const ReviewFeatures = require('../utils/ReviewsFeatures');
 const handlerFactory = require('./handlerFactory');
 

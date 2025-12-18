@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
-const AppError = require('../utils/appError');
+const AppError = require('../utils/AppError');
 const crypto = require('crypto');
 
 const validation1 = /^[a-z0-9._]+$/;

@@ -1,16 +1,9 @@
-const express = require('express');
-
 const Tour = require('../model/toursModel');
 const User = require('../model/usersModel');
 const Booking = require('../model/bookingsModel');
 const { error } = require('console');
-const TourFeatures = require('../utils/toursFeatures');
 const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
 const handlerFactory = require('./handlerFactory');
-const multer = require('multer');
-const sharp = require('sharp');
-const multerUtil = require('../utils/multer');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const tour = await Tour.findById(req.params.tourId);
@@ -48,7 +41,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 exports.createBookingCheckout = async (session) => {
   const tour = session.client_reference_id;
   const user = await User.findOne({ email: session.customer_email });
-  const price = session.line_items[0].price_data.unit_amount / 100;
+  const price = session.amount_total / 100;
   await Booking.create({ tour, user, price });
 };
 
@@ -68,7 +61,7 @@ exports.webhookCheckout = (req, res, next) => {
   }
 
   if (event.type === 'checkout.session.completed') {
-    createBookingCheckout(event.data.object);
+    exports.createBookingCheckout(event.data.object);
   }
 
   res.status(200).json({ received: true });

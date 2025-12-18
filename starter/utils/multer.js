@@ -1,5 +1,5 @@
 const multer = require('multer');
-const AppError = require('../utils/appError');
+const AppError = require('./AppError');
 
 //irá armazenar no req.file.buffer para podermos usar para mexer na imagem e depois enviar para algum canto
 const multerStorage = multer.memoryStorage();
