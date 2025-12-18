@@ -1,0 +1,2323 @@
+{
+	"info": {
+		"_postman_id": "857040eb-1591-4df9-875d-3c2ade7c7f43",
+		"name": "REQUISIÇÕES / RECURSOS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46078241",
+		"_collection_link": "https://paulo-186674.postman.co/workspace/Paulo's-Workspace~98497539-4b45-4487-82d2-8a01f00f46da/collection/46078241-857040eb-1591-4df9-875d-3c2ade7c7f43?action=share&source=collection_link&creator=46078241"
+	},
+	"item": [
+		{
+			"name": "TOURS",
+			"item": [
+				{
+					"name": "ALLTOURS",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/tours",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours"
+							]
+						},
+						"description": "Recupera uma lista de todos os tours disponíveis. Cada tour inclui detalhes como localização, avaliações, guias, preço, duração, dificuldade, imagens e outras informações relevantes. Útil para exibir ou filtrar tours em aplicações clientes."
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta - sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/api/v1/tours",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"tours"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\"status\":\"sucess\",\"results\":9,\"data\":{\"doc\":[{\"startLocation\":{\"type\":\"Point\",\"description\":\"Banff, CAN\",\"coordinates\":[-115.570154,51.178456]},\"ratingsAverage\":5,\"ratingsQuantity\":9,\"images\":[\"tour-1-1.jpg\",\"tour-1-2.jpg\",\"tour-1-3.jpg\"],\"startDates\":[\"2021-04-25T09:00:00.000Z\",\"2021-07-20T09:00:00.000Z\",\"2021-10-05T09:00:00.000Z\"],\"secretTour\":false,\"guides\":[{\"role\":\"lead-guide\",\"_id\":\"5c8a21d02f8fb814b56fa189\",\"name\":\"Steve T. Scaife\",\"email\":\"steve@example.com\",\"photo\":\"user-10.jpg\",\"username\":\"steve_t._scaife\"},{\"role\":\"guide\",\"_id\":\"5c8a201e2f8fb814b56fa186\",\"name\":\"Kate Morrison\",\"email\":\"kate@example.com\",\"photo\":\"user-7.jpg\",\"username\":\"kate_morrison\"},{\"role\":\"guide\",\"_id\":\"5c8a1f292f8fb814b56fa184\",\"name\":\"Leo Gillespie\",\"email\":\"leo@example.com\",\"photo\":\"user-5.jpg\",\"username\":\"leo_gillespie\"}],\"_id\":\"5c88fa8cf4afda39709c2951\",\"name\":\"The Forest Hiker\",\"duration\":5,\"maxGroupSize\":25,\"difficulty\":\"easy\",\"price\":397,\"summary\":\"Breathtaking hike through the Canadian B...<truncated>\",\"description\":\"Ut enim ad minim veniam, quis nostrud ex...<truncated>\",\"imageCover\":\"tour-1-cover.jpg\",\"locations\":[{\"type\":\"Point\",\"coordinates\":[-116.214531,51.417611],\"_id\":\"5c88fa8cf4afda39709c2954\",\"description\":\"Banff National Park\"},{\"type\":\"Point\",\"coordinates\":[-118.076152,52.875223],\"_id\":\"5c88fa8cf4afda39709c2953\",\"description\":\"Jasper National Park\"},{\"type\":\"Point\",\"coordinates\":[-117.490309,51.261937],\"_id\":\"5c88fa8cf4afda39709c2952\",\"description\":\"Glacier National Park of Canada\"}],\"slug\":\"the-forest-hiker\",\"durationWeeks\":0.7142857142857143,\"id\":\"5c88fa8cf4afda39709c2951\"}]}}"
+						}
+					]
+				},
+				{
+					"name": "WITHINTOUR",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/tours/tours-within/800/center/34.111745,-118.113491/unit/km",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours",
+								"tours-within",
+								"800",
+								"center",
+								"34.111745,-118.113491",
+								"unit",
+								"km"
+							]
+						},
+						"description": "Retorna todos os tours que estão dentro de um raio específico a partir de um ponto central (latitude, longitude), utilizando a unidade de medida informada (milhas ou quilômetros). Útil para encontrar passeios próximos a uma localização geográfica."
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta - sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": "json"
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/tours/tours-within/800/center/34.111745,-118.113491/unit/km",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"tours",
+										"tours-within",
+										"800",
+										"center",
+										"34.111745,-118.113491",
+										"unit",
+										"km"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\"status\":\"sucess\",\"results\":3,\"data\":{\"data\":[{\"startLocation\":{\"type\":\"Point\",\"description\":\"California, USA\",\"coordinates\":[-122.29286,38.294065]},\"ratingsAverage\":4.4,\"ratingsQuantity\":7,\"images\":[\"tour-7-1.jpg\",\"tour-7-2.jpg\",\"tour-7-3.jpg\"],\"startDates\":[\"2021-02-12T10:00:00.000Z\",\"2021-04-14T09:00:00.000Z\",\"2021-09-01T09:00:00.000Z\"],\"secretTour\":false,\"guides\":[{\"role\":\"lead-guide\",\"_id\":\"5c8a22c62f8fb814b56fa18b\",\"name\":\"Miyah Myles\",\"email\":\"miyah@example.com\",\"photo\":\"user-12.jpg\",\"username\":\"miyah_myles\"},{\"role\":\"guide\",\"_id\":\"5c8a23412f8fb814b56fa18c\",\"name\":\"Ben Hadley\",\"email\":\"ben@example.com\",\"photo\":\"user-13.jpg\",\"username\":\"ben_hadley\"}],\"_id\":\"5c88fa8cf4afda39709c296c\",\"name\":\"The Wine Taster\",\"duration\":5,\"maxGroupSize\":8,\"difficulty\":\"easy\",\"price\":1997,\"summary\":\"Exquisite wines, scenic views, exclusive...\",\"description\":\"Consectetur adipisicing elit, sed do eiu...\",\"imageCover\":\"tour-7-cover.jpg\",\"locations\":[{\"type\":\"Point\",\"coordinates\":[-122.479887,38.510312],\"_id\":\"5c88fa8cf4afda39709c296f\",\"description\":\"Beringer Vineyards\"},{\"type\":\"Point\",\"coordinates\":[-122.582948,38.585707],\"_id\":\"5c88fa8cf4afda39709c296e\",\"description\":\"Clos Pegase Winery & Tasting Room\"},{\"type\":\"Point\",\"coordinates\":[-122.434697,38.482181],\"_id\":\"5c88fa8cf4afda39709c296d\",\"description\":\"Raymond Vineyard and Cellar\"}],\"slug\":\"the-wine-taster\",\"__v\":0,\"durationWeeks\":0.7142857142857143,\"id\":\"5c88fa8cf4afda39709c296c\"},{\"startLocation\":{\"type\":\"Point\",\"description\":\"Las Vegas, USA\",\"coordinates\":[-115.172652,36.110904]},\"ratingsAverage\":4.7,\"ratingsQuantity\":7,\"images\":[\"tour-5-1.jpg\",\"tour-5-2.jpg\",\"tour-5-3.jpg\"],\"startDates\":[\"2021-08-05T09:00:00.000Z\",\"2022-03-20T10:00:00.000Z\",\"2022-08-12T09:00:00.000Z\"],\"secretTour\":false,\"guides\":[{\"role\":\"lead-guide\",\"_id\":\"5c8a21f22f8fb814b56fa18a\",\"name\":\"Aarav Lynn\",\"email\":\"aarav@example.com\",\"photo\":\"user-11.jpg\",\"username\":\"aarav_lynn\"},{\"role\":\"guide\",\"_id\":\"5c8a23412f8fb814b56fa18c\",\"name\":\"Ben Hadley\",\"email\":\"ben@example.com\",\"photo\":\"user-13.jpg\",\"username\":\"ben_hadley\"},{\"role\":\"guide\",\"_id\":\"5c8a201e2f8fb814b56fa186\",\"name\":\"Kate Morrison\",\"email\":\"kate@example.com\",\"photo\":\"user-7.jpg\",\"username\":\"kate_morrison\"}],\"_id\":\"5c88fa8cf4afda39709c2961\",\"name\":\"The Park Camper\",\"duration\":10,\"maxGroupSize\":15,\"difficulty\":\"medium\",\"price\":90,\"summary\":\"Breathing in Nature in America's most sp...\",\"description\":\"Lorem ipsum dolor sit amet, consectetur ...\",\"imageCover\":\"tour-5-cover.jpg\",\"locations\":[{\"type\":\"Point\",\"coordinates\":[-112.987418,37.198125],\"_id\":\"5c88fa8cf4afda39709c2965\",\"description\":\"Zion Canyon National Park\"},{\"type\":\"Point\",\"coordinates\":[-111.376161,36.86438],\"_id\":\"5c88fa8cf4afda39709c2964\",\"description\":\"Antelope Canyon\"},{\"type\":\"Point\",\"coordinates\":[-112.115763,36.058973],\"_id\":\"5c88fa8cf4afda39709c2963\",\"description\":\"Grand Canyon National Park\"},{\"type\":\"Point\",\"coordinates\":[-116.107963,34.011646],\"_id\":\"5c88fa8cf4afda39709c2962\",\"description\":\"Joshua Tree National Park\"}],\"slug\":\"the-park-camper\",\"__v\":0,\"durationWeeks\":1.4285714285714286,\"id\":\"5c88fa8cf4afda39709c2961\"},{\"startLocation\":{\"type\":\"Point\",\"description\":\"California, USA\",\"coordinates\":[-118.803461,34.006072]},\"ratingsAverage\":3.9,\"ratingsQuantity\":7,\"images\":[\"tour-6-1.jpg\",\"tour-6-2.jpg\",\"tour-6-3.jpg\"],\"startDates\":[\"2021-07-19T09:00:00.000Z\",\"2021-09-06T09:00:00.000Z\",\"2022-03-18T10:00:00.000Z\"],\"secretTour\":false,\"guides\":[{\"role\":\"lead-guide\",\"_id\":\"5c8a21f22f8fb814b56fa18a\",\"name\":\"Aarav Lynn\",\"email\":\"aarav@example.com\",\"photo\":\"user-11.jpg\",\"username\":\"aarav_lynn\"},{\"role\":\"guide\",\"_id\":\"5c8a1f292f8fb814b56fa184\",\"name\":\"Leo Gillespie\",\"email\":\"leo@example.com\",\"photo\":\"user-5.jpg\",\"username\":\"leo_gillespie\"},{\"role\":\"guide\",\"_id\":\"5c8a1f4e2f8fb814b56fa185\",\"name\":\"Jennifer Hardy\",\"email\":\"jennifer@example.com\",\"photo\":\"user-6.jpg\",\"username\":\"jennifer_hardy\"}],\"_id\":\"5c88fa8cf4afda39709c2966\",\"name\":\"The Sports Lover\",\"duration\":14,\"maxGroupSize\":8,\"difficulty\":\"difficult\",\"price\":2997,\"summary\":\"Surfing, skating, parajumping, rock clim...\",\"description\":\"Nisi ut aliquip ex ea commodo consequat....\",\"imageCover\":\"tour-6-cover.jpg\",\"locations\":[{\"type\":\"Point\",\"coordinates\":[-118.809361,34.003098],\"_id\":\"5c88fa8cf4afda39709c296b\",\"description\":\"Point Dume Beach\"},{\"type\":\"Point\",\"coordinates\":[-118.47549,33.987367],\"_id\":\"5c88fa8cf4afda39709c296a\",\"description\":\"Venice Skate Park\"},{\"type\":\"Point\",\"coordinates\":[-116.830104,33.022843],\"_id\":\"5c88fa8cf4afda39709c2969\",\"description\":\"San Diego Skydive\"},{\"type\":\"Point\",\"coordinates\":[-118.4547,35.710359],\"_id\":\"5c88fa8cf4afda39709c2968\",\"description\":\"Kern River Rafting\"},{\"type\":\"Point\",\"coordinates\":[-119.600492,37.742371],\"_id\":\"5c88fa8cf4afda39709c2967\",\"description\":\"Yosemite National Park\"}],\"slug\":\"the-sports-lover\",\"__v\":0,\"durationWeeks\":2,\"id\":\"5c88fa8cf4afda39709c2966\"}]}}"
+						}
+					]
+				},
+				{
+					"name": "DISTANCESTOURS",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/tours/distances/34.111745,-118.113491/unit/km",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours",
+								"distances",
+								"34.111745,-118.113491",
+								"unit",
+								"km"
+							]
+						},
+						"description": "Calcula e retorna a distância de todos os tours a partir de um ponto central (latitude, longitude), utilizando a unidade de medida especificada (milhas ou quilômetros). Útil para exibir a distância de cada tour em relação a uma localização informada pelo usuário.\n\nCalculates and returns the distance of all tours from a central point (latitude, longitude), using the specified unit (miles or kilometers). Useful for displaying the distance of each tour relative to a user-provided location."
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta - sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": "json"
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/tours/distances/34.111745,-118.113491/unit/km",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"tours",
+										"distances",
+										"34.111745,-118.113491",
+										"unit",
+										"km"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\"status\":\"success\",\"data\":{\"data\":[{\"distance\":0,\"name\":\"The Sea Explorer\"},{\"distance\":12.5,\"name\":\"The Forest Hiker\"},{\"distance\":25.3,\"name\":\"The Park Camper\"}]}}"
+						}
+					]
+				},
+				{
+					"name": "TOURPORMES",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/tours/mes-mais-tours/2021",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours",
+								"mes-mais-tours",
+								"2021"
+							]
+						},
+						"description": "Retorna o número de tours cadastrados por mês em um determinado ano. Útil para análises sazonais e planejamento de marketing ou operações."
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta - sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": "json"
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/tours/mes-mais-tours/2021",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"tours",
+										"mes-mais-tours",
+										"2021"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\"status\":\"success\",\"data\":{\"plan\":[{\"numTours\":4,\"tours\":[\"The Snow Adventurer\",\"The Snow Adventurer\",\"The Star Gazer\",\"The Northern Lights\"],\"month\":1},{\"numTours\":4,\"tours\":[\"The Park Camper\",\"The City Wanderer\",\"The Sports Lover\",\"The Star Gazer\"],\"month\":3},{\"numTours\":3,\"tours\":[\"The Park Camper\",\"The Park Camper\",\"The Sea Explorer\"],\"month\":8},{\"numTours\":3,\"tours\":[\"The Forest Hiker\",\"The Sports Lover\",\"The Sea Explorer\"],\"month\":7},{\"numTours\":2,\"tours\":[\"The City Wanderer\",\"The Sea Explorer\"],\"month\":6},{\"numTours\":2,\"tours\":[\"The Northern Lights\",\"The Northern Lights\"],\"month\":12},{\"numTours\":2,\"tours\":[\"The Snow Adventurer\",\"The Wine Taster\"],\"month\":2},{\"numTours\":2,\"tours\":[\"The Sports Lover\",\"The Wine Taster\"],\"month\":9},{\"numTours\":2,\"tours\":[\"The Forest Hiker\",\"The Star Gazer\"],\"month\":10},{\"numTours\":2,\"tours\":[\"The Forest Hiker\",\"The Wine Taster\"],\"month\":4}]}}"
+						}
+					]
+				},
+				{
+					"name": "NEWTOUR",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startLocation\": {\r\n      \"description\": \"Miami, USA\",\r\n      \"type\": \"Point\",\r\n      \"coordinates\": [-80.185942, 25.774772],\r\n      \"address\": \"301 Biscayne Blvd, Miami, FL 33132, USA\"\r\n    },\r\n    \"ratingsAverage\": 4.8,\r\n    \"ratingsQuantity\": 6,\r\n    \"images\": [\"tour-2-1.jpg\", \"tour-2-2.jpg\", \"tour-2-3.jpg\"],\r\n    \"startDates\": [\r\n      \"2021-06-19T09:00:00.000Z\",\r\n      \"2021-07-20T09:00:00.000Z\",\r\n      \"2021-08-18T09:00:00.000Z\"\r\n    ],\r\n    \"_id\": \"5c88fa8cf4afda39709c2955\",\r\n    \"name\": \"The Sea Explorer\",\r\n    \"duration\": 7,\r\n    \"maxGroupSize\": 15,\r\n    \"difficulty\": \"medium\",\r\n    \"guides\": [\"5c8a22c62f8fb814b56fa18b\", \"5c8a1f4e2f8fb814b56fa185\"],\r\n    \"price\": 497,\r\n    \"summary\": \"Exploring the jaw-dropping US east coast by foot and by boat\",\r\n    \"description\": \"Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\\nIrure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\",\r\n    \"imageCover\": \"tour-2-cover.jpg\",\r\n    \"locations\": [\r\n      {\r\n        \"_id\": \"5c88fa8cf4afda39709c2959\",\r\n        \"description\": \"Lummus Park Beach\",\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [-80.128473, 25.781842],\r\n        \"day\": 1\r\n      },\r\n      {\r\n        \"_id\": \"5c88fa8cf4afda39709c2958\",\r\n        \"description\": \"Islamorada\",\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [-80.647885, 24.909047],\r\n        \"day\": 2\r\n      },\r\n      {\r\n        \"_id\": \"5c88fa8cf4afda39709c2957\",\r\n        \"description\": \"Sombrero Beach\",\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [-81.0784, 24.707496],\r\n        \"day\": 3\r\n      },\r\n      {\r\n        \"_id\": \"5c88fa8cf4afda39709c2956\",\r\n        \"description\": \"West Key\",\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [-81.768719, 24.552242],\r\n        \"day\": 5\r\n      }\r\n    ] }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/tours",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours"
+							]
+						},
+						"description": "Cria um novo tour com base nos dados fornecidos no corpo da requisição. Permite cadastrar passeios com informações detalhadas como nome, preço, localização, datas e guias. Requer privilégios administrativos."
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta - sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"startLocation\":{\"description\":\"Miami, USA\",\"type\":\"Point\",\"coordinates\":[-80.185942,25.774772],\"address\":\"301 Biscayne Blvd, Miami, FL 33132, USA\"},\"ratingsAverage\":4.8,\"ratingsQuantity\":6,\"images\":[\"tour-2-1.jpg\",\"tour-2-2.jpg\",\"tour-2-3.jpg\"],\"startDates\":[\"2021-06-19T09:00:00.000Z\",\"2021-07-20T09:00:00.000Z\",\"2021-08-18T09:00:00.000Z\"],\"_id\":\"5c88fa8cf4afda39709c2955\",\"name\":\"The Sea Expxlorer\",\"duration\":7,\"maxGroupSize\":15,\"difficulty\":\"medium\",\"guides\":[\"5c8a22c62f8fb814b56fa18b\",\"5c8a1f4e2f8fb814b56fa185\"],\"price\":497,\"summary\":\"Exploring the jaw-dropping US east coast...\",\"description\":\"Consectetur adipisicing elit, sed do eiu...\",\"imageCover\":\"tour-2-cover.jpg\",\"locations\":[{\"_id\":\"5c88fa8cf4afda39709c2959\",\"description\":\"Lummus Park Beach\",\"type\":\"Point\",\"coordinates\":[-80.128473,25.781842],\"day\":1},{\"_id\":\"5c88fa8cf4afda39709c2958\",\"description\":\"Islamorada\",\"type\":\"Point\",\"coordinates\":[-80.647885,24.909047],\"day\":2},{\"_id\":\"5c88fa8cf4afda39709c2957\",\"description\":\"Sombrero Beach\",\"type\":\"Point\",\"coordinates\":[-81.0784,24.707496],\"day\":3},{\"_id\":\"5c88fa8cf4afda39709c2956\",\"description\":\"West Key\",\"type\":\"Point\",\"coordinates\":[-81.768719,24.552242],\"day\":5}]}",
+									"options": {
+										"raw": "json"
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/tours",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"tours"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\"status\":\"success\",\"data\":{\"tour\":{\"startLocation\":{\"type\":\"Point\",\"description\":\"Miami, USA\",\"coordinates\":[-80.185942,25.774772]},\"ratingsAverage\":4.8,\"ratingsQuantity\":6,\"images\":[\"tour-2-1.jpg\",\"tour-2-2.jpg\",\"tour-2-3.jpg\"],\"createdAt\":\"2025-10-18T17:12:50.141Z\",\"startDates\":[\"2021-06-19T09:00:00.000Z\",\"2021-07-20T09:00:00.000Z\",\"2021-08-18T09:00:00.000Z\"],\"secretTour\":false,\"guides\":[\"5c8a22c62f8fb814b56fa18b\",\"5c8a1f4e2f8fb814b56fa185\"],\"_id\":\"5c88fa8cf4afda39709c2955\",\"name\":\"The Sea Expxlorer\",\"duration\":7,\"maxGroupSize\":15,\"difficulty\":\"medium\",\"price\":497,\"summary\":\"Exploring the jaw-dropping US east coast...\",\"description\":\"Consectetur adipisicing elit, sed do eiu...\",\"imageCover\":\"tour-2-cover.jpg\",\"locations\":[{\"type\":\"Point\",\"coordinates\":[-80.128473,25.781842],\"_id\":\"5c88fa8cf4afda39709c2959\",\"description\":\"Lummus Park Beach\"},{\"type\":\"Point\",\"coordinates\":[-80.647885,24.909047],\"_id\":\"5c88fa8cf4afda39709c2958\",\"description\":\"Islamorada\"},{\"type\":\"Point\",\"coordinates\":[-81.0784,24.707496],\"_id\":\"5c88fa8cf4afda39709c2957\",\"description\":\"Sombrero Beach\"},{\"type\":\"Point\",\"coordinates\":[-81.768719,24.552242],\"_id\":\"5c88fa8cf4afda39709c2956\",\"description\":\"West Key\"}],\"slug\":\"the-sea-expxlorer\",\"__v\":0,\"durationWeeks\":1,\"id\":\"5c88fa8cf4afda39709c2955\"}}}"
+						}
+					]
+				},
+				{
+					"name": "IDTOUR",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/tours/68e866d9d4f5cb9e109800ed",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours",
+								"68e866d9d4f5cb9e109800ed"
+							]
+						},
+						"description": "Recupera os detalhes completos de um tour específico com base no seu ID. Inclui informações como nome, descrição, preço, localização, datas, avaliações e guias associados.\n\nRetrieves the complete details of a specific tour by its ID. Includes information such as name, description, price, location, dates, reviews, and associated guides."
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/api/v1/tours/5c88fa8cf4afda39709c2961",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"tours",
+										"5c88fa8cf4afda39709c2961"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\"status\":\"sucess\",\"data\":{\"doc\":{\"startLocation\":{\"type\":\"Point\",\"description\":\"Las Vegas, USA\",\"coordinates\":[-115.172652,36.110904]},\"ratingsAverage\":4.7,\"ratingsQuantity\":7,\"images\":[\"tour-5-1.jpg\",\"tour-5-2.jpg\",\"tour-5-3.jpg\"],\"startDates\":[\"2021-08-05T09:00:00.000Z\",\"2022-03-20T10:00:00.000Z\",\"2022-08-12T09:00:00.000Z\"],\"secretTour\":false,\"guides\":[{\"role\":\"lead-guide\",\"_id\":\"5c8a21f22f8fb814b56fa18a\",\"name\":\"Aarav Lynn\",\"email\":\"aarav@example.com\",\"photo\":\"user-11.jpg\",\"username\":\"aarav_lynn\"},{\"role\":\"guide\",\"_id\":\"5c8a23412f8fb814b56fa18c\",\"name\":\"Ben Hadley\",\"email\":\"ben@example.com\",\"photo\":\"user-13.jpg\",\"username\":\"ben_hadley\"},{\"role\":\"guide\",\"_id\":\"5c8a201e2f8fb814b56fa186\",\"name\":\"Kate Morrison\",\"email\":\"kate@example.com\",\"photo\":\"user-7.jpg\",\"username\":\"kate_morrison\"}],\"_id\":\"5c88fa8cf4afda39709c2961\",\"name\":\"The Park Camper\",\"duration\":10,\"maxGroupSize\":15,\"difficulty\":\"medium\",\"price\":90,\"summary\":\"Breathing in Nature in America's most sp...<truncated>\",\"description\":\"Lorem ipsum dolor sit amet, consectetur ...<truncated>\",\"imageCover\":\"tour-5-cover.jpg\",\"locations\":[{\"type\":\"Point\",\"coordinates\":[-112.987418,37.198125],\"_id\":\"5c88fa8cf4afda39709c2965\",\"description\":\"Zion Canyon National Park\"},{\"type\":\"Point\",\"coordinates\":[-111.376161,36.86438],\"_id\":\"5c88fa8cf4afda39709c2964\",\"description\":\"Antelope Canyon\"},{\"type\":\"Point\",\"coordinates\":[-112.115763,36.058973],\"_id\":\"5c88fa8cf4afda39709c2963\",\"description\":\"Grand Canyon National Park\"},{\"type\":\"Point\",\"coordinates\":[-116.107963,34.011646],\"_id\":\"5c88fa8cf4afda39709c2962\",\"description\":\"Joshua Tree National Park\"}],\"slug\":\"the-park-camper\",\"__v\":0,\"durationWeeks\":1.4285714285714286,\"reviews\":[],\"id\":\"5c88fa8cf4afda39709c2961\"}}}"
+						}
+					]
+				},
+				{
+					"name": "UPDATETOUR",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"price\": 90 } ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/tours/68630bd17564eb8a3c68dcb4",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours",
+								"68630bd17564eb8a3c68dcb4"
+							]
+						},
+						"description": "Atualiza os dados de um tour específico com base no seu ID. Permite modificar informações como nome, preço, localização, datas, avaliações e guias associados. Requer privilégios administrativos.\n\nUpdates the data of a specific tour by its ID. Allows modifying information such as name, price, location, dates, reviews, and associated guides. Requires administrative privileges."
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"price\":90}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/tours/5c88fa8cf4afda39709c2961",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"tours",
+										"5c88fa8cf4afda39709c2961"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\"status\":\"success\",\"data\":{\"doc\":{\"startLocation\":{\"type\":\"Point\",\"description\":\"Las Vegas, USA\",\"coordinates\":[-115.172652,36.110904]},\"ratingsAverage\":4.7,\"ratingsQuantity\":7,\"images\":[\"tour-5-1.jpg\",\"tour-5-2.jpg\",\"tour-5-3.jpg\"],\"startDates\":[\"2021-08-05T09:00:00.000Z\",\"2022-03-20T10:00:00.000Z\",\"2022-08-12T09:00:00.000Z\"],\"secretTour\":false,\"guides\":[\"5c8a21f22f8fb814b56fa18a\",\"5c8a23412f8fb814b56fa18c\",\"5c8a201e2f8fb814b56fa186\"],\"_id\":\"5c88fa8cf4afda39709c2961\",\"name\":\"The Park Camper\",\"duration\":10,\"maxGroupSize\":15,\"difficulty\":\"medium\",\"price\":90,\"summary\":\"Breathing in Nature in America's most sp...<truncated>\",\"description\":\"Lorem ipsum dolor sit amet, consectetur ...<truncated>\",\"imageCover\":\"tour-5-cover.jpg\",\"locations\":[{\"type\":\"Point\",\"coordinates\":[-112.987418,37.198125],\"_id\":\"5c88fa8cf4afda39709c2965\",\"description\":\"Zion Canyon National Park\"},{\"type\":\"Point\",\"coordinates\":[-111.376161,36.86438],\"_id\":\"5c88fa8cf4afda39709c2964\",\"description\":\"Antelope Canyon\"},{\"type\":\"Point\",\"coordinates\":[-112.115763,36.058973],\"_id\":\"5c88fa8cf4afda39709c2963\",\"description\":\"Grand Canyon National Park\"},{\"type\":\"Point\",\"coordinates\":[-116.107963,34.011646],\"_id\":\"5c88fa8cf4afda39709c2962\",\"description\":\"Joshua Tree National Park\"}],\"slug\":\"the-park-camper\",\"__v\":0,\"durationWeeks\":1.4285714285714286,\"id\":\"5c88fa8cf4afda39709c2961\"}}}"
+						}
+					]
+				},
+				{
+					"name": "DELETETOUR",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/tours/5",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours",
+								"5"
+							]
+						},
+						"description": "Exclui um tour específico com base no seu ID. Esta rota é utilizada para remover permanentemente um tour do sistema. Requer privilégios administrativos."
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/tours/5",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"tours",
+										"5"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\"status\":\"sucess\",\"results\":5,\"data\":{\"doc\":[{\"ratingsAverage\":3.9,\"guides\":[{\"role\":\"lead-guide\",\"_id\":\"5c8a21f22f8fb814b56fa18a\",\"name\":\"Aarav Lynn\",\"email\":\"aarav@example.com\",\"photo\":\"user-11.jpg\",\"username\":\"aarav_lynn\"},{\"role\":\"guide\",\"_id\":\"5c8a1f292f8fb814b56fa184\",\"name\":\"Leo Gillespie\",\"email\":\"leo@example.com\",\"photo\":\"user-5.jpg\",\"username\":\"leo_gillespie\"},{\"role\":\"guide\",\"_id\":\"5c8a1f4e2f8fb814b56fa185\",\"name\":\"Jennifer Hardy\",\"email\":\"jennifer@example.com\",\"photo\":\"user-6.jpg\",\"username\":\"jennifer_hardy\"}],\"_id\":\"5c88fa8cf4afda39709c2966\",\"name\":\"The Sports Lover\",\"difficulty\":\"difficult\",\"price\":2997,\"summary\":\"Surfing, skating, parajumping, rock climbing and more, all in one tour\",\"durationWeeks\":null,\"id\":\"5c88fa8cf4afda39709c2966\"},{\"ratingsAverage\":4.4,\"guides\":[{\"role\":\"lead-guide\",\"_id\":\"5c8a22c62f8fb814b56fa18b\",\"name\":\"Miyah Myles\",\"email\":\"miyah@example.com\",\"photo\":\"user-12.jpg\",\"username\":\"miyah_myles\"},{\"role\":\"guide\",\"_id\":\"5c8a23412f8fb814b56fa18c\",\"name\":\"Ben Hadley\",\"email\":\"ben@example.com\",\"photo\":\"user-13.jpg\",\"username\":\"ben_hadley\"}],\"_id\":\"5c88fa8cf4afda39709c296c\",\"name\":\"The Wine Taster\",\"difficulty\":\"easy\",\"price\":1997,\"summary\":\"Exquisite wines, scenic views, exclusive barrel tastings,  and much more\",\"durationWeeks\":null,\"id\":\"5c88fa8cf4afda39709c296c\"},{\"ratingsAverage\":4.5,\"guides\":[{\"role\":\"lead-guide\",\"_id\":\"5c8a21d02f8fb814b56fa189\",\"name\":\"Steve T. Scaife\",\"email\":\"steve@example.com\",\"photo\":\"user-10.jpg\",\"username\":\"steve_t._scaife\"},{\"role\":\"guide\",\"_id\":\"5c8a23412f8fb814b56fa18c\",\"name\":\"Ben Hadley\",\"email\":\"ben@example.com\",\"photo\":\"user-13.jpg\",\"username\":\"ben_hadley\"},{\"role\":\"guide\",\"_id\":\"5c8a1f4e2f8fb814b56fa185\",\"name\":\"Jennifer Hardy\",\"email\":\"jennifer@example.com\",\"photo\":\"user-6.jpg\",\"username\":\"jennifer_hardy\"}],\"_id\":\"5c88fa8cf4afda39709c295a\",\"name\":\"The Snow Adventurer\",\"difficulty\":\"difficult\",\"price\":997,\"summary\":\"Exciting adventure in the snow with snowboarding and skiing\",\"durationWeeks\":null,\"id\":\"5c88fa8cf4afda39709c295a\"},{\"ratingsAverage\":4.6,\"guides\":[{\"role\":\"lead-guide\",\"_id\":\"5c8a22c62f8fb814b56fa18b\",\"name\":\"Miyah Myles\",\"email\":\"miyah@example.com\",\"photo\":\"user-12.jpg\",\"username\":\"miyah_myles\"},{\"role\":\"guide\",\"_id\":\"5c8a201e2f8fb814b56fa186\",\"name\":\"Kate Morrison\",\"email\":\"kate@example.com\",\"photo\":\"user-7.jpg\",\"username\":\"kate_morrison\"}],\"_id\":\"5c88fa8cf4afda39709c295d\",\"name\":\"The City Wanderer\",\"difficulty\":\"easy\",\"price\":1197,\"summary\":\"Living the life of Wanderlust in the US' most beatiful cities\",\"durationWeeks\":null,\"id\":\"5c88fa8cf4afda39709c295d\"},{\"ratingsAverage\":4.7,\"guides\":[{\"role\":\"lead-guide\",\"_id\":\"5c8a21f22f8fb814b56fa18a\",\"name\":\"Aarav Lynn\",\"email\":\"aarav@example.com\",\"photo\":\"user-11.jpg\",\"username\":\"aarav_lynn\"},{\"role\":\"guide\",\"_id\":\"5c8a23412f8fb814b56fa18c\",\"name\":\"Ben Hadley\",\"email\":\"ben@example.com\",\"photo\":\"user-13.jpg\",\"username\":\"ben_hadley\"},{\"role\":\"guide\",\"_id\":\"5c8a201e2f8fb814b56fa186\",\"name\":\"Kate Morrison\",\"email\":\"kate@example.com\",\"photo\":\"user-7.jpg\",\"username\":\"kate_morrison\"}],\"_id\":\"5c88fa8cf4afda39709c2961\",\"name\":\"The Park Camper\",\"difficulty\":\"medium\",\"price\":90,\"summary\":\"Breathing in Nature in America's most spectacular National Parks\",\"durationWeeks\":null,\"id\":\"5c88fa8cf4afda39709c2961\"}]}}"
+						}
+					]
+				},
+				{
+					"name": "TOP-5-CHEAP-TOURS",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/tours/top-5-cheap",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours",
+								"top-5-cheap"
+							]
+						},
+						"description": "Retorna os 5 tours mais baratos e melhor avaliados. Útil para exibir recomendações rápidas de passeios econômicos e populares para os usuários."
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/tours/top-5-cheap",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"tours",
+										"top-5-cheap"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\"status\":\"sucess\",\"results\":5,\"data\":{\"doc\":[{\"ratingsAverage\":3.9,\"guides\":[{\"role\":\"lead-guide\",\"_id\":\"5c8a21f22f8fb814b56fa18a\",\"name\":\"Aarav Lynn\",\"email\":\"aarav@example.com\",\"photo\":\"user-11.jpg\",\"username\":\"aarav_lynn\"},{\"role\":\"guide\",\"_id\":\"5c8a1f292f8fb814b56fa184\",\"name\":\"Leo Gillespie\",\"email\":\"leo@example.com\",\"photo\":\"user-5.jpg\",\"username\":\"leo_gillespie\"},{\"role\":\"guide\",\"_id\":\"5c8a1f4e2f8fb814b56fa185\",\"name\":\"Jennifer Hardy\",\"email\":\"jennifer@example.com\",\"photo\":\"user-6.jpg\",\"username\":\"jennifer_hardy\"}],\"_id\":\"5c88fa8cf4afda39709c2966\",\"name\":\"The Sports Lover\",\"difficulty\":\"difficult\",\"price\":2997,\"summary\":\"Surfing, skating, parajumping, rock climbing and more, all in one tour\",\"durationWeeks\":null,\"id\":\"5c88fa8cf4afda39709c2966\"},{\"ratingsAverage\":4.4,\"guides\":[{\"role\":\"lead-guide\",\"_id\":\"5c8a22c62f8fb814b56fa18b\",\"name\":\"Miyah Myles\",\"email\":\"miyah@example.com\",\"photo\":\"user-12.jpg\",\"username\":\"miyah_myles\"},{\"role\":\"guide\",\"_id\":\"5c8a23412f8fb814b56fa18c\",\"name\":\"Ben Hadley\",\"email\":\"ben@example.com\",\"photo\":\"user-13.jpg\",\"username\":\"ben_hadley\"}],\"_id\":\"5c88fa8cf4afda39709c296c\",\"name\":\"The Wine Taster\",\"difficulty\":\"easy\",\"price\":1997,\"summary\":\"Exquisite wines, scenic views, exclusive barrel tastings,  and much more\",\"durationWeeks\":null,\"id\":\"5c88fa8cf4afda39709c296c\"},{\"ratingsAverage\":4.5,\"guides\":[{\"role\":\"lead-guide\",\"_id\":\"5c8a21d02f8fb814b56fa189\",\"name\":\"Steve T. Scaife\",\"email\":\"steve@example.com\",\"photo\":\"user-10.jpg\",\"username\":\"steve_t._scaife\"},{\"role\":\"guide\",\"_id\":\"5c8a23412f8fb814b56fa18c\",\"name\":\"Ben Hadley\",\"email\":\"ben@example.com\",\"photo\":\"user-13.jpg\",\"username\":\"ben_hadley\"},{\"role\":\"guide\",\"_id\":\"5c8a1f4e2f8fb814b56fa185\",\"name\":\"Jennifer Hardy\",\"email\":\"jennifer@example.com\",\"photo\":\"user-6.jpg\",\"username\":\"jennifer_hardy\"}],\"_id\":\"5c88fa8cf4afda39709c295a\",\"name\":\"The Snow Adventurer\",\"difficulty\":\"difficult\",\"price\":997,\"summary\":\"Exciting adventure in the snow with snowboarding and skiing\",\"durationWeeks\":null,\"id\":\"5c88fa8cf4afda39709c295a\"},{\"ratingsAverage\":4.6,\"guides\":[{\"role\":\"lead-guide\",\"_id\":\"5c8a22c62f8fb814b56fa18b\",\"name\":\"Miyah Myles\",\"email\":\"miyah@example.com\",\"photo\":\"user-12.jpg\",\"username\":\"miyah_myles\"},{\"role\":\"guide\",\"_id\":\"5c8a201e2f8fb814b56fa186\",\"name\":\"Kate Morrison\",\"email\":\"kate@example.com\",\"photo\":\"user-7.jpg\",\"username\":\"kate_morrison\"}],\"_id\":\"5c88fa8cf4afda39709c295d\",\"name\":\"The City Wanderer\",\"difficulty\":\"easy\",\"price\":1197,\"summary\":\"Living the life of Wanderlust in the US' most beatiful cities\",\"durationWeeks\":null,\"id\":\"5c88fa8cf4afda39709c295d\"},{\"ratingsAverage\":4.7,\"guides\":[{\"role\":\"lead-guide\",\"_id\":\"5c8a21f22f8fb814b56fa18a\",\"name\":\"Aarav Lynn\",\"email\":\"aarav@example.com\",\"photo\":\"user-11.jpg\",\"username\":\"aarav_lynn\"},{\"role\":\"guide\",\"_id\":\"5c8a23412f8fb814b56fa18c\",\"name\":\"Ben Hadley\",\"email\":\"ben@example.com\",\"photo\":\"user-13.jpg\",\"username\":\"ben_hadley\"},{\"role\":\"guide\",\"_id\":\"5c8a201e2f8fb814b56fa186\",\"name\":\"Kate Morrison\",\"email\":\"kate@example.com\",\"photo\":\"user-7.jpg\",\"username\":\"kate_morrison\"}],\"_id\":\"5c88fa8cf4afda39709c2961\",\"name\":\"The Park Camper\",\"difficulty\":\"medium\",\"price\":90,\"summary\":\"Breathing in Nature in America's most spectacular National Parks\",\"durationWeeks\":null,\"id\":\"5c88fa8cf4afda39709c2961\"}]}}"
+						}
+					]
+				},
+				{
+					"name": "STATSTOURDIFFICULTY",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/tours/stats",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours",
+								"stats"
+							]
+						},
+						"description": "Retorna estatísticas agregadas dos tours com base na dificuldade. Inclui dados como média de preço, avaliação média, total de tours e faixa de preços. Somente tours com média de avaliações acima de 4.5 são considerados."
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta - sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/api/v1/tours/stats",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"tours",
+										"stats"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\"status\":\"success\",\"data\":{\"stats\":[{\"_id\":\"easy\",\"numTours\":3,\"numRating\":21,\"avgPrice\":1030.3333333333333,\"avgRatings\":4.766666666666667,\"minPrice\":397,\"maxPrice\":1497},{\"_id\":\"medium\",\"numTours\":3,\"numRating\":19,\"avgPrice\":1663.6666666666667,\"avgRatings\":4.766666666666667,\"minPrice\":497,\"maxPrice\":2997},{\"_id\":\"difficult\",\"numTours\":1,\"numRating\":6,\"avgPrice\":997,\"avgRatings\":4.5,\"minPrice\":997,\"maxPrice\":997}]}}"
+						}
+					]
+				}
+			],
+			"description": "Contém as rotas relacionadas à gestão de tours/passeios. Permite listar, buscar, criar, atualizar e excluir tours, além de operações de análise e localização.\n\nContains routes related to tour management. Allows listing, searching, creating, updating, and deleting tours, as well as analytics and location operations."
+		},
+		{
+			"name": "REVIEWS",
+			"item": [
+				{
+					"name": "ALLREVIEWS",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/reviews",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews"
+							]
+						},
+						"description": "Recupera todas as avaliações cadastradas no sistema. Útil para exibir feedbacks de usuários sobre diferentes tours.\n\nRetrieves all reviews registered in the system. Useful for displaying user feedback on different tours."
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta - sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/api/v1/reviews",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"reviews"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\"status\":\"sucess\",\"results\":9,\"data\":{\"doc\":[{\"startLocation\":{\"type\":\"Point\",\"description\":\"Banff, CAN\",\"coordinates\":[-115.570154,51.178456]},\"ratingsAverage\":5,\"ratingsQuantity\":9,\"images\":[\"tour-1-1.jpg\",\"tour-1-2.jpg\",\"tour-1-3.jpg\"],\"startDates\":[\"2021-04-25T09:00:00.000Z\",\"2021-07-20T09:00:00.000Z\",\"2021-10-05T09:00:00.000Z\"],\"secretTour\":false,\"guides\":[{\"role\":\"lead-guide\",\"_id\":\"5c8a21d02f8fb814b56fa189\",\"name\":\"Steve T. Scaife\",\"email\":\"steve@example.com\",\"photo\":\"user-10.jpg\",\"username\":\"steve_t._scaife\"},{\"role\":\"guide\",\"_id\":\"5c8a201e2f8fb814b56fa186\",\"name\":\"Kate Morrison\",\"email\":\"kate@example.com\",\"photo\":\"user-7.jpg\",\"username\":\"kate_morrison\"},{\"role\":\"guide\",\"_id\":\"5c8a1f292f8fb814b56fa184\",\"name\":\"Leo Gillespie\",\"email\":\"leo@example.com\",\"photo\":\"user-5.jpg\",\"username\":\"leo_gillespie\"}],\"_id\":\"5c88fa8cf4afda39709c2951\",\"name\":\"The Forest Hiker\",\"duration\":5,\"maxGroupSize\":25,\"difficulty\":\"easy\",\"price\":397,\"summary\":\"Breathtaking hike through the Canadian Banff National Park\",\"description\":\"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\",\"imageCover\":\"tour-1-cover.jpg\",\"locations\":[{\"type\":\"Point\",\"coordinates\":[-116.214531,51.417611],\"_id\":\"5c88fa8cf4afda39709c2954\",\"description\":\"Banff National Park\"},{\"type\":\"Point\",\"coordinates\":[-118.076152,52.875223],\"_id\":\"5c88fa8cf4afda39709c2953\",\"description\":\"Jasper National Park\"},{\"type\":\"Point\",\"coordinates\":[-117.490309,51.261937],\"_id\":\"5c88fa8cf4afda39709c2952\",\"description\":\"Glacier National Park of Canada\"}],\"slug\":\"the-forest-hiker\",\"durationWeeks\":0.7142857142857143,\"id\":\"5c88fa8cf4afda39709c2951\"}]}}"
+						}
+					]
+				},
+				{
+					"name": "DELETEREVIEW",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is valid JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(function () {",
+									"        pm.response.json();",
+									"    }).not.to.throw();",
+									"});",
+									"",
+									"pm.test(\"Response has 'status' and 'message' fields\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('status');",
+									"    pm.expect(jsonData).to.have.property('message');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/reviews/68f2bf37fd6c31129809afa3",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"68f2bf37fd6c31129809afa3"
+							]
+						},
+						"description": "Exclui uma avaliação específica com base no seu ID. Esta rota é utilizada para remover permanentemente uma avaliação do sistema.\n\nDeletes a specific review based on its ID. This route is used to permanently remove a review from the system."
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/reviews/68f3d3c335830006006aff11",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"reviews",
+										"68f3d3c335830006006aff11"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": "(sem conteúdo)"
+						}
+					]
+				},
+				{
+					"name": "UPDATEREVIEW",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is valid JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(function () {",
+									"        pm.response.json();",
+									"    }).not.to.throw();",
+									"});",
+									"",
+									"pm.test(\"Response has 'status' and 'data' fields\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('status');",
+									"    pm.expect(jsonData).to.have.property('data');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"review\": \"atualizei\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/reviews/68e9dd7ac798a535bcf85c16",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"68e9dd7ac798a535bcf85c16"
+							]
+						},
+						"description": "Atualiza uma avaliação existente com base no seu ID. Permite modificar o comentário ou a nota atribuída pelo usuário.\n\nUpdates an existing review based on its ID. Allows modifying the comment or the rating given by the user."
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"review\":\"atualizei\"}",
+									"options": {
+										"raw": "json"
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/reviews/68f2bf35fd6c31129809af9d",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"reviews",
+										"68f2bf35fd6c31129809af9d"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\"status\":\"success\",\"data\":{\"doc\":{\"_id\":\"68f2bf35fd6c31129809af9d\",\"review\":\"atualizei\",\"rating\":1,\"user\":\"68c89b5dc942888160bcdf71\",\"tour\":\"68e9dcd6c798a535bcf85bfa\",\"createdAt\":\"2025-10-17T22:12:05.193Z\",\"__v\":0,\"id\":\"68f2bf35fd6c31129809af9d\"}}}"
+						}
+					]
+				}
+			],
+			"description": "Contém as rotas relacionadas às avaliações dos usuários sobre os tours. Permite listar, atualizar e excluir avaliações.\n\nContains routes related to user reviews about tours. Allows listing, updating, and deleting reviews."
+		},
+		{
+			"name": "TOURS/REVIEWS",
+			"item": [
+				{
+					"name": "TOURSREVIEWS",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/tours/68e9dcd6c798a535bcf85bfa/reviews",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours",
+								"68e9dcd6c798a535bcf85bfa",
+								"reviews"
+							]
+						},
+						"description": "Recupera todas as avaliações de um tour específico, identificado pelo seu ID. Útil para exibir feedbacks de usuários sobre um determinado passeio.\n\nRetrieves all reviews for a specific tour, identified by its ID. Useful for displaying user feedback about a particular tour."
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/tours/68e9dcd6c798a535bcf85bfa/reviews",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"tours",
+										"68e9dcd6c798a535bcf85bfa",
+										"reviews"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\"status\":\"sucess\",\"results\":11,\"data\":{\"doc\":[{\"_id\":\"68f3e69e35830006006aff80\",\"review\":\"vou postar aqui\",\"rating\":1,\"user\":{\"_id\":\"68f3cdfd35830006006afef1\",\"username\":\"pfssssssssvv5vv\"},\"tour\":\"68e9dcd6c798a535bcf85bfa\",\"createdAt\":\"2025-10-18T19:12:30.292Z\",\"id\":\"68f3e69e35830006006aff80\"},{\"_id\":\"68f2bf35fd6c31129809af9d\",\"review\":\"atualizei\",\"rating\":1,\"user\":null,\"tour\":\"68e9dcd6c798a535bcf85bfa\",\"createdAt\":\"2025-10-17T22:12:05.193Z\",\"id\":\"68f2bf35fd6c31129809af9d\"},{\"_id\":\"68f2bf34fd6c31129809af97\",\"review\":\"vou postar aqui\",\"rating\":1,\"user\":null,\"tour\":\"68e9dcd6c798a535bcf85bfa\",\"createdAt\":\"2025-10-17T22:12:04.061Z\",\"id\":\"68f2bf34fd6c31129809af97\"},{\"_id\":\"68f2bf32fd6c31129809af91\",\"review\":\"vou postar aqui\",\"rating\":1,\"user\":null,\"tour\":\"68e9dcd6c798a535bcf85bfa\",\"createdAt\":\"2025-10-17T22:12:02.874Z\",\"id\":\"68f2bf32fd6c31129809af91\"},{\"_id\":\"68f2bef7fd6c31129809af7d\",\"review\":\"vou postar aqui\",\"rating\":5,\"user\":null,\"tour\":\"68e9dcd6c798a535bcf85bfa\",\"createdAt\":\"2025-10-17T22:11:03.399Z\",\"id\":\"68f2bef7fd6c31129809af7d\"},{\"_id\":\"68f2bef5fd6c31129809af77\",\"review\":\"vou postar aqui\",\"rating\":5,\"user\":null,\"tour\":\"68e9dcd6c798a535bcf85bfa\",\"createdAt\":\"2025-10-17T22:11:01.973Z\",\"id\":\"68f2bef5fd6c31129809af77\"},{\"_id\":\"68f2bef4fd6c31129809af71\",\"review\":\"vou postar aqui\",\"rating\":5,\"user\":null,\"tour\":\"68e9dcd6c798a535bcf85bfa\",\"createdAt\":\"2025-10-17T22:11:00.720Z\",\"id\":\"68f2bef4fd6c31129809af71\"},{\"_id\":\"68f2bef3fd6c31129809af6b\",\"review\":\"vou postar aqui\",\"rating\":5,\"user\":null,\"tour\":\"68e9dcd6c798a535bcf85bfa\",\"createdAt\":\"2025-10-17T22:10:59.771Z\",\"id\":\"68f2bef3fd6c31129809af6b\"},{\"_id\":\"68f2beaafd6c31129809af60\",\"review\":\"vou postar aqui\",\"rating\":2,\"user\":null,\"tour\":\"68e9dcd6c798a535bcf85bfa\",\"createdAt\":\"2025-10-17T22:09:46.984Z\",\"id\":\"68f2beaafd6c31129809af60\"},{\"_id\":\"68f2bea6fd6c31129809af5a\",\"review\":\"vou postar aqui\",\"rating\":4,\"user\":null,\"tour\":\"68e9dcd6c798a535bcf85bfa\",\"createdAt\":\"2025-10-17T22:09:42.321Z\",\"id\":\"68f2bea6fd6c31129809af5a\"}]}}"
+						}
+					]
+				},
+				{
+					"name": "ADDREVIEW",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"review\": \"vou postar aqui\", \"rating\": \"1\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/tours/68e9dcd6c798a535bcf85bfa/reviews",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tours",
+								"68e9dcd6c798a535bcf85bfa",
+								"reviews"
+							]
+						},
+						"description": "Adiciona uma nova avaliação para um tour específico. O corpo da requisição deve conter os dados da avaliação, como nota e comentário.\n\nAdds a new review for a specific tour. The request body must contain the review data, such as rating and comment."
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"review\":\"vou postar aqui\",\"rating\":\"1\"}",
+									"options": {
+										"raw": "json"
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/tours/68e9dcd6c798a535bcf85bfa/reviews",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"tours",
+										"68e9dcd6c798a535bcf85bfa",
+										"reviews"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\"status\":\"success\",\"data\":{\"tour\":{\"_id\":\"68f3e69e35830006006aff80\",\"review\":\"vou postar aqui\",\"rating\":1,\"user\":\"68f3cdfd35830006006afef1\",\"tour\":\"68e9dcd6c798a535bcf85bfa\",\"createdAt\":\"2025-10-18T19:12:30.292Z\",\"__v\":0,\"id\":\"68f3e69e35830006006aff80\"}}}"
+						}
+					]
+				}
+			],
+			"description": "Contém as rotas relacionadas às avaliações de tours específicos. Permite listar e adicionar avaliações para um tour determinado.\n\nContains routes related to reviews for specific tours. Allows listing and adding reviews for a given tour."
+		},
+		{
+			"name": "USERS",
+			"item": [
+				{
+					"name": "ALLUSERS",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/users",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						},
+						"description": "Recupera todos os usuários cadastrados no sistema. Útil para exibir, filtrar ou administrar usuários.\n\nRetrieves all users registered in the system. Useful for displaying, filtering, or administering users."
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta - sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/api/v1/users",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\"status\":\"success\",\"results\":2,\"data\":{\"users\":[{\"_id\":\"1\",\"name\":\"João Silva\",\"email\":\"joao@example.com\"},{\"_id\":\"2\",\"name\":\"Maria Souza\",\"email\":\"maria@example.com\"}]}}"
+						}
+					]
+				},
+				{
+					"name": "IDUSER",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is valid JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(function () {",
+									"        pm.response.json();",
+									"    }).not.to.throw();",
+									"});",
+									"",
+									"pm.test(\"Response has 'status' and 'data' fields\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('status');",
+									"    pm.expect(jsonData).to.have.property('data');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/users/68981152beaf7d64b0cc6974",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"68981152beaf7d64b0cc6974"
+							]
+						},
+						"description": "Recupera os detalhes completos de um usuário específico com base no seu ID. Inclui informações como nome de usuário, e-mail, função e datas relevantes.\n\nRetrieves the complete details of a specific user by their ID. Includes information such as username, email, role, and relevant dates."
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta - sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/api/v1/users/68981152beaf7d64b0cc6974",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"68981152beaf7d64b0cc6974"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\"status\":\"success\",\"data\":{\"user\":{\"_id\":\"68981152beaf7d64b0cc6974\",\"name\":\"João Silva\",\"email\":\"joao@example.com\",\"role\":\"user\"}}}"
+						}
+					]
+				},
+				{
+					"name": "DELETEME",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is valid JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(function () {",
+									"        pm.response.json();",
+									"    }).not.to.throw();",
+									"});",
+									"",
+									"pm.test(\"Response has 'status' and 'message' fields\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('status');",
+									"    pm.expect(jsonData).to.have.property('message');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"password\":\"Pauloloco123*\", \"passwordConfirm\": \"Pauloloco123*\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users/deleteme",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"deleteme"
+							]
+						},
+						"description": "Exclui o próprio usuário autenticado do sistema. Esta ação é irreversível e remove permanentemente o perfil e os dados associados.\n\nDeletes the currently authenticated user from the system. This action is irreversible and permanently removes the profile and associated data."
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta - sucesso",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/api/v1/users/deleteme",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"deleteme"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\"status\":\"success\",\"message\":\"User deleted successfully\"}"
+						}
+					]
+				},
+				{
+					"name": "DELETEUSER",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is valid JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(function () {",
+									"        pm.response.json();",
+									"    }).not.to.throw();",
+									"});",
+									"",
+									"pm.test(\"Response has 'status' and 'message' fields\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('status');",
+									"    pm.expect(jsonData).to.have.property('message');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/users/deleteuser/68e44244b2f6578990223e3a",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"deleteuser",
+								"68e44244b2f6578990223e3a"
+							]
+						},
+						"description": "Exclui um usuário específico com base no seu ID. Esta rota é utilizada para remover permanentemente um usuário do sistema.\n\nDeletes a specific user based on their ID. This route is used to permanently remove a user from the system."
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta - sucesso",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/api/v1/users/deleteuser/68e44244b2f6578990223e3a",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"deleteuser",
+										"68e44244b2f6578990223e3a"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\"status\":\"success\",\"message\":\"User deleted successfully\"}"
+						}
+					]
+				},
+				{
+					"name": "UPDATEME",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is valid JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(function () {",
+									"        pm.response.json();",
+									"    }).not.to.throw();",
+									"});",
+									"",
+									"pm.test(\"Response has 'status' and 'data' fields\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('status');",
+									"    pm.expect(jsonData).to.have.property('data');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users/updateme",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"updateme"
+							]
+						},
+						"description": "Atualiza os dados do próprio usuário autenticado. Permite modificar informações como nome, e-mail ou outros dados do perfil.\n\nUpdates the data of the currently authenticated user. Allows modifying information such as name, email, or other profile data."
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta - sucesso",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/api/v1/users/updateme",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"updateme"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\"status\":\"success\",\"data\":{\"user\":{\"_id\":\"68e9deadc798a535bcf85c35\",\"name\":\"João Silva\",\"email\":\"joao@example.com\"}}}"
+						}
+					]
+				},
+				{
+					"name": "UPDATEUSER",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\": \"paulaoendjendjendjendetriz7@gmail.com\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users/updateuser/68e9deadc798a535bcf85c35",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"updateuser",
+								"68e9deadc798a535bcf85c35"
+							]
+						},
+						"description": "Atualiza os dados de um usuário específico com base no seu ID. Permite modificar informações como nome, e-mail ou outros dados do perfil.\n\nUpdates the data of a specific user by their ID. Allows modifying information such as name, email, or other profile data."
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta - sucesso",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/api/v1/users/updateuser/68e9deadc798a535bcf85c35",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"updateuser",
+										"68e9deadc798a535bcf85c35"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\"status\":\"success\",\"data\":{\"user\":{\"_id\":\"68e9deadc798a535bcf85c35\",\"name\":\"João Silva\",\"email\":\"joao@example.com\"}}}"
+						}
+					]
+				}
+			],
+			"description": "Contém as rotas relacionadas à gestão de usuários do sistema. Permite listar, buscar, atualizar e excluir usuários, além de operações no próprio perfil.\n\nContains routes related to user management in the system. Allows listing, searching, updating, and deleting users, as well as operations on the user's own profile."
+		},
+		{
+			"name": "AUTHENTICATIONS",
+			"item": [
+				{
+					"name": "SIGNUP",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let token;\r",
+									"\r",
+									"// 🔹 1. Tenta pegar o token do cookie (jwt)\r",
+									"token = pm.cookies.get('jwt');\r",
+									"\r",
+									"// 🔹 2. Se não achar no cookie, tenta pegar do corpo JSON (ex: resetPassword)\r",
+									"if (!token) {\r",
+									"    try {\r",
+									"        let jsonData = pm.response.json();\r",
+									"        if (jsonData.token) {\r",
+									"            token = jsonData.token;\r",
+									"        }\r",
+									"    } catch (err) {\r",
+									"        console.log(\"⚠️ Resposta não é JSON válido:\", err.message);\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"// 🔹 3. Se achar o token em algum lugar, salva no ambiente\r",
+									"if (token) {\r",
+									"    pm.environment.set(\"jwt\", token);\r",
+									"    console.log(\"✅ Token atualizado:\", token);\r",
+									"} else {\r",
+									"    console.log(\"⚠️ Nenhum token encontrado (nem em cookie nem em JSON).\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"name\": \"Paulo Schmedtmaan\",\r\n    \"email\": \"paulotriz7d777777s@gmail.com\",\r\n    \"role\": \"user\",\r\n    \"password\": \"Pauloloco123*\",\r\n    \"passwordConfirm\": \"Pauloloco123*\",\r\n    \"username\": \"paulojjdxffddfsssssvv5vv\"\r\n  }  ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users/signup",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"signup"
+							]
+						},
+						"description": "Cria um novo usuário no sistema com base nos dados fornecidos. Útil para registrar novos usuários.\n\nCreates a new user in the system based on the provided data. Useful for registering new users."
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"name\":\"Paulo sssSchsmmedtmaan\",\"email\":\"test123@gmail.com\",\"role\":\"admin\",\"password\":\"Pauloloco123*\",\"passwordConfirm\":\"Pauloloco123*\",\"username\":\"pfsssssssssvv5vv\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/users/signup",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"signup"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\"status\":\"sucess\",\"data\":{\"role\":\"admin\",\"active\":true,\"_id\":\"68f3e71835830006006aff87\",\"username\":\"pfsssssssssvv5vv\",\"email\":\"test123@gmail.com\",\"__v\":0}}"
+						}
+					]
+				},
+				{
+					"name": "LOGIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let token;\r",
+									"\r",
+									"// 🔹 1. Tenta pegar o token do cookie (jwt)\r",
+									"token = pm.cookies.get('jwt');\r",
+									"\r",
+									"// 🔹 2. Se não achar no cookie, tenta pegar do corpo JSON (ex: resetPassword)\r",
+									"if (!token) {\r",
+									"    try {\r",
+									"        let jsonData = pm.response.json();\r",
+									"        if (jsonData.token) {\r",
+									"            token = jsonData.token;\r",
+									"        }\r",
+									"    } catch (err) {\r",
+									"        console.log(\"⚠️ Resposta não é JSON válido:\", err.message);\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"// 🔹 3. Se achar o token em algum lugar, salva no ambiente\r",
+									"if (token) {\r",
+									"    pm.environment.set(\"jwt\", token);\r",
+									"    console.log(\"✅ Token atualizado:\", token);\r",
+									"} else {\r",
+									"    console.log(\"⚠️ Nenhum token encontrado (nem em cookie nem em JSON).\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"email\": \"paulaotriz7@gmail.com\",\r\n    \"password\": \"Pauloloco123*\"\r\n}  ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						},
+						"description": "Realiza a autenticação do usuário com e-mail e senha. Retorna um token JWT em caso de sucesso.\n\nAuthenticates the user with email and password. Returns a JWT token on success."
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"email\":\"test@gmail.com\",\"password\":\"{{password}}\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/users/login",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\"status\":\"sucess\"}"
+						}
+					]
+				},
+				{
+					"name": "FORGOTPASSWORD",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is valid JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(function () {",
+									"        pm.response.json();",
+									"    }).not.to.throw();",
+									"});",
+									"",
+									"pm.test(\"Response has 'status' and 'message' fields\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('status');",
+									"    pm.expect(jsonData).to.have.property('message');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\": \"pauloedvandrodekmkvfvvvviddfficrjcriiiivvv@gmail.com\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users/forgotpassword",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"forgotpassword"
+							]
+						},
+						"description": "Envia um e-mail para redefinição de senha ao usuário informado. Útil para recuperação de acesso.\n\nSends a password reset email to the specified user. Useful for account recovery."
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"email\": \"pauloedvandrodekmkvfvvvviddfficrjcriiiivvv@gmail.com\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/users/forgotpassword",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"forgotpassword"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\"status\":\"fail\",\"message\":\"Senha incorreta, tente novamente!\",\"err\":{\"statusCode\":401,\"status\":\"fail\",\"isOperational\":true},\"stack\":\"Error: Senha incorreta, tente novamente!\\n    at C:\\\\Users\\\\Paulo edvandro rocha\\\\nodeApi\\\\starter\\\\controllers\\\\authenticationController.js:210:17\"}"
+						}
+					]
+				},
+				{
+					"name": "UPDATEPASSWORD",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let token;\r",
+									"\r",
+									"// 🔹 1. Tenta pegar o token do cookie (jwt)\r",
+									"token = pm.cookies.get('jwt');\r",
+									"\r",
+									"// 🔹 2. Se não achar no cookie, tenta pegar do corpo JSON (ex: resetPassword)\r",
+									"if (!token) {\r",
+									"    try {\r",
+									"        let jsonData = pm.response.json();\r",
+									"        if (jsonData.token) {\r",
+									"            token = jsonData.token;\r",
+									"        }\r",
+									"    } catch (err) {\r",
+									"        console.log(\"⚠️ Resposta não é JSON válido:\", err.message);\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"// 🔹 3. Se achar o token em algum lugar, salva no ambiente\r",
+									"if (token) {\r",
+									"    pm.environment.set(\"jwt\", token);\r",
+									"    console.log(\"✅ Token atualizado:\", token);\r",
+									"} else {\r",
+									"    console.log(\"⚠️ Nenhum token encontrado (nem em cookie nem em JSON).\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"currentPassword\": \"Pauloloco123*\", \"newPassword\": \"Pauloloco1223*\", \"newPasswordConfirm\": \"Pauloloco1223*\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users/updatepassword",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"updatepassword"
+							]
+						},
+						"description": "Atualiza a senha do usuário autenticado. Requer a senha atual e a nova senha.\n\nUpdates the password of the authenticated user. Requires the current and new password."
+					},
+					"response": [
+						{
+							"name": "Sucesso",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "",
+										"value": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"currentPassword\":\"Pauloloco123*\",\"newPassword\":\"Pauloloco1223*\",\"newPasswordConfirm\":\"Pauloloco1223*\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/users/updatepassword",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"updatepassword"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "",
+									"value": "",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\"status\":\"sucess\"}"
+						}
+					]
+				},
+				{
+					"name": "RESETPASSWORD",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.json().token);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let token;\r",
+									"\r",
+									"// 🔹 1. Tenta pegar o token do cookie (jwt)\r",
+									"token = pm.cookies.get('jwt');\r",
+									"\r",
+									"// 🔹 2. Se não achar no cookie, tenta pegar do corpo JSON (ex: resetPassword)\r",
+									"if (!token) {\r",
+									"    try {\r",
+									"        let jsonData = pm.response.json();\r",
+									"        if (jsonData.token) {\r",
+									"            token = jsonData.token;\r",
+									"        }\r",
+									"    } catch (err) {\r",
+									"        console.log(\"⚠️ Resposta não é JSON válido:\", err.message);\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"// 🔹 3. Se achar o token em algum lugar, salva no ambiente\r",
+									"if (token) {\r",
+									"    pm.environment.set(\"jwt\", token);\r",
+									"    console.log(\"✅ Token atualizado:\", token);\r",
+									"} else {\r",
+									"    console.log(\"⚠️ Nenhum token encontrado (nem em cookie nem em JSON).\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"newPassword\": \"essaSenhaLouca123*\", \"newPasswordConfirm\": \"essaSenhaLouca123*\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users/resetpassword/d4f9e6827cccaee912846cabd9fd223b90a75b9bbf6613d43a449995f5510f5c",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"resetpassword",
+								"d4f9e6827cccaee912846cabd9fd223b90a75b9bbf6613d43a449995f5510f5c"
+							]
+						},
+						"description": "Permite redefinir a senha do usuário utilizando um token de redefinição.\n\nAllows the user to reset their password using a reset token."
+					},
+					"response": []
+				},
+				{
+					"name": "RESENDEMAILCONFIRMATION",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"email\": \"paulaotriz7@gmail.com\",\r\n    \"password\": \"Pauloloco123*\"\r\n}  "
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users/resend-email-confirmation",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"resend-email-confirmation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EMAILCONFIRMATION",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"description": "Contém as rotas relacionadas à autenticação e gerenciamento de senhas dos usuários. Permite registrar, autenticar, recuperar e atualizar senhas.\n\nContains routes related to user authentication and password management. Allows registering, authenticating, recovering, and updating passwords."
+		},
+		{
+			"name": "BOOKINGS",
+			"item": [
+				{
+					"name": "CHECKOUTBOOKING",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "CREATEBOOKING",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/bookings",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATEBOOKING",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/bookings/5c88fa8cf4afda39709c2951",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bookings",
+								"5c88fa8cf4afda39709c2951"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GETALLBOOKINGS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/bookings",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETEBOOKING",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/bookings/5c88fa8cf4afda39709c2951",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bookings",
+								"5c88fa8cf4afda39709c2951"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GETBOOKING",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/bookings/5c88fa8cf4afda39709c2951",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bookings",
+								"5c88fa8cf4afda39709c2951"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

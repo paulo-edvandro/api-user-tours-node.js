@@ -1,48 +1,65 @@
-### API de Turismo: User/Tours
+# Natours API 🏔️ - Sistema de Reserva de Tours
 
-Este é um projeto de back-end para um site completo de turismo, com diferentes perfis de usuários e tours. A API é responsável por gerenciar dados de tours e usuários, garantindo um sistema robusto e escalável.
+Este é um projeto de back-end robusto para uma plataforma de turismo, focado em **Arquitetura MVC**, segurança de dados e integrações complexas. Desenvolvido para consolidar os fundamentos de Node.js antes da transição para o ecossistema **Nest.js e TypeScript**.
 
-O projeto foi desenvolvido como parte de um curso online na **Udemy**. **O front-end em HTML, CSS e JavaScript foi fornecido como material didático do curso**, e meu trabalho se concentrou exclusivamente no desenvolvimento da API e do back-end.
+## 🔗 Links Úteis
 
-## Preview
+  * **Live Demo:** [https://api-natours-75jm.onrender.com/](https://api-natours-75jm.onrender.com/)
+  * **Documentação/Testes:** O arquivo JSON da coleção do Postman está disponível na pasta `/postman` deste repositório.
 
-<img width="1363" height="722" alt="Captura de tela 2025-09-20 014816" src="https://github.com/user-attachments/assets/7ed7386d-e77c-480a-bb1a-5cd3f12c7c7e" />
+## 🛠️ Tecnologias e Implementações
 
----
+### Back-end & Infraestrutura
 
-### Status do Projeto
+  * **Node.js & Express.js:** Motor principal da aplicação.
+  * **MongoDB & Mongoose:** Modelagem de dados NoSQL com referenciamento, populações e agregadores.
+  * **Stripe API:** Fluxo completo de checkout e processamento automático de reservas via **Webhooks**.
+  * **Render:** Hospedagem e Deploy contínuo.
 
-**Em desenvolvimento.** As funcionalidades de back-end estão em fase de conclusão. O objetivo é finalizar o projeto e depois iniciar a criação de um **front-end completo** para consumir a API.
+### Segurança (Camada de Produção)
 
----
+  * **Autenticação JWT:** Login, Signup e recuperação de senha.
+  * **Segurança de Dados:** Implementação de `bcrypt` para hash de senhas e `helmet` para headers HTTP.
+  * **Proteção de API:** \* `express-rate-limit` contra ataques de força bruta.
+      * `mongo-sanitize` contra NoSQL Injection.
+      * `xss-clean` para sanitização de inputs do usuário.
 
-### Funcionalidades
+### Funcionalidades do Projeto
 
-* **Gerenciamento de Usuários:**
-    * Criação de novos usuários (**`signup`**) e login (**`login`**).
-    * Rotas protegidas por autenticação e autorização (somente usuários logados podem acessar certas rotas).
-* **Gerenciamento de Tours:**
-    * Criação, leitura, atualização e exclusão de tours (CRUD).
-    * Acesso restrito para administradores ou usuários específicos.
-* **APIs RESTful:**
-    * Todos os endpoints foram construídos seguindo o padrão REST.
+  * **CRUD Completo:** Tours, Usuários, Reviews e Reservas.
+  * **Filtros Avançados:** Paginação, ordenação e filtragem dinâmica de campos na API.
+  * **Processamento de Imagens:** Upload e redimensionamento automático de fotos de perfil com `Sharp`.
+  * **Templates Server-Side:** Renderização de e-mails e páginas informativas usando `Pug`.
 
----
+## 📂 Como rodar localmente
 
-### Como Testar a API (via Postman)
+1.  **Clone o repositório:**
 
-A API está hospedada publicamente. Você pode explorar todos os endpoints e payloads de exemplo na documentação oficial do Postman. [👉 Documentação Completa da API no Postman](https://documenter.getpostman.com/view/46078241/2sB3QQJTaT).
+    ```bash
+    git clone https://github.com/seu-usuario/seu-repositorio.git
+    ```
 
-**URL Base:** `https://api-user-tours-node-js.onrender.com/api/v1`
+2.  **Instale as dependências:**
 
----
-### Tecnologias Utilizadas
+    ```bash
+    npm install
+    ```
 
-* **Back-end:**
-    * **Node.js**
-    * **Express.js**
-    * **MongoDB** (via Mongoose)
-    * **JavaScript**
-    * **Outras Ferramentas:** Render (para hospedagem), Postman
+3.  **Configure as variáveis de ambiente:**
 
----
+      * Crie um arquivo `config.env` na raiz do projeto.
+      * Utilize o arquivo `.env.example` como guia para preencher suas chaves do MongoDB, Stripe e JWT.
+
+4.  **Inicie o servidor:**
+
+    ```bash
+    npm start
+    ```
+
+## 🚀 Próximos Passos
+
+Este projeto marca o fim da minha jornada com **Express.js e Mongoose**. Atualmente, estou aplicando os conceitos de Injeção de Dependência e Design Patterns aprendidos aqui em arquiteturas mais escaláveis utilizando **Nest.js e PostgreSQL**.
+
+-----
+
+*Desenvolvido como parte do curso "Node.js, Express, MongoDB & More" de Jonas Schmedtmann, com foco exclusivo no desenvolvimento do Back-end.*
