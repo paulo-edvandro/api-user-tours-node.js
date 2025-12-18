@@ -109,7 +109,7 @@ module.exports = (err, req, res, next) => {
     //AQUI VAI SER UNDEFINED SE O ERRO FOI ENVIADO POR NÓS MESMOS COMO OPERACIONAL; SÓ APARECERÁ SE FOR ERRO ENVIADO PELO MONGOOSE
     const handlers = errorHandlers[err.name] || errorHandlers[err.code];
 
-    let error = { ...err };
+    let error = Object.create(err);
     error.message = err.message;
     error.stack = err.stack;
 
