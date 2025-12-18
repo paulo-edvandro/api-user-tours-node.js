@@ -21,7 +21,7 @@ function jwtSign(id) {
 }
 function createAndSendToken(
   user,
-  req
+  req,
   res,
   statusCode,
   sendUser = false,
