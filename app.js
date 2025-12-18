@@ -18,10 +18,16 @@ const hpp = require("hpp");
 const cors = require("cors");
 const compression = require("compression");
 
+app.enable("trust proxy");
 //adicionando comentarios aquii
 
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "/starter/views"));
+
+app.use(cors());
+
+app.options("*", cors());
+
 app.use(express.static(path.join(__dirname, "starter", "public")));
 //segurança de http headers
 // Configuração do Helmet com CSP personalizado
@@ -80,12 +86,6 @@ app.use((req, res, next) => {
   // console.log(req.cookies);
   next();
 });
-app.use(
-  cors({
-    origin: "http://127.0.0.1:8000", // ou o domínio do seu front se for diferente
-    credentials: true, // 🔥 permite o envio de cookies entre client/server
-  })
-);
 
 app.use("/api/v1/bookings", bookingRouter);
 app.use("/", viewsRouter);

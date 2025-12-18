@@ -39,3 +39,10 @@ process.on("uncaughtException", (err) => {
 
   process.exit(1);
 });
+
+process.on('SIGTERM', () => {
+    console.log('👋 SIGTERM recebido. Iniciando encerramento elegante...');
+    server.close(() => {
+        console.log('❌ Servidor Express encerrado.');
+    });
+});

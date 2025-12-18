@@ -38,7 +38,7 @@ function createAndSendToken(
     // secure: true,
     httpOnly: true,
     sameSite: 'Lax',
-    secure: process.env.NODE_ENV === 'production',
+    secure: secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
   };
 
   user.password = undefined;
