@@ -7,6 +7,7 @@ import { bookTour } from './stripe';
 import { resendEmail } from './resendEmail';
 import { forgotPassword } from './forgotPassword';
 import { resetPassword } from './resetPassword';
+import { showAlert } from './alerts';
 
 const bookBtn = document.getElementById('book-tour');
 const mapElement = document.getElementById('map');
@@ -158,3 +159,6 @@ if (resetPasswordForm) {
       'Redefinir Senha';
   });
 }
+
+const alertMessage = document.querySelector('body').dataset.alert;
+if (alertMessage) showAlert('success', alertMessage, 13);

@@ -8,6 +8,9 @@ const bookingsController = require('../controllers/bookingsController');
 // app.get("/tour", (req, res) => {
 //   res.status(200).render("tour", { title: "tour" });
 // });
+
+router.use(viewsController.alerts);
+
 router.get('/login', viewsController.getLogin);
 
 router.get(
@@ -23,7 +26,6 @@ router.get('/emailConfirmed', viewsController.getEmailConfirmedPage);
 
 router.get(
   '/',
-  bookingsController.createBookingCheckout,
   authenticationController.isLoginIn,
   viewsController.getOverview,
 );

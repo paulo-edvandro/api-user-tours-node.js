@@ -24,7 +24,6 @@ app.enable("trust proxy");
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "/starter/views"));
 
-
 //Cors, mas não é a melhor opção. Não previine ataques de outros sites;
 app.use(cors());
 app.options("*", cors());
@@ -38,9 +37,14 @@ app.use(
   })
 );
 
-app.use(cookieParser());
+app.post(
+  "webhook-checkout",
+  express.raw({ type: "application/json" }),
+  bookingController.webhookCheckout
+);
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
+app.use(cookieParser());
 
 const limiter = rateLimit({
   max: 1000,
