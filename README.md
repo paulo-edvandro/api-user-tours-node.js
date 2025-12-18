@@ -36,7 +36,7 @@ Este é um projeto de back-end robusto para uma plataforma de turismo, focado em
 1.  **Clone o repositório:**
 
     ```bash
-    git clone https://github.com/seu-usuario/seu-repositorio.git
+    git clone https://github.com/paulo-edvandro/api-user-tours-node.js.git
     ```
 
 2.  **Instale as dependências:**
