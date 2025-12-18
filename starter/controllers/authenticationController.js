@@ -8,7 +8,6 @@ const Email = require('../utils/Email');
 const crypto = require('crypto');
 
 const url = (req, caminho, flag, token) => {
-
   if (flag !== true) {
     return `${req.protocol}://${req.get('host')}/${caminho}`;
   }
@@ -22,6 +21,7 @@ function jwtSign(id) {
 }
 function createAndSendToken(
   user,
+  req
   res,
   statusCode,
   sendUser = false,
@@ -38,7 +38,7 @@ function createAndSendToken(
     // secure: true,
     httpOnly: true,
     sameSite: 'Lax',
-    secure: secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
   };
 
   user.password = undefined;
@@ -114,7 +114,7 @@ exports.emailConfirmation = catchAsync(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
   await new Email(user, url(req, 'me')).sendWelcome();
 
-  createAndSendToken(user, res, 200, false, false, true, '/');
+  createAndSendToken(user, req, res, 200, false, false, true, '/');
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -133,7 +133,7 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError(401, 'Confirme seu email!'));
   }
 
-  createAndSendToken(user, res, 200, true, 'Sucesso! Usuário logado!');
+  createAndSendToken(user, req, res, 200, true, 'Sucesso! Usuário logado!');
 });
 
 exports.logout = (req, res) => {
@@ -281,7 +281,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   user.passwordResetToken = undefined;
   user.passwordResetExpires = undefined;
   await user.save();
-  createAndSendToken(user, res, 200);
+  createAndSendToken(user, req, res, 200);
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
@@ -307,7 +307,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   user.passwordConfirm = req.body.passwordConfirm;
   await user.save();
 
-  createAndSendToken(user, res, 200);
+  createAndSendToken(user, req, res, 200);
 });
 
 exports.resendEmailToken = catchAsync(async (req, res, next) => {

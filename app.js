@@ -24,8 +24,9 @@ app.enable("trust proxy");
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "/starter/views"));
 
-app.use(cors());
 
+//Cors, mas não é a melhor opção. Não previine ataques de outros sites;
+app.use(cors());
 app.options("*", cors());
 
 app.use(express.static(path.join(__dirname, "starter", "public")));
