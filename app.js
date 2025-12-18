@@ -10,6 +10,7 @@ const toursRouter = require("./starter/routes/toursRoutes");
 const usersRouter = require("./starter/routes/usersRoutes");
 const viewsRouter = require("./starter/routes/viewsRoutes");
 const bookingRouter = require("./starter/routes/bookingsRoutes");
+const bookingController = require("./starter/controllers/bookingsController");
 const reviewsRouter = require("./starter/routes/reviewsRoutes");
 const globalErrorHandler = require("./starter/controllers/globalErrorController");
 const mongoSanitize = require("express-mongo-sanitize");
