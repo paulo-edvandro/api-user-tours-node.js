@@ -5,14 +5,8 @@ const catchAsync = require('../utils/catchAsync');
 const { promisify } = require('util');
 const Email = require('../utils/Email');
 const crypto = require('crypto');
+const url = require('../utils/url');
 
-const url = (req, caminho, flag, token) => {
-  if (flag !== true) {
-    return `${req.protocol}://${req.get('host')}/${caminho}`;
-  }
-
-  return `${req.protocol}://${req.get('host')}/${caminho}/${token}`;
-};
 function jwtSign(id) {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES,

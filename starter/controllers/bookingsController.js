@@ -5,6 +5,7 @@ const { error } = require('console');
 const catchAsync = require('../utils/catchAsync');
 const handlerFactory = require('./handlerFactory');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const tour = await Tour.findById(req.params.tourId);
 
