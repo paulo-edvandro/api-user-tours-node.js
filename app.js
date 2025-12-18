@@ -39,7 +39,7 @@ app.use(
 );
 
 app.post(
-  "webhook-checkout",
+  "/webhook-checkout",
   express.raw({ type: "application/json" }),
   bookingController.webhookCheckout
 );
