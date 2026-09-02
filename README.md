@@ -1,6 +1,6 @@
 # Natours API 🏔️ - Sistema de Reserva de Tours
 
-Este é um projeto de back-end robusto para uma plataforma de turismo, focado em **Arquitetura MVC**, segurança de dados e integrações complexas. Desenvolvido para consolidar os fundamentos de Node.js antes da transição para o ecossistema **Nest.js e TypeScript**.
+Este é um projeto de back-end para uma plataforma de turismo, focado em **Arquitetura MVC**, segurança de dados e integrações complexas. Desenvolvido para consolidar os fundamentos de Node.js
 
 ## 🔗 Links Úteis
 
@@ -66,11 +66,7 @@ Para testar a funcionalidade de reserva e checkout, a API está em modo de teste
 * **Número:** `4242 4242 4242 4242`
 * **Validade:** Qualquer data futura (ex: `12/28`)
 * **CVC:** `123`
-
-## 🚀 Próximos Passos
-
-Este projeto marca o fim da minha jornada com **Express.js e Mongoose**. Atualmente, estou aplicando os conceitos de Injeção de Dependência e Design Patterns aprendidos aqui em arquiteturas mais escaláveis utilizando **Nest.js e PostgreSQL**.
-
+  
 -----
 
 *Desenvolvido como parte do curso "Node.js, Express, MongoDB & More" de Jonas Schmedtmann, com foco exclusivo no desenvolvimento do Back-end.*
