@@ -4,7 +4,6 @@ Este é um projeto de back-end para uma plataforma de turismo, focado em **Arqui
 
 ## 🔗 Links Úteis
 
-  * **Live Demo:** [https://api-natours-75jm.onrender.com/](https://api-natours-75jm.onrender.com/)
   * **Documentação/Testes:** O arquivo JSON da coleção do Postman está disponível na pasta `/postman` deste repositório.
 
 ## 🛠️ Tecnologias e Implementações
