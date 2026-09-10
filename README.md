@@ -2,10 +2,6 @@
 
 Este é um projeto de back-end para uma plataforma de turismo, focado em **Arquitetura MVC**, segurança de dados e integrações complexas. Desenvolvido para consolidar os fundamentos de Node.js
 
-## 🔗 Links Úteis
-
-  * **Documentação/Testes:** O arquivo JSON da coleção do Postman está disponível na pasta `/postman` deste repositório.
-
 ## 🛠️ Tecnologias e Implementações
 
 ### Back-end & Infraestrutura
